@@ -1,0 +1,26 @@
+{
+
+  "app_name":"Local Card Trading",
+
+  "enter_email":"Email",
+  "password":"Password",
+  "repeat_password":"Repeat Password",
+
+  "login":"Login",
+  "click_to_register": "Click here to register!",
+
+  "register":"Register",
+  "click_to_log_in":"Click here to log in!",
+
+  "logout":"Logout",
+  "account":"Account",
+
+  "error_occurred":"An error occurred",
+  "ok":"Ok",
+  "confirm":"Confirm",
+  "dismiss":"Dismiss",
+
+  "logoud_dialog_title":"Confirm Logout",
+  "logoud_dialog_text":"Are you really sure you want to log out?"
+
+}

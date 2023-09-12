@@ -1,0 +1,25 @@
+{
+
+  "app_name":"Local Card Trading",
+  
+  "enter_email":"Email",
+  "password":"Password",
+  "repeat_password":"Ripeti Password",
+
+  "login":"Accedi",
+  "click_to_register": "Tocca qui per registrarti!",
+
+  "register":"Registrati",
+  "click_to_log_in":"Tocca qui per accedere!",
+
+  "logout":"Disconnetti Utente",
+  "account":"Profilo",
+
+  "error_occurred":"Si è verificato un errore",
+  "ok":"Ok",
+  "confirm":"Conferma",
+  "dismiss":"Cancella",
+
+  "logoud_dialog_title":"Conferma Disconnessione",
+  "logoud_dialog_text":"Sicuro di volerti disconnettere?"
+}
