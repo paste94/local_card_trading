@@ -21,6 +21,7 @@
   "dismiss":"Dismiss",
 
   "logoud_dialog_title":"Confirm Logout",
-  "logoud_dialog_text":"Are you really sure you want to log out?"
+  "logoud_dialog_text":"Are you really sure you want to log out?",
 
+  "user_settings":"User Settings"
 }

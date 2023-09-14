@@ -6,12 +6,21 @@ import 'package:flutter/foundation.dart';
 /// perchè ad ora è l'unico elemento di interese per lo user.
 @immutable
 class AuthUser {
-  final bool isEmailVerified;
-  const AuthUser({required this.isEmailVerified});
+  final String? displayName;
+  final String? email;
+  final String? photoURL;
+  const AuthUser({
+    required this.displayName,
+    required this.email,
+    required this.photoURL,
+  });
 
   // Questo permette di creare una sorta di override del costruttore. Prende
   // come parametro l'user e crea una istanza di AuthUser guardando la
   // emailVerified dello user passato come parametro
-  factory AuthUser.fromFirebase(User user) =>
-      AuthUser(isEmailVerified: user.emailVerified);
+  factory AuthUser.fromFirebase(User user) => AuthUser(
+        displayName: user.displayName,
+        email: user.email,
+        photoURL: user.photoURL,
+      );
 }

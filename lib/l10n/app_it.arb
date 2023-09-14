@@ -21,5 +21,8 @@
   "dismiss":"Cancella",
 
   "logoud_dialog_title":"Conferma Disconnessione",
-  "logoud_dialog_text":"Sicuro di volerti disconnettere?"
+  "logoud_dialog_text":"Sicuro di volerti disconnettere?",
+
+  "user_settings":"Impostazioni utente"
+
 }
