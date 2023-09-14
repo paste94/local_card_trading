@@ -1,6 +1,8 @@
 import 'package:firebase_core/firebase_core.dart';
 
-import 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
+import 'package:firebase_auth/firebase_auth.dart'
+    show FirebaseAuth, GoogleAuthProvider;
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:local_card_trading/services/auth/auth_exceptions.dart';
 import 'package:local_card_trading/services/auth/auth_provider.dart';
 import 'package:local_card_trading/services/auth/auth_user.dart';
@@ -78,5 +80,24 @@ class FirebaseAuthProvider implements AuthProvider {
     } else {
       throw UserNotLoggedInAuthException();
     }
+  }
+
+  @override
+  Future<void> signInWithGoogle() async {
+    // Trigger the authentication flow
+    final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
+
+    // Obtain the auth details from the request
+    final GoogleSignInAuthentication? googleAuth =
+        await googleUser?.authentication;
+
+    // Create a new credential
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    // Once signed in, return the UserCredential
+    await FirebaseAuth.instance.signInWithCredential(credential);
   }
 }

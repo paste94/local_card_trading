@@ -31,6 +31,11 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    navigateToHome(value) => Navigator.of(context).pushNamedAndRemoveUntil(
+          ROUTE_HOME,
+          (route) => false,
+        );
+
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)?.login ?? '')),
       body: Center(
@@ -63,12 +68,7 @@ class _LoginViewState extends State<LoginView> {
                       email: email,
                       password: password,
                     )
-                    .then(
-                      (value) => Navigator.of(context).pushNamedAndRemoveUntil(
-                        ROUTE_HOME,
-                        (route) => false,
-                      ),
-                    )
+                    .then(navigateToHome)
                     .catchError(
                       (e) => showErrorDialog(
                         context,
@@ -83,7 +83,20 @@ class _LoginViewState extends State<LoginView> {
                 ROUTE_REGISTER,
                 (route) => false,
               ),
-            )
+            ),
+            TextButton(
+                onPressed: () {
+                  AuthService.firebase()
+                      .signInWithGoogle()
+                      .then(navigateToHome)
+                      .catchError(
+                        (e) => showErrorDialog(
+                          context,
+                          e.toString(),
+                        ),
+                      );
+                },
+                child: Text('Google'))
           ],
         ),
       ),

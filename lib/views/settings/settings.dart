@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:local_card_trading/constants/routes.dart';
 import 'package:local_card_trading/services/auth/auth_service.dart';
 import 'package:local_card_trading/utils/dialogs.dart';
 import 'package:settings_ui/settings_ui.dart';
@@ -30,7 +31,13 @@ class _SettingsViewState extends State<SettingsView> {
                   context: context,
                   title: AppLocalizations.of(context)!.logoud_dialog_title,
                   text: AppLocalizations.of(context)!.logoud_dialog_text,
-                  onAcceptPressed: AuthService.firebase().logOut,
+                  onAcceptPressed: () => AuthService.firebase().logOut().then(
+                        (value) =>
+                            Navigator.of(context).pushNamedAndRemoveUntil(
+                          ROUTE_LOGIN,
+                          (route) => false,
+                        ),
+                      ),
                 ),
               )
             ],

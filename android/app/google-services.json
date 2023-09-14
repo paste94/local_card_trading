@@ -12,7 +12,20 @@
           "package_name": "com.example.local_card_trading"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "517582488644-h18hh62u9la6iajkoq8d289sbklm9k26.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.local_card_trading",
+            "certificate_hash": "64c4fdee9c5ff8ec9da6d8c8e45689a63b99fb90"
+          }
+        },
+        {
+          "client_id": "517582488644-nkbfq96i0cqr4fk35dbjrj33crpntbuq.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyDCx7rFjTLJw4oliVnh5f32Xpkoz1gOxhI"
@@ -20,7 +33,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "517582488644-nkbfq96i0cqr4fk35dbjrj33crpntbuq.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "517582488644-ko779lbfhosk9n2dkruuf5506pvel9jm.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.localCardTrading"
+              }
+            }
+          ]
         }
       }
     }
