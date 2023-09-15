@@ -6,10 +6,12 @@ import 'package:flutter/foundation.dart';
 /// perchè ad ora è l'unico elemento di interese per lo user.
 @immutable
 class AuthUser {
+  final String? uid;
   final String? displayName;
   final String? email;
   final String? photoURL;
   const AuthUser({
+    required this.uid,
     required this.displayName,
     required this.email,
     required this.photoURL,
@@ -19,6 +21,7 @@ class AuthUser {
   // come parametro l'user e crea una istanza di AuthUser guardando la
   // emailVerified dello user passato come parametro
   factory AuthUser.fromFirebase(User user) => AuthUser(
+        uid: user.uid,
         displayName: user.displayName,
         email: user.email,
         photoURL: user.photoURL,
