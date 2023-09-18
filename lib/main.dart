@@ -5,6 +5,8 @@ import 'package:local_card_trading/app.dart';
 import 'package:local_card_trading/app_bloc_observer.dart';
 import 'package:local_card_trading/bloc/authentication_bloc.dart';
 
+import 'repository/auth/authentication_repository.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -13,7 +15,7 @@ void main() async {
 
   runApp(MultiBlocProvider(providers: [
     BlocProvider(
-      create: (context) => AuthenticationBloc()(AuthenticationRepositoryImpl())
+      create: (context) => AuthenticationBloc(AuthenticationRepositoryImpl())
         ..add(AuthenticationStarted()),
     ),
   ], child: App()));

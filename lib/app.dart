@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:local_card_trading/views/auth/login.dart';
+import 'package:local_card_trading/views/home/home.dart';
 
 import 'bloc/authentication_bloc.dart';
 
@@ -28,7 +30,7 @@ class BlocNavigate extends StatelessWidget {
         if (state is AuthenticationSuccess) {
           return const HomeView();
         } else {
-          return const WelcomeView();
+          return const LoginView();
         }
       },
     );

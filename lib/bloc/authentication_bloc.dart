@@ -1,31 +1,29 @@
 import 'package:bloc/bloc.dart';
+import 'package:local_card_trading/model/user_model.dart';
+import 'package:local_card_trading/repository/auth/authentication_repository.dart';
 import 'package:equatable/equatable.dart';
-import 'package:local_card_trading/services/auth/auth_provider.dart';
-import 'package:local_card_trading/services/auth/auth_user.dart';
-import 'package:meta/meta.dart';
 
 part 'authentication_event.dart';
 part 'authentication_state.dart';
 
 class AuthenticationBloc
     extends Bloc<AuthenticationEvent, AuthenticationState> {
-  final AuthProvider _authProvider;
+  final AuthenticationRepository _authenticationRepository;
 
-  AuthenticationBloc(this._authProvider) : super(AuthenticationInitial()) {
+  AuthenticationBloc(this._authenticationRepository)
+      : super(AuthenticationInitial()) {
     on<AuthenticationEvent>((event, emit) async {
       if (event is AuthenticationStarted) {
-        AuthUser? user = await _authProvider.currentUser;
-        if (user == null) {
-          emit(AuthenticationFailure());
-        }
-        if (user!.uid != "uid") {
-          String? displayName = await user.displayName;
+        UserModel user = await _authenticationRepository.getCurrentUser().first;
+        if (user.uid != "uid") {
+          String? displayName =
+              await _authenticationRepository.retrieveUserName(user);
           emit(AuthenticationSuccess(displayName: displayName));
         } else {
           emit(AuthenticationFailure());
         }
       } else if (event is AuthenticationSignedOut) {
-        await _authProvider.signOut();
+        await _authenticationRepository.signOut();
         emit(AuthenticationFailure());
       }
     });
