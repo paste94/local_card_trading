@@ -24,7 +24,7 @@ class _HomeViewState extends State<HomeView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.app_name),
+        title: Text(AppLocalizations.of(context)?.app_name ?? ''),
       ),
       drawer: Drawer(
         child: ListView(
@@ -42,11 +42,11 @@ class _HomeViewState extends State<HomeView> {
             ),
             ListTile(
               leading: const Icon(Icons.logout),
-              title: Text(AppLocalizations.of(context)!.logout),
+              title: Text(AppLocalizations.of(context)?.logout ?? ''),
               onTap: () => showConfirmDialog(
                 context: context,
-                title: AppLocalizations.of(context)!.logoud_dialog_title,
-                text: AppLocalizations.of(context)!.logoud_dialog_text,
+                title: AppLocalizations.of(context)?.logoud_dialog_title ?? '',
+                text: AppLocalizations.of(context)?.logoud_dialog_text ?? '',
                 onAcceptPressed: () => AuthService.firebase().logOut().then(
                       (value) => Navigator.of(context).pushNamedAndRemoveUntil(
                         ROUTE_LOGIN,

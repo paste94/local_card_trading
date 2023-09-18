@@ -59,7 +59,7 @@ class _LoginViewState extends State<LoginView> {
                   hintText: AppLocalizations.of(context)?.password),
             ),
             TextButton(
-              child: Text(AppLocalizations.of(context)!.login),
+              child: Text(AppLocalizations.of(context)?.login ?? ''),
               onPressed: () async {
                 final email = _email.text;
                 final password = _password.text;
@@ -78,7 +78,8 @@ class _LoginViewState extends State<LoginView> {
               },
             ),
             TextButton(
-              child: Text(AppLocalizations.of(context)!.click_to_register),
+              child:
+                  Text(AppLocalizations.of(context)?.click_to_register ?? ''),
               onPressed: () => Navigator.of(context).pushNamedAndRemoveUntil(
                 ROUTE_REGISTER,
                 (route) => false,

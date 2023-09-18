@@ -4,12 +4,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app.dart';
 import 'package:local_card_trading/app_bloc_observer.dart';
 import 'package:local_card_trading/bloc/authentication_bloc.dart';
+import 'package:local_card_trading/firebase_options.dart';
 
 import 'repository/auth/authentication_repository.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
   Bloc.observer = AppBlocObserver();
 
@@ -18,7 +21,7 @@ void main() async {
       create: (context) => AuthenticationBloc(AuthenticationRepositoryImpl())
         ..add(AuthenticationStarted()),
     ),
-  ], child: App()));
+  ], child: const App()));
 }
 
 

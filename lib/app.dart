@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/views/auth/login.dart';
 import 'package:local_card_trading/views/home/home.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import 'bloc/authentication_bloc.dart';
 
@@ -14,6 +15,8 @@ class App extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: const BlocNavigate(),
         title: 'Constants.title',
+        supportedLocales: AppLocalizations.supportedLocales,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
         theme: ThemeData(
           primarySwatch: Colors.blue,
         ));
