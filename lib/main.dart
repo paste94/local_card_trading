@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app.dart';
 import 'package:local_card_trading/app_bloc_observer.dart';
-import 'package:local_card_trading/bloc/authentication_bloc.dart';
+import 'package:local_card_trading/bloc/auth/authentication_bloc.dart';
+import 'package:local_card_trading/bloc/form/form_bloc.dart';
 import 'package:local_card_trading/firebase_options.dart';
 
 import 'repository/auth/authentication_repository.dart';
@@ -16,12 +17,17 @@ void main() async {
 
   Bloc.observer = AppBlocObserver();
 
-  runApp(MultiBlocProvider(providers: [
-    BlocProvider(
-      create: (context) => AuthenticationBloc(AuthenticationRepositoryImpl())
-        ..add(AuthenticationStarted()),
-    ),
-  ], child: const App()));
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (context) => AuthenticationBloc(AuthenticationRepositoryImpl())
+          ..add(AuthenticationStarted()),
+      ),
+      BlocProvider(
+          create: (context) => FormBloc(AuthenticationRepositoryImpl()))
+    ],
+    child: const App(),
+  ));
 }
 
 

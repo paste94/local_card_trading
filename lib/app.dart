@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_card_trading/views/auth/login.dart';
+import 'package:local_card_trading/views/auth/login_view/login.dart';
 import 'package:local_card_trading/views/home/home.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'bloc/authentication_bloc.dart';
+import 'bloc/auth/authentication_bloc.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);
