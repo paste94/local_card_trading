@@ -10,12 +10,12 @@ Future<Object?> showErrorDialog(
     showDialog(
       context: context,
       builder: ((context) => AlertDialog(
-            title: Text(AppLocalizations.of(context)!.error_occurred),
+            title: Text(AppLocalizations.of(context).error_occurred),
             content: Text(text),
             actions: [
               TextButton(
                 onPressed: Navigator.of(context).pop,
-                child: Text(AppLocalizations.of(context)!.ok),
+                child: Text(AppLocalizations.of(context).ok),
               )
             ],
           )),
@@ -35,11 +35,11 @@ Future<Object?> showConfirmDialog({
             actions: [
               TextButton(
                 onPressed: Navigator.of(context).pop,
-                child: Text(AppLocalizations.of(context)!.dismiss),
+                child: Text(AppLocalizations.of(context).dismiss),
               ),
               TextButton(
                 onPressed: onAcceptPressed,
-                child: Text(AppLocalizations.of(context)!.confirm),
+                child: Text(AppLocalizations.of(context).confirm),
               ),
             ],
           )),

@@ -23,7 +23,7 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.user_settings),
+        title: Text(AppLocalizations.of(context).user_settings),
       ),
       body: SettingsList(
         sections: [
@@ -48,12 +48,12 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               DividerTile(),
               SettingsTile.navigation(
-                title: Text(AppLocalizations.of(context)!.logout),
+                title: Text(AppLocalizations.of(context).logout),
                 leading: const Icon(Icons.logout),
                 onPressed: (context) => showConfirmDialog(
                   context: context,
-                  title: AppLocalizations.of(context)!.logoud_dialog_title,
-                  text: AppLocalizations.of(context)!.logoud_dialog_text,
+                  title: AppLocalizations.of(context).logoud_dialog_title,
+                  text: AppLocalizations.of(context).logoud_dialog_text,
                   onAcceptPressed: () => AuthService.firebase().logOut().then(
                         (value) =>
                             Navigator.of(context).pushNamedAndRemoveUntil(
@@ -84,7 +84,7 @@ class _SettingsViewState extends State<SettingsView> {
                 onPressed: () => _picker.pickImage(source: ImageSource.camera),
               ),
               const SizedBox(height: 8),
-              Text('Camersssa'),
+              Text('Camera'),
             ],
           ),
           const SizedBox(width: 80),
@@ -104,7 +104,3 @@ class _SettingsViewState extends State<SettingsView> {
     );
   }
 }
-                  // final XFile? photo =
-                  //     await _picker.pickImage(source: ImageSource.camera);
-                  // XFile? image =
-                  //     await _picker.pickImage(source: ImageSource.gallery);

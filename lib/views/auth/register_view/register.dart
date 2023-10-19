@@ -32,7 +32,7 @@ class _RegisterViewState extends State<RegisterView> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(AppLocalizations.of(context)!.register)),
+      appBar: AppBar(title: Text(AppLocalizations.of(context).register)),
       body: Column(
         children: [
           TextField(
@@ -41,7 +41,7 @@ class _RegisterViewState extends State<RegisterView> {
             autocorrect: false,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.enter_email),
+                hintText: AppLocalizations.of(context).enter_email),
           ),
           TextField(
             controller: _password,
@@ -49,10 +49,10 @@ class _RegisterViewState extends State<RegisterView> {
             enableSuggestions: false,
             autocorrect: false,
             decoration: InputDecoration(
-                hintText: AppLocalizations.of(context)!.password),
+                hintText: AppLocalizations.of(context).password),
           ),
           TextButton(
-            child: Text(AppLocalizations.of(context)!.register),
+            child: Text(AppLocalizations.of(context).register),
             onPressed: () async {
               final email = _email.text;
               final password = _password.text;
@@ -80,7 +80,7 @@ class _RegisterViewState extends State<RegisterView> {
               ROUTE_LOGIN,
               (_) => false,
             ),
-            child: Text(AppLocalizations.of(context)!.click_to_log_in),
+            child: Text(AppLocalizations.of(context).click_to_log_in),
           )
         ],
       ),
