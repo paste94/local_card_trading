@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/bloc/auth/authentication_bloc.dart';
 import 'package:local_card_trading/bloc/form/form_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:local_card_trading/constants/routes.dart';
 import 'package:local_card_trading/utils/dialogs.dart';
 import 'package:local_card_trading/views/auth/register_view/register.dart';
 import 'package:local_card_trading/views/home/home.dart';
@@ -13,7 +14,6 @@ class LoginView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     return MultiBlocListener(
       listeners: [
         BlocListener<FormBloc, FormsValidate>(listener: (context, state) {
@@ -121,7 +121,7 @@ class _PasswordField extends StatelessWidget {
 }
 
 class _SubmitButton extends StatelessWidget {
-  const _SubmitButton({super.key});
+  const _SubmitButton();
 
   @override
   Widget build(BuildContext context) {
@@ -147,7 +147,7 @@ class _SubmitButton extends StatelessWidget {
 }
 
 class _GoToRegisterView extends StatelessWidget {
-  const _GoToRegisterView({super.key});
+  const _GoToRegisterView();
 
   @override
   Widget build(BuildContext context) {
@@ -161,9 +161,7 @@ class _GoToRegisterView extends StatelessWidget {
               width: size.width * 0.8,
               child: OutlinedButton(
                 onPressed: !state.isFormValid
-                    ? () => context
-                        .read<FormBloc>()
-                        .add(const FormSubmitted(value: Status.signUp))
+                    ? () => Navigator.of(context).pushNamed(ROUTE_REGISTER)
                     : null,
                 child: Text(AppLocalizations.of(context).click_to_register),
               ),
