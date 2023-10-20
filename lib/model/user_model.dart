@@ -6,28 +6,28 @@ class UserModel {
   final String? email;
   String? password;
   final String? displayName;
-  final int? age;
+  DateTime? birthDate;
   UserModel(
       {this.uid,
       this.email,
       this.password,
       this.displayName,
-      this.age,
+      this.birthDate,
       this.isVerified});
 
   Map<String, dynamic> toMap() {
     return {
       'email': email,
       'displayName': displayName,
-      'age': age,
+      'birthDate': birthDate,
     };
   }
 
   UserModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
       : uid = doc.id,
         email = doc.data()!["email"],
-        age = doc.data()!["age"],
-        displayName = doc.data()!["displayName"];
+        displayName = doc.data()!["displayName"],
+        birthDate = doc.data()!["birthDate"];
 
   UserModel copyWith({
     bool? isVerified,
@@ -35,14 +35,14 @@ class UserModel {
     String? email,
     String? password,
     String? displayName,
-    int? age,
+    DateTime? birthDate,
   }) {
     return UserModel(
         uid: uid ?? this.uid,
         email: email ?? this.email,
         password: password ?? this.password,
         displayName: displayName ?? this.displayName,
-        age: age ?? this.age,
+        birthDate: birthDate ?? this.birthDate,
         isVerified: isVerified ?? this.isVerified);
   }
 }

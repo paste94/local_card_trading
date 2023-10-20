@@ -2,9 +2,24 @@
 
   "app_name":"Local Card Trading",
 
+  "date_format":"MM/dd/yyyy",
+
   "enter_email":"Email",
+  "invalid_email":"Please ensure the email entered is valid",
+  
   "password":"Password",
+  "invalid_password":"Password must be at least 8 characters and contain at least one letter and number",
+  
+  "birth_date":"Birth Date",
+  "invalid_birth_date":"You must be at least 18",
+
   "repeat_password":"Repeat Password",
+  "invalid_repeat_password":"Different passwords!",
+
+  "name":"Name",
+  "invalid_name":"Please ensure the name is valid",
+  
+  "form_not_valid":"Form not valid",
 
   "login":"Login",
   "click_to_register": "Click here to register!",

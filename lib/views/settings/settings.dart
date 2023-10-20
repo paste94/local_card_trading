@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:local_card_trading/constants/routes.dart';
 import 'package:local_card_trading/services/auth/auth_service.dart';
 import 'package:local_card_trading/services/auth/auth_user.dart';
-import 'package:local_card_trading/utils/dialogs.dart';
+import 'package:local_card_trading/utils/widgets/dialogs.dart';
 import 'package:local_card_trading/utils/settings/list_item.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -23,7 +23,7 @@ class _SettingsViewState extends State<SettingsView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context).user_settings),
+        title: Text(AppLocalizations.of(context)?.user_settings ?? ''),
       ),
       body: SettingsList(
         sections: [
@@ -48,12 +48,13 @@ class _SettingsViewState extends State<SettingsView> {
               ),
               DividerTile(),
               SettingsTile.navigation(
-                title: Text(AppLocalizations.of(context).logout),
+                title: Text(AppLocalizations.of(context)?.logout ?? ''),
                 leading: const Icon(Icons.logout),
                 onPressed: (context) => showConfirmDialog(
                   context: context,
-                  title: AppLocalizations.of(context).logoud_dialog_title,
-                  text: AppLocalizations.of(context).logoud_dialog_text,
+                  title:
+                      AppLocalizations.of(context)?.logoud_dialog_title ?? '',
+                  text: AppLocalizations.of(context)?.logoud_dialog_text ?? '',
                   onAcceptPressed: () => AuthService.firebase().logOut().then(
                         (value) =>
                             Navigator.of(context).pushNamedAndRemoveUntil(

@@ -19,21 +19,21 @@ class FormsValidate extends FormState {
       required this.isLoading,
       this.errorMessage = "",
       required this.isNameValid,
-      required this.isAgeValid,
+      required this.isBirthDateValid,
       required this.isFormValidateFailed,
       this.displayName,
-      required this.age,
+      required this.birthDate,
       this.isFormSuccessful = false});
 
   final String email;
   final String? displayName;
-  final int age;
+  final DateTime birthDate;
   final String password;
   final bool isEmailValid;
   final bool isPasswordValid;
   final bool isFormValid;
   final bool isNameValid;
-  final bool isAgeValid;
+  final bool isBirthDateValid;
   final bool isFormValidateFailed;
   final bool isLoading;
   final String errorMessage;
@@ -47,10 +47,10 @@ class FormsValidate extends FormState {
       bool? isPasswordValid,
       bool? isFormValid,
       bool? isLoading,
-      int? age,
+      DateTime? birthDate,
       String? errorMessage,
       bool? isNameValid,
-      bool? isAgeValid,
+      bool? isBirthDateValid,
       bool? isFormValidateFailed,
       bool? isFormSuccessful}) {
     return FormsValidate(
@@ -62,8 +62,8 @@ class FormsValidate extends FormState {
         isLoading: isLoading ?? this.isLoading,
         errorMessage: errorMessage ?? this.errorMessage,
         isNameValid: isNameValid ?? this.isNameValid,
-        age: age ?? this.age,
-        isAgeValid: isAgeValid ?? this.isAgeValid,
+        birthDate: birthDate ?? this.birthDate,
+        isBirthDateValid: isBirthDateValid ?? this.isBirthDateValid,
         displayName: displayName ?? this.displayName,
         isFormValidateFailed: isFormValidateFailed ?? this.isFormValidateFailed,
         isFormSuccessful: isFormSuccessful ?? this.isFormSuccessful);
@@ -80,7 +80,7 @@ class FormsValidate extends FormState {
         errorMessage,
         isNameValid,
         displayName,
-        age,
+        birthDate,
         isFormValidateFailed,
         isFormSuccessful,
       ];

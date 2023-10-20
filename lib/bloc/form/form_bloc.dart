@@ -11,7 +11,8 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
   final AuthenticationRepository _authenticationRepository;
   //final DatabaseRepository _databaseRepository;
   FormBloc(this._authenticationRepository)
-      : super(const FormsValidate(
+      : super(
+          FormsValidate(
             email: "example@gmail.com",
             password: "",
             isEmailValid: true,
@@ -19,13 +20,15 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
             isFormValid: false,
             isLoading: false,
             isNameValid: true,
-            age: 0,
-            isAgeValid: true,
-            isFormValidateFailed: false)) {
+            birthDate: DateTime.now(),
+            isBirthDateValid: true,
+            isFormValidateFailed: false,
+          ),
+        ) {
     on<EmailChanged>(_onEmailChanged);
     on<PasswordChanged>(_onPasswordChanged);
     on<NameChanged>(_onNameChanged);
-    on<AgeChanged>(_onAgeChanged);
+    on<BirthDateChanged>(_onBirthDateChanged);
     on<FormSubmitted>(_onFormSubmitted);
     on<FormSucceeded>(_onFormSucceeded);
   }
@@ -48,8 +51,8 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
     return displayName!.isNotEmpty;
   }
 
-  bool _isAgeValid(int age) {
-    return age >= 1 && age <= 120 ? true : false;
+  bool _isBirthDateValid(DateTime birthDate) {
+    return (DateTime.now().difference(birthDate).inDays ~/ 365) > 18;
   }
 
   _onEmailChanged(EmailChanged event, Emitter<FormsValidate> emit) {
@@ -83,13 +86,13 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
     ));
   }
 
-  _onAgeChanged(AgeChanged event, Emitter<FormsValidate> emit) {
+  _onBirthDateChanged(BirthDateChanged event, Emitter<FormsValidate> emit) {
     emit(state.copyWith(
       isFormSuccessful: false,
       isFormValidateFailed: false,
       errorMessage: "",
-      age: event.age,
-      isAgeValid: _isAgeValid(event.age),
+      birthDate: event.birthDate,
+      isBirthDateValid: _isBirthDateValid(event.birthDate),
     ));
   }
 
@@ -97,7 +100,7 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
     UserModel user = UserModel(
       email: state.email,
       password: state.password,
-      age: state.age,
+      birthDate: state.birthDate,
       displayName: state.displayName,
     );
 
@@ -113,10 +116,10 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
       FormSubmitted event, Emitter<FormsValidate> emit, UserModel user) async {
     emit(state.copyWith(
         errorMessage: "",
-        isFormValid:
-            _isPasswordValid(state.password) && _isEmailValid(state.email), //&&
-        //_isAgeValid(state.age) &&
-        //_isNameValid(state.displayName),
+        isFormValid: _isPasswordValid(state.password) &&
+            _isEmailValid(state.email) &&
+            _isBirthDateValid(state.birthDate) &&
+            _isNameValid(state.displayName),
         isLoading: true));
     if (state.isFormValid) {
       try {

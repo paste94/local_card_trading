@@ -17,7 +17,6 @@ class EmailChanged extends FormEvent {
   List<Object> get props => [email];
 }
 
-
 class PasswordChanged extends FormEvent {
   final String password;
   const PasswordChanged(this.password);
@@ -34,12 +33,12 @@ class NameChanged extends FormEvent {
   List<Object> get props => [displayName];
 }
 
-class AgeChanged extends FormEvent {
-  final int age;
-  const AgeChanged(this.age);
+class BirthDateChanged extends FormEvent {
+  final DateTime birthDate;
+  const BirthDateChanged(this.birthDate);
 
   @override
-  List<Object> get props => [age];
+  List<Object> get props => [birthDate];
 }
 
 class FormSubmitted extends FormEvent {
