@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/bloc/form/form_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:local_card_trading/constants/auth_view_const.dart';
+import 'package:local_card_trading/constants/routes.dart';
 import 'package:local_card_trading/utils/widgets/auth/auth_widgets.dart';
 
 class LoginView extends StatelessWidget {
@@ -29,7 +30,7 @@ class LoginView extends StatelessWidget {
                 color: DIV_COLOR,
               ),
               BtnSubmit(status: Status.signIn),
-              BtnRegister(),
+              BtnGoTo(route: ROUTE_REGISTER),
             ],
           ),
         ),

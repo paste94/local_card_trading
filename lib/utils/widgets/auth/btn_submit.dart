@@ -8,7 +8,11 @@ class BtnSubmit extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
+    final String? text = status == Status.signIn
+        ? AppLocalizations.of(context)?.login
+        : AppLocalizations.of(context)?.register;
+
     return BlocBuilder<FormBloc, FormsValidate>(builder: (context, state) {
       return state.isLoading
           ? const Center(child: CircularProgressIndicator())
@@ -20,7 +24,7 @@ class BtnSubmit extends StatelessWidget {
                         .read<FormBloc>()
                         .add(FormSubmitted(value: status))
                     : null,
-                child: Text(AppLocalizations.of(context)?.login ?? ''),
+                child: Text(text ?? ''),
               ),
             );
     });

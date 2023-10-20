@@ -34,6 +34,8 @@ class RegisterView extends StatelessWidget {
                   height: 30,
                   color: Colors.transparent,
                 ),
+                BtnSubmit(status: Status.signUp),
+                BtnGoTo(route: ROUTE_LOGIN)
               ],
             ),
           ),
