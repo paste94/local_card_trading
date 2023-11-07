@@ -17,7 +17,6 @@ class TxtEmail extends StatelessWidget {
               errorText: !state.isEmailValid
                   ? AppLocalizations.of(context)?.invalid_email ?? ''
                   : null,
-              hintText: AppLocalizations.of(context)?.enter_email ?? '',
               contentPadding: const EdgeInsets.symmetric(
                 vertical: ABS_TXT_FLD_VER_CONTENT_PADDING,
                 horizontal: ABS_TXT_FLD_HOR_CONTENT_PADDING,

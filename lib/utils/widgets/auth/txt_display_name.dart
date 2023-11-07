@@ -20,7 +20,6 @@ class TxtDispalyName extends StatelessWidget {
                 errorText: !state.isNameValid
                     ? AppLocalizations.of(context)?.invalid_name ?? ''
                     : null,
-                hintText: AppLocalizations.of(context)?.name ?? '',
                 contentPadding: const EdgeInsets.symmetric(
                   vertical: ABS_TXT_FLD_VER_CONTENT_PADDING,
                   horizontal: ABS_TXT_FLD_HOR_CONTENT_PADDING,
