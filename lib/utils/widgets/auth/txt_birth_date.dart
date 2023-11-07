@@ -22,29 +22,37 @@ class _TxtBirthDateState extends State<TxtBirthDate> {
         return SizedBox(
           width: size.width * REL_TXT_FLD_WIDTH,
           child: TextFormField(
-            onChanged: (value) {
-              if (_selectedDate != null) {
-                context.read<FormBloc>().add(BirthDateChanged(_selectedDate!));
-              }
-            },
             controller: _birthDateController,
             readOnly: true,
-            onTap: () async {
-              _selectedDate = await showDatePicker(
+            onTap: () {
+              showDatePicker(
                 context: context,
                 initialDate: DateTime.now(),
                 firstDate: DateTime(1900),
                 lastDate: DateTime.now(),
-              );
-              if (_selectedDate != null) {
-                _birthDateController.text =
-                    DateFormat(dateFormat).format(_selectedDate!);
-              }
+              ).then((selectedDate) {
+                print('CHANGED');
+                if(selectedDate != null){
+                  _birthDateController.text = DateFormat(dateFormat).format(selectedDate);
+                  context.read<FormBloc>().add(BirthDateChanged(selectedDate));
+                }
+              });
+              // _selectedDate = await showDatePicker(
+              //   context: context,
+              //   initialDate: DateTime.now(),
+              //   firstDate: DateTime(1900),
+              //   lastDate: DateTime.now(),
+              // );
+              // if (_selectedDate != null) {
+              //   _birthDateController.text =
+              //       DateFormat(dateFormat).format(_selectedDate!);
+              //   context.read<FormBloc>().add(BirthDateChanged(_selectedDate!));
+              // }
             },
             keyboardType: TextInputType.name,
             decoration: InputDecoration(
               labelText: AppLocalizations.of(context)?.birth_date,
-              errorText: !state.isNameValid
+              errorText: !state.isBirthDateValid
                   ? AppLocalizations.of(context)?.invalid_birth_date
                   : null,
               hintText: AppLocalizations.of(context)?.birth_date,

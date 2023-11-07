@@ -59,7 +59,9 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
   }
 
   bool _isBirthDateValid(DateTime birthDate) {
-    return (DateTime.now().difference(birthDate).inDays ~/ 365) > 18;
+    var valid = (DateTime.now().difference(birthDate).inDays ~/ 365) > 18;
+    print('BIRTH VALIDITY: $valid');
+    return valid;
   }
 
   _onEmailChanged(EmailChanged event, Emitter<FormsValidate> emit) {
@@ -133,11 +135,13 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
       FormSubmitted event, Emitter<FormsValidate> emit, UserModel user) async {
     emit(state.copyWith(
         errorMessage: "",
-        isFormValid: _isPasswordValid(state.password) &&
-            _isEmailValid(state.email) &&
-            _isBirthDateValid(state.birthDate) &&
-            _isNameValid(state.displayName),
-        isLoading: true));
+        isFormValid:  _isPasswordValid(state.password) &&
+                      _isRepeatPasswordValid(state.password, state.repeatPassword) &&
+                      _isEmailValid(state.email) &&
+                      _isBirthDateValid(state.birthDate) &&
+                      _isNameValid(state.displayName),
+        isLoading: true,
+    ));
     if (state.isFormValid) {
       try {
         UserCredential? authUser = await _authenticationRepository.signUp(user);

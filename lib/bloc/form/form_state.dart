@@ -95,4 +95,26 @@ class FormsValidate extends FormState {
         isFormValidateFailed,
         isFormSuccessful,
       ];
+
+  @override
+  String toString() {
+    var obj = {
+      'email': email,
+      'password': password,
+      'repeatPassword': repeatPassword,
+      'isEmailValid': isEmailValid,
+      'isPasswordValid': isPasswordValid,
+      'isRepeatPasswordValid': isRepeatPasswordValid,
+      'isFormValid': isFormValid,
+      'isLoading': isLoading,
+      'errorMessage': errorMessage,
+      'isNameValid': isNameValid,
+      'isBirthDateValid': isBirthDateValid,
+      'isFormValidateFailed': isFormValidateFailed,
+      'displayName': displayName,
+      'birthDate': birthDate,
+      'isFormSuccessful': isFormSuccessful,
+    };
+    return obj.toString();
+  }
 }
