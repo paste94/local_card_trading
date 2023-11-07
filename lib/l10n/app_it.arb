@@ -9,7 +9,10 @@
 
   "password":"Password",
   "invalid_password":"La password deve essere lunga almeno 8 caratteri e contenere un numero e un simbolo ",
-  
+    
+  "repeat_password":"Ripeti Password",
+  "repeat_invalid_password":"Le password non coincidono",
+
   "birth_date":"Data di Nascita",
   "invalid_birth_date":"Spiacente, devi essere maggiorenne",
 

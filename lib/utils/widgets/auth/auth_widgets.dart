@@ -10,6 +10,7 @@ import 'package:local_card_trading/utils/widgets/dialogs.dart';
 
 part 'txt_email.dart';
 part 'txt_password.dart';
+part 'txt_repeat_password.dart';
 part 'txt_display_name.dart';
 part 'txt_birth_date.dart';
 part 'btn_submit.dart';

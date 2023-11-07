@@ -10,6 +10,9 @@
   "password":"Password",
   "invalid_password":"Password must be at least 8 characters and contain at least one letter and number",
   
+  "repeat_password":"Repeat Password",
+  "repeat_invalid_password":"Passwords do not match",
+  
   "birth_date":"Birth Date",
   "invalid_birth_date":"You must be at least 18",
 

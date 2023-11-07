@@ -27,6 +27,7 @@ class RegisterView extends StatelessWidget {
               children: [
                 TxtEmail(),
                 TxtPassword(),
+                TxtRepeatPassword(),
                 //TODO: Aggiungi repeat password
                 TxtDispalyName(),
                 TxtBirthDate(),

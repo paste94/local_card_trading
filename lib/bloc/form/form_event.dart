@@ -25,6 +25,14 @@ class PasswordChanged extends FormEvent {
   List<Object> get props => [password];
 }
 
+class RepeatPasswordChanged extends FormEvent {
+  final String repeatPassword;
+  const RepeatPasswordChanged(this.repeatPassword);
+
+  @override
+  List<Object> get props => [repeatPassword];
+}
+
 class NameChanged extends FormEvent {
   final String displayName;
   const NameChanged(this.displayName);

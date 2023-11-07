@@ -15,8 +15,10 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
           FormsValidate(
             email: "example@gmail.com",
             password: "",
+            repeatPassword: "",
             isEmailValid: true,
             isPasswordValid: true,
+            isRepeatPasswordValid: true,
             isFormValid: false,
             isLoading: false,
             isNameValid: true,
@@ -27,6 +29,7 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
         ) {
     on<EmailChanged>(_onEmailChanged);
     on<PasswordChanged>(_onPasswordChanged);
+    on<RepeatPasswordChanged>(_onRepeatPasswordChanged);
     on<NameChanged>(_onNameChanged);
     on<BirthDateChanged>(_onBirthDateChanged);
     on<FormSubmitted>(_onFormSubmitted);
@@ -36,7 +39,7 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
     r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
   );
   final RegExp _passwordRegExp = RegExp(
-    r'^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$',
+    r'^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$',
   );
 
   bool _isEmailValid(String email) {
@@ -45,6 +48,10 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
 
   bool _isPasswordValid(String password) {
     return _passwordRegExp.hasMatch(password);
+  }
+
+  bool _isRepeatPasswordValid(String password, String repeatPassword){
+    return password == repeatPassword;
   }
 
   bool _isNameValid(String? displayName) {
@@ -73,6 +80,16 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
       errorMessage: "",
       password: event.password,
       isPasswordValid: _isPasswordValid(event.password),
+    ));
+  }
+
+  _onRepeatPasswordChanged(RepeatPasswordChanged event, Emitter<FormsValidate> emit) {
+    emit(state.copyWith(
+      isFormSuccessful: false,
+      isFormValidateFailed: false,
+      errorMessage: "",
+      repeatPassword: event.repeatPassword,
+      isRepeatPasswordValid: _isRepeatPasswordValid(state.password, event.repeatPassword),
     ));
   }
 
