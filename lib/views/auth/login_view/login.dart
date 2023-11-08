@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_card_trading/bloc/form/form_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:local_card_trading/constants/auth_view_const.dart';
 import 'package:local_card_trading/constants/routes.dart';
-import 'package:local_card_trading/utils/widgets/auth/auth_widgets.dart';
+import 'package:local_card_trading/views/auth/bloc/form_bloc.dart';
+import 'package:local_card_trading/views/auth/widgets/auth_widgets.dart';
 
 class LoginView extends StatelessWidget {
   const LoginView({super.key});

@@ -24,13 +24,13 @@ class FormsValidate extends FormState {
         required this.isBirthDateValid,
         required this.isFormValidateFailed,
         this.displayName,
-        required this.birthDate,
+        this.birthDate,
         this.isFormSuccessful = false,
       });
 
   final String email;
   final String? displayName;
-  final DateTime birthDate;
+  final DateTime? birthDate;
   final String password;
   final String repeatPassword;
   final bool isEmailValid;

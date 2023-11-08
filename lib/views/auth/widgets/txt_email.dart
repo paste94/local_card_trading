@@ -11,6 +11,7 @@ class TxtEmail extends StatelessWidget {
         return SizedBox(
           width: size.width * REL_TXT_FLD_WIDTH,
           child: TextFormField(
+            initialValue: state.email,
             keyboardType: TextInputType.emailAddress,
             decoration: InputDecoration(
               labelText: AppLocalizations.of(context)?.enter_email ?? '',

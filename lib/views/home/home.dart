@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:local_card_trading/constants/routes.dart';
 import 'package:local_card_trading/services/auth/auth_user.dart';
-import 'package:local_card_trading/utils/widgets/dialogs.dart';
+import 'package:local_card_trading/utils/dialogs.dart';
 import 'package:local_card_trading/views/home/subpages/near_me.dart';
 import 'package:local_card_trading/views/home/subpages/to_buy.dart';
 import 'package:local_card_trading/views/home/subpages/to_sell.dart';

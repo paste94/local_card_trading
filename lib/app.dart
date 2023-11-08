@@ -6,7 +6,7 @@ import 'package:local_card_trading/views/auth/register_view/register.dart';
 import 'package:local_card_trading/views/home/home.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'bloc/auth/authentication_bloc.dart';
+import 'views/auth/bloc/authentication_bloc.dart';
 
 class App extends StatelessWidget {
   const App({Key? key}) : super(key: key);

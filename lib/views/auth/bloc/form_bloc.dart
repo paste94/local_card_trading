@@ -13,7 +13,7 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
   FormBloc(this._authenticationRepository)
       : super(
           FormsValidate(
-            email: "example@gmail.com",
+            email: "",
             password: "",
             repeatPassword: "",
             isEmailValid: true,
@@ -58,10 +58,8 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
     return displayName!.isNotEmpty;
   }
 
-  bool _isBirthDateValid(DateTime birthDate) {
-    var valid = (DateTime.now().difference(birthDate).inDays ~/ 365) > 18;
-    print('BIRTH VALIDITY: $valid');
-    return valid;
+  bool _isBirthDateValid(DateTime? birthDate) {
+    return birthDate == null ? false : (DateTime.now().difference(birthDate).inDays ~/ 365) > 18;
   }
 
   _onEmailChanged(EmailChanged event, Emitter<FormsValidate> emit) {

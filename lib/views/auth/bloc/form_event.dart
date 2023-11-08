@@ -6,7 +6,7 @@ abstract class FormEvent extends Equatable {
   const FormEvent();
 
   @override
-  List<Object> get props => [];
+  List<Object?> get props => [];
 }
 
 class EmailChanged extends FormEvent {
@@ -42,11 +42,11 @@ class NameChanged extends FormEvent {
 }
 
 class BirthDateChanged extends FormEvent {
-  final DateTime birthDate;
+  final DateTime? birthDate;
   const BirthDateChanged(this.birthDate);
 
   @override
-  List<Object> get props => [birthDate];
+  List<Object?> get props => [birthDate];
 }
 
 class FormSubmitted extends FormEvent {

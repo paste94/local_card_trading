@@ -3,7 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:local_card_trading/constants/routes.dart';
 import 'package:local_card_trading/services/auth/auth_service.dart';
 import 'package:local_card_trading/services/auth/auth_user.dart';
-import 'package:local_card_trading/utils/widgets/dialogs.dart';
+import 'package:local_card_trading/utils/dialogs.dart';
 import 'package:local_card_trading/utils/settings/list_item.dart';
 import 'package:settings_ui/settings_ui.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
