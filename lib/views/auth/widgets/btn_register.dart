@@ -18,12 +18,9 @@ class BtnGoTo extends StatelessWidget {
       width: size.width * REL_TXT_FLD_WIDTH,
       child: OutlinedButton(
         onPressed: () {
-          context.read<FormBloc>().add(const PasswordChanged(''));
-          context.read<FormBloc>().add(const EmailChanged(''));
-          context.read<FormBloc>().add(const RepeatPasswordChanged(''));
-          context.read<FormBloc>().add(const NameChanged(''));
-          context.read<FormBloc>().add(const BirthDateChanged(null));
-          Navigator.of(context).pushNamedAndRemoveUntil(route, (route) => false);
+          context.read<FormBloc>().add(const ResetBlocState());
+          Navigator.of(context)
+              .pushNamedAndRemoveUntil(route, (route) => false);
         },
         child: Text(text ?? ''),
       ),

@@ -34,6 +34,7 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
     on<BirthDateChanged>(_onBirthDateChanged);
     on<FormSubmitted>(_onFormSubmitted);
     on<FormSucceeded>(_onFormSucceeded);
+    on<ResetBlocState>(_onResetBlocState);
   }
   final RegExp _emailRegExp = RegExp(
     r'^[a-zA-Z0-9.!#$%&’*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$',
@@ -42,24 +43,26 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
     r'^.*(?=.{8,})(?=.*[a-zA-Z])(?=.*\d)(?=.*[!#$%&? "]).*$',
   );
 
-  bool _isEmailValid(String email) {
-    return _emailRegExp.hasMatch(email);
+  bool _isEmailValid(String? email) {
+    return email == null ? true : _emailRegExp.hasMatch(email);
   }
 
-  bool _isPasswordValid(String password) {
-    return _passwordRegExp.hasMatch(password);
+  bool _isPasswordValid(String? password) {
+    return password == null ? true : _passwordRegExp.hasMatch(password);
   }
 
-  bool _isRepeatPasswordValid(String password, String repeatPassword){
-    return password == repeatPassword;
+  bool _isRepeatPasswordValid(String? password, String? repeatPassword) {
+    return (password ?? '') == (repeatPassword ?? '');
   }
 
   bool _isNameValid(String? displayName) {
-    return displayName!.isNotEmpty;
+    return displayName == null ? true : displayName.isNotEmpty;
   }
 
   bool _isBirthDateValid(DateTime? birthDate) {
-    return birthDate == null ? false : (DateTime.now().difference(birthDate).inDays ~/ 365) > 18;
+    return birthDate == null
+        ? true
+        : (DateTime.now().difference(birthDate).inDays ~/ 365) > 18;
   }
 
   _onEmailChanged(EmailChanged event, Emitter<FormsValidate> emit) {
@@ -75,21 +78,24 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
 
   _onPasswordChanged(PasswordChanged event, Emitter<FormsValidate> emit) {
     emit(state.copyWith(
-      isFormSuccessful: false,
-      isFormValidateFailed: false,
-      errorMessage: "",
-      password: event.password,
-      isPasswordValid: _isPasswordValid(event.password),
-    ));
+        isFormSuccessful: false,
+        isFormValidateFailed: false,
+        errorMessage: "",
+        password: event.password,
+        isPasswordValid: _isPasswordValid(event.password),
+        isRepeatPasswordValid:
+            _isRepeatPasswordValid(event.password, state.repeatPassword)));
   }
 
-  _onRepeatPasswordChanged(RepeatPasswordChanged event, Emitter<FormsValidate> emit) {
+  _onRepeatPasswordChanged(
+      RepeatPasswordChanged event, Emitter<FormsValidate> emit) {
     emit(state.copyWith(
       isFormSuccessful: false,
       isFormValidateFailed: false,
       errorMessage: "",
       repeatPassword: event.repeatPassword,
-      isRepeatPasswordValid: _isRepeatPasswordValid(state.password, event.repeatPassword),
+      isRepeatPasswordValid:
+          _isRepeatPasswordValid(state.password, event.repeatPassword),
     ));
   }
 
@@ -100,6 +106,13 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
       errorMessage: "",
       displayName: event.displayName,
       isNameValid: _isNameValid(event.displayName),
+    ));
+  }
+
+  _onErrorMessageChanged(
+      ErrorMessageChanged event, Emitter<FormsValidate> emit) {
+    emit(state.copyWith(
+      errorMessage: event.errorMessage,
     ));
   }
 
@@ -132,13 +145,13 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
   _updateUIAndSignUp(
       FormSubmitted event, Emitter<FormsValidate> emit, UserModel user) async {
     emit(state.copyWith(
-        errorMessage: "",
-        isFormValid:  _isPasswordValid(state.password) &&
-                      _isRepeatPasswordValid(state.password, state.repeatPassword) &&
-                      _isEmailValid(state.email) &&
-                      _isBirthDateValid(state.birthDate) &&
-                      _isNameValid(state.displayName),
-        isLoading: true,
+      errorMessage: "",
+      isFormValid: _isPasswordValid(state.password) &&
+          _isRepeatPasswordValid(state.password, state.repeatPassword) &&
+          _isEmailValid(state.email) &&
+          _isBirthDateValid(state.birthDate) &&
+          _isNameValid(state.displayName),
+      isLoading: true,
     ));
     if (state.isFormValid) {
       try {
@@ -199,5 +212,23 @@ class FormBloc extends Bloc<FormEvent, FormsValidate> {
 
   _onFormSucceeded(FormSucceeded event, Emitter<FormsValidate> emit) {
     emit(state.copyWith(isFormSuccessful: true));
+  }
+
+  _onResetBlocState(ResetBlocState event, Emitter<FormsValidate> emit) {
+    emit(state.copyWith(
+      email: "",
+      password: "",
+      repeatPassword: "",
+      errorMessage: "",
+      isEmailValid: true,
+      isPasswordValid: true,
+      isRepeatPasswordValid: true,
+      isFormValid: false,
+      isLoading: false,
+      isNameValid: true,
+      birthDate: DateTime.now(),
+      isBirthDateValid: true,
+      isFormValidateFailed: false,
+    ));
   }
 }

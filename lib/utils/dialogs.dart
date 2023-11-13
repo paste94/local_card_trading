@@ -3,10 +3,11 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-Future<Object?> showErrorDialog(
-  BuildContext context,
-  String text,
-) =>
+Future<Object?> showErrorDialog({
+  required BuildContext context,
+  required String text,
+  Function? callback,
+}) =>
     showDialog(
       context: context,
       builder: ((context) => AlertDialog(
@@ -14,7 +15,12 @@ Future<Object?> showErrorDialog(
             content: Text(text),
             actions: [
               TextButton(
-                onPressed: Navigator.of(context).pop,
+                onPressed: () {
+                  if (callback != null) {
+                    callback();
+                  }
+                  Navigator.of(context).pop;
+                },
                 child: Text(AppLocalizations.of(context)?.ok ?? ''),
               )
             ],

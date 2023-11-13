@@ -1,48 +1,40 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:equatable/equatable.dart';
 
-class UserModel {
-  String? uid;
-  bool? isVerified;
+/// {@template user}
+/// User model
+///
+/// [User.empty] represents an unauthenticated user.
+/// {@endtemplate}
+class UserModel extends Equatable {
+  /// {@macro user}
+  const UserModel({
+    required this.uid,
+    this.email,
+    this.name,
+    this.photo,
+  });
+
+  /// The current user's email address.
   final String? email;
-  String? password;
-  final String? displayName;
-  DateTime? birthDate;
-  UserModel(
-      {this.uid,
-      this.email,
-      this.password,
-      this.displayName,
-      this.birthDate,
-      this.isVerified});
 
-  Map<String, dynamic> toMap() {
-    return {
-      'email': email,
-      'displayName': displayName,
-      'birthDate': birthDate,
-    };
-  }
+  /// The current user's id.
+  final String uid;
 
-  UserModel.fromDocumentSnapshot(DocumentSnapshot<Map<String, dynamic>> doc)
-      : uid = doc.id,
-        email = doc.data()!["email"],
-        displayName = doc.data()!["displayName"],
-        birthDate = doc.data()!["birthDate"];
+  /// The current user's name (display name).
+  final String? name;
 
-  UserModel copyWith({
-    bool? isVerified,
-    String? uid,
-    String? email,
-    String? password,
-    String? displayName,
-    DateTime? birthDate,
-  }) {
-    return UserModel(
-        uid: uid ?? this.uid,
-        email: email ?? this.email,
-        password: password ?? this.password,
-        displayName: displayName ?? this.displayName,
-        birthDate: birthDate ?? this.birthDate,
-        isVerified: isVerified ?? this.isVerified);
-  }
+  /// Url for the current user's photo.
+  final String? photo;
+
+  /// Empty user which represents an unauthenticated user.
+  static const empty = UserModel(uid: '');
+
+  /// Convenience getter to determine whether the current user is empty.
+  bool get isEmpty => this == UserModel.empty;
+
+  /// Convenience getter to determine whether the current user is not empty.
+  bool get isNotEmpty => this != UserModel.empty;
+
+  @override
+  List<Object?> get props => [email, uid, name, photo];
 }

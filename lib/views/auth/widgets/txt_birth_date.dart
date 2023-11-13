@@ -12,6 +12,12 @@ DateTime? _selectedDate;
 
 class _TxtBirthDateState extends State<TxtBirthDate> {
   @override
+  void dispose() {
+    _birthDateController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     String dateFormat =
@@ -32,22 +38,12 @@ class _TxtBirthDateState extends State<TxtBirthDate> {
                 lastDate: DateTime.now(),
               ).then((selectedDate) {
                 print('CHANGED');
-                if(selectedDate != null){
-                  _birthDateController.text = DateFormat(dateFormat).format(selectedDate);
+                if (selectedDate != null) {
+                  _birthDateController.text =
+                      DateFormat(dateFormat).format(selectedDate);
                   context.read<FormBloc>().add(BirthDateChanged(selectedDate));
                 }
               });
-              // _selectedDate = await showDatePicker(
-              //   context: context,
-              //   initialDate: DateTime.now(),
-              //   firstDate: DateTime(1900),
-              //   lastDate: DateTime.now(),
-              // );
-              // if (_selectedDate != null) {
-              //   _birthDateController.text =
-              //       DateFormat(dateFormat).format(_selectedDate!);
-              //   context.read<FormBloc>().add(BirthDateChanged(_selectedDate!));
-              // }
             },
             keyboardType: TextInputType.name,
             decoration: InputDecoration(

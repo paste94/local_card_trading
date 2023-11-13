@@ -3,7 +3,31 @@ part of 'auth_widgets.dart';
 final formBlocListener = BlocListener<FormBloc, FormsValidate>(
   listener: (context, state) {
     if (state.errorMessage.isNotEmpty) {
-      showErrorDialog(context, state.errorMessage);
+      showErrorDialog(
+          context: context,
+          text: state.errorMessage,
+          callback: () {
+            context.read<FormBloc>().add(const ErrorMessageChanged());
+          });
+    } else if (state.isFormValid && !state.isLoading) {
+      context.read<AuthenticationBloc>().add(AuthenticationStarted());
+      context.read<FormBloc>().add(const FormSucceeded());
+    } else if (state.isFormValidateFailed) {
+      ScaffoldMessenger.of(context)
+          .showSnackBar(const SnackBar(content: Text('Form not valid')));
+    }
+  },
+);
+
+final registerBlocListener = BlocListener<FormBloc, FormsValidate>(
+  listener: (context, state) {
+    if (state.errorMessage.isNotEmpty) {
+      showErrorDialog(
+          context: context,
+          text: state.errorMessage,
+          callback: () {
+            context.read<FormBloc>().add(const ErrorMessageChanged());
+          });
     } else if (state.isFormValid && !state.isLoading) {
       context.read<AuthenticationBloc>().add(AuthenticationStarted());
       context.read<FormBloc>().add(const FormSucceeded());

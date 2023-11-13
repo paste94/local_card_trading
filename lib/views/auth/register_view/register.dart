@@ -19,7 +19,7 @@ class RegisterView extends StatelessWidget {
           appBar: AppBar(
             title: Text(AppLocalizations.of(context)?.register ?? ''),
           ),
-          body: const Center(
+          body: const SingleChildScrollView(
             child: Column(
               children: [
                 TxtEmail(),
