@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/pages/login/login.dart';
-// import 'package:local_card_trading/sign_up/sign_up.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:local_card_trading/pages/register/register.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LoginForm extends StatelessWidget {
   const LoginForm({super.key});
@@ -18,7 +18,8 @@ class LoginForm extends StatelessWidget {
             ..hideCurrentSnackBar()
             ..showSnackBar(
               SnackBar(
-                content: Text(state.errorMessage ?? 'Authentication Failure'),
+                content: Text(state.errorMessage ??
+                    AppLocalizations.of(context)!.auth_error),
               ),
             ).closed.then((value) => context.read<LoginCubit>().resetError());
         }
@@ -62,10 +63,11 @@ class _EmailInput extends StatelessWidget {
           onChanged: (email) => context.read<LoginCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
+            labelText: AppLocalizations.of(context)?.enter_email,
             helperText: '',
-            errorText:
-                state.email.displayError != null ? 'invalid email' : null,
+            errorText: state.email.displayError != null
+                ? AppLocalizations.of(context)?.invalid_email
+                : null,
           ),
         );
       },
@@ -85,10 +87,10 @@ class _PasswordInput extends StatelessWidget {
               context.read<LoginCubit>().passwordChanged(password),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'password',
-            helperText: '',
-            errorText:
-                state.password.displayError != null ? 'invalid password' : null,
+            labelText: AppLocalizations.of(context)?.password,
+            errorText: state.password.displayError != null
+                ? AppLocalizations.of(context)?.invalid_password
+                : null,
           ),
         );
       },
@@ -114,7 +116,7 @@ class _LoginButton extends StatelessWidget {
                 onPressed: state.isValid
                     ? () => context.read<LoginCubit>().logInWithCredentials()
                     : null,
-                child: const Text('LOGIN'),
+                child: Text(AppLocalizations.of(context)?.login ?? ''),
               );
       },
     );
@@ -127,9 +129,9 @@ class _GoogleLoginButton extends StatelessWidget {
     final theme = Theme.of(context);
     return ElevatedButton.icon(
       key: const Key('loginForm_googleLogin_raisedButton'),
-      label: const Text(
-        'SIGN IN WITH GOOGLE',
-        style: TextStyle(color: Colors.white),
+      label: Text(
+        AppLocalizations.of(context)?.login_with_google ?? '',
+        style: const TextStyle(color: Colors.white),
       ),
       style: ElevatedButton.styleFrom(
         shape: RoundedRectangleBorder(
@@ -151,7 +153,7 @@ class _SignUpButton extends StatelessWidget {
       key: const Key('loginForm_createAccount_flatButton'),
       onPressed: () => Navigator.of(context).push<void>(RegisterPage.route()),
       child: Text(
-        'CREATE ACCOUNT',
+        AppLocalizations.of(context)?.click_to_register ?? '',
         style: TextStyle(color: theme.primaryColor),
       ),
     );

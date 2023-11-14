@@ -40,6 +40,18 @@ class LoginCubit extends Cubit<LoginState> {
     );
   }
 
+  void resetCubit() {
+    emit(
+      state.copyWith(
+        email: const Email.pure(),
+        password: const Password.pure(),
+        status: FormzSubmissionStatus.initial,
+        isValid: false,
+        errorMessage: null,
+      ),
+    );
+  }
+
   Future<void> logInWithCredentials() async {
     if (!state.isValid) return;
 

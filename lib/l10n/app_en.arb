@@ -25,6 +25,9 @@
   "form_not_valid":"Form not valid",
 
   "login":"Login",
+  "login_with_google":"Login with Google",
+  "auth_error":"Authentication Error, please try again",
+  "registration_error":"Registration Error, please try again",
   "click_to_register": "Click here to register!",
 
   "register":"Register",

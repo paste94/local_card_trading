@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/pages/register/register.dart';
 import 'package:formz/formz.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class RegisterForm extends StatelessWidget {
   const RegisterForm({super.key});
@@ -16,8 +17,15 @@ class RegisterForm extends StatelessWidget {
           ScaffoldMessenger.of(context)
             ..hideCurrentSnackBar()
             ..showSnackBar(
-              SnackBar(content: Text(state.errorMessage ?? 'Sign Up Failure')),
-            );
+              SnackBar(
+                content: Text(
+                  state.errorMessage ??
+                      AppLocalizations.of(context)!.registration_error,
+                ),
+              ),
+            )
+                .closed
+                .then((value) => context.read<RegisterCubit>().resetError());
         }
       },
       child: Align(
@@ -51,10 +59,10 @@ class _EmailInput extends StatelessWidget {
               context.read<RegisterCubit>().emailChanged(email),
           keyboardType: TextInputType.emailAddress,
           decoration: InputDecoration(
-            labelText: 'email',
-            helperText: '',
-            errorText:
-                state.email.displayError != null ? 'invalid email' : null,
+            labelText: AppLocalizations.of(context)!.enter_email,
+            errorText: state.email.displayError != null
+                ? AppLocalizations.of(context)!.invalid_email
+                : null,
           ),
         );
       },
@@ -74,10 +82,10 @@ class _PasswordInput extends StatelessWidget {
               context.read<RegisterCubit>().passwordChanged(password),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'password',
-            helperText: '',
-            errorText:
-                state.password.displayError != null ? 'invalid password' : null,
+            labelText: AppLocalizations.of(context)!.password,
+            errorText: state.password.displayError != null
+                ? AppLocalizations.of(context)!.invalid_password
+                : null,
           ),
         );
       },
@@ -100,10 +108,9 @@ class _ConfirmPasswordInput extends StatelessWidget {
               .confirmedPasswordChanged(confirmPassword),
           obscureText: true,
           decoration: InputDecoration(
-            labelText: 'confirm password',
-            helperText: '',
+            labelText: AppLocalizations.of(context)!.repeat_password,
             errorText: state.confirmedPassword.displayError != null
-                ? 'passwords do not match'
+                ? AppLocalizations.of(context)!.invalid_repeat_password
                 : null,
           ),
         );
@@ -130,7 +137,7 @@ class _RegisterButton extends StatelessWidget {
                 onPressed: state.isValid
                     ? () => context.read<RegisterCubit>().signUpFormSubmitted()
                     : null,
-                child: const Text('SIGN UP'),
+                child: Text(AppLocalizations.of(context)!.register),
               );
       },
     );

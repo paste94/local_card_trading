@@ -25,6 +25,10 @@
   "form_not_valid":"Form non valido",
 
   "login":"Accedi",
+  "login_with_google":"Accedi con Google",
+  "auth_error":"Errore di autenticazione, riprovare",
+  "registration_error":"Errore di registrazione, riprovare",
+
   "click_to_register": "Tocca qui per registrarti!",
 
   "register":"Registrati",
