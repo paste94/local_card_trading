@@ -25,6 +25,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
         items: bottomNavItems,
         currentIndex: _selectedPageIndex,
         selectedItemColor: Colors.amber[800],
+        unselectedItemColor: Colors.black,
         onTap: (index) => context.read<HomeBloc>().add(
               HomePageSelected(
                 SelectedPage.values[index],

@@ -21,7 +21,8 @@ class LoginForm extends StatelessWidget {
                 content: Text(state.errorMessage ??
                     AppLocalizations.of(context)!.auth_error),
               ),
-            ).closed.then((value) => context.read<LoginCubit>().resetError());
+            );
+          context.read<LoginCubit>().resetError();
         }
       },
       child: Align(
