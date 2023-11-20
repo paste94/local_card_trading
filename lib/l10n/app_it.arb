@@ -34,13 +34,14 @@
   "register":"Registrati",
   "click_to_log_in":"Tocca qui per accedere!",
 
-  "logout":"Disconnetti Utente",
+  "logout":"Esci",
   "account":"Profilo",
 
   "error_occurred":"Si è verificato un errore",
   "ok":"Ok",
-  "confirm":"Conferma",
-  "dismiss":"Cancella",
+  "confirm":"Confermare?",
+  "cancel":"Cancella",
+  "confirm_dialog":"Sicuro di volere uscire dall'app?",
 
   "logoud_dialog_title":"Conferma Disconnessione",
   "logoud_dialog_text":"Sicuro di volerti disconnettere?",

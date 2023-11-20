@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/app.dart';
 import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
-import 'package:local_card_trading/pages/home/view/constants.dart';
 import 'package:local_card_trading/pages/home/view/home_body.dart';
 import 'package:local_card_trading/pages/home/view/home_bottom_nav_bar.dart';
 

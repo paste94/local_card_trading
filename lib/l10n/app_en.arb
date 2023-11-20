@@ -38,8 +38,9 @@
 
   "error_occurred":"An error occurred",
   "ok":"Ok",
-  "confirm":"Confirm",
-  "dismiss":"Dismiss",
+  "confirm":"Confirm?",
+  "cancel":"Cancel",
+  "confirm_dialog":"Are you sure you want to log out?",
 
   "logoud_dialog_title":"Confirm Logout",
   "logoud_dialog_text":"Are you really sure you want to log out?",
