@@ -27,11 +27,12 @@ class SettingsLogout extends StatelessWidget {
                 onPressed: () => Navigator.of(context).pop(),
                 child: Text(AppLocalizations.of(context)!.cancel)),
             TextButton(
-                onPressed: () {
-                  context.read<AppBloc>().add(const AppLogoutRequested());
-                  Navigator.of(context).pop();
-                },
-                child: Text(AppLocalizations.of(context)!.logout))
+              onPressed: () {
+                context.read<AppBloc>().add(const AppLogoutRequested());
+                Navigator.of(context).pop();
+              },
+              child: Text(AppLocalizations.of(context)!.logout),
+            ),
           ],
         );
       },

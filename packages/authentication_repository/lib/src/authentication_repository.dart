@@ -145,6 +145,25 @@ class LogInWithGoogleFailure implements Exception {
   final String message;
 }
 
+class NetworkFailure implements Exception {
+  const NetworkFailure([
+    this.message = 'An unknown exception occurred.',
+  ]);
+
+  factory NetworkFailure.fromCode(String code) {
+    switch (code) {
+      case 'network-request-failed':
+        return const NetworkFailure(
+          'No internet connection, please connect your device to the internet and retry',
+        );
+      default:
+        return const NetworkFailure();
+    }
+  }
+
+  final String message;
+}
+
 /// Thrown during the logout process if a failure occurs.
 class LogOutFailure implements Exception {}
 
@@ -272,6 +291,18 @@ class AuthenticationRepository {
     } catch (_) {
       throw LogOutFailure();
     }
+  }
+
+  Future<void> updateUserName(String newName) async {
+    print('STARTED UPDATE NAME');
+    try {
+      await _firebaseAuth.currentUser?.updateDisplayName(newName);
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw NetworkFailure.fromCode(e.code);
+    } catch (_) {
+      throw const NetworkFailure();
+    }
+    print('FINISHED UPDATE NAME');
   }
 }
 

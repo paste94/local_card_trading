@@ -27,7 +27,29 @@ class HomePage extends StatelessWidget {
             ),
           ],
         ),
-        body: const HomeBody(),
+        body: BlocListener<AppBloc, AppState>(
+          listener: (context, state) {
+            print('LISTEN');
+            if (state.errorMsg != '') {
+              context.read<AppBloc>().add(const AppUserResetError());
+
+              showDialog(
+                context: context,
+                builder: (context) => AlertDialog(
+                  title: const Text('Error'),
+                  content: Text(state.errorMsg!),
+                  actions: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: const Text('Ok'),
+                    )
+                  ],
+                ),
+              );
+            }
+          },
+          child: const HomeBody(),
+        ),
         bottomNavigationBar: const HomeBottomNavigationBar(),
       ),
     );

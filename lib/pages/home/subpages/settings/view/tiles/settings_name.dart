@@ -60,7 +60,11 @@ class _SettingsNameState extends State<SettingsName> {
                   child: Text('Cancel'),
                 ),
                 TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    context
+                        .read<AppBloc>()
+                        .add(AppUserUpdateName(_nameController.text));
+                  },
                   child: Text('Confirm'),
                 ),
               ],
