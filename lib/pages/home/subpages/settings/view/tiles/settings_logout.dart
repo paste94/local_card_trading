@@ -20,7 +20,7 @@ class SettingsLogout extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text(AppLocalizations.of(context)!.confirm),
+          title: Text(AppLocalizations.of(context)!.confirm_ans),
           content: Text(AppLocalizations.of(context)!.confirm_dialog),
           actions: [
             TextButton(

@@ -15,8 +15,8 @@ class SettingsEmail extends StatelessWidget {
       leading: const Icon(Icons.email),
       title: Text(AppLocalizations.of(context)!.enter_email),
       subtitle: Text(user.email ?? ''),
-      trailing: const Icon(Icons.edit),
-      onTap: () {},
+      // trailing: const Icon(Icons.edit),
+      // onTap: () {},
     );
   }
 }

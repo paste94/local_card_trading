@@ -201,7 +201,7 @@ class AuthenticationRepository {
   ///
   /// Emits [User.empty] if the user is not authenticated.
   Stream<User> get user {
-    return _firebaseAuth.authStateChanges().map((firebaseUser) {
+    return _firebaseAuth.userChanges().map((firebaseUser) {
       final user = firebaseUser == null ? User.empty : firebaseUser.toUser;
       _cache.write(key: userCacheKey, value: user);
       return user;
@@ -294,7 +294,6 @@ class AuthenticationRepository {
   }
 
   Future<void> updateUserName(String newName) async {
-    print('STARTED UPDATE NAME');
     try {
       await _firebaseAuth.currentUser?.updateDisplayName(newName);
     } on firebase_auth.FirebaseAuthException catch (e) {
@@ -302,7 +301,6 @@ class AuthenticationRepository {
     } catch (_) {
       throw const NetworkFailure();
     }
-    print('FINISHED UPDATE NAME');
   }
 }
 

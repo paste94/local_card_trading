@@ -38,12 +38,18 @@
 
   "error_occurred":"An error occurred",
   "ok":"Ok",
-  "confirm":"Confirm?",
+  "save":"Save",
+  "confirm_ans":"Confirm?",
   "cancel":"Cancel",
   "confirm_dialog":"Are you sure you want to log out?",
 
   "logoud_dialog_title":"Confirm Logout",
   "logoud_dialog_text":"Are you really sure you want to log out?",
 
-  "user_settings":"User Settings"
+  "user_settings":"User Settings",
+  "insert_your_name":"Insert your name",
+
+  "insert_current_password":"Insert current password",
+  "insert_new_password":"Insert new password",
+  "repeat_new_password":"Repeat new password"
 }

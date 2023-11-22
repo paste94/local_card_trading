@@ -40,10 +40,13 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     unawaited(_authenticationRepository.logOut());
   }
 
-  void _onAppUserUpdateName(
-      AppUserUpdateName event, Emitter<AppState> emit) async {
+  Future<void> _onAppUserUpdateName(
+    AppUserUpdateName event,
+    Emitter<AppState> emit,
+  ) async {
     try {
       await _authenticationRepository.updateUserName(event.newName);
+      event.onSuccess();
     } on NetworkFailure catch (e) {
       emit(
         state.copyWith(

@@ -24,6 +24,8 @@ class _SettingsNameState extends State<SettingsName> {
       trailing: const Icon(Icons.edit),
       onTap: () => showModalBottomSheet(
         context: context,
+        isScrollControlled: true,
+        showDragHandle: true,
         builder: _showModalEditName,
       ),
     );
@@ -33,39 +35,38 @@ class _SettingsNameState extends State<SettingsName> {
     final User user = context.select((AppBloc bloc) => bloc.state.user);
 
     _nameController.text = user.name ?? '';
-    return SizedBox(
-      width: MediaQuery.of(context).size.width,
+    return FractionallySizedBox(
+      heightFactor: 0.6,
       child: Column(
         children: [
-          const Icon(
-            Icons.horizontal_rule_rounded,
-            size: 40,
-            color: Colors.grey,
-          ),
-          Text('Insert your name'),
+          Text(AppLocalizations.of(context)!.insert_your_name),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: TextField(
               controller: _nameController,
+              decoration: InputDecoration(
+                labelText: AppLocalizations.of(context)?.name,
+              ),
             ),
           ),
           const Divider(color: Colors.transparent),
           SizedBox(
-            width: MediaQuery.of(context).size.width * 0.8,
+            width: MediaQuery.of(context).size.width * 0.9,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 TextButton(
                   onPressed: () => Navigator.of(context).pop(),
-                  child: Text('Cancel'),
+                  child: Text(AppLocalizations.of(context)!.cancel),
                 ),
                 TextButton(
                   onPressed: () {
-                    context
-                        .read<AppBloc>()
-                        .add(AppUserUpdateName(_nameController.text));
+                    context.read<AppBloc>().add(AppUserUpdateName(
+                          _nameController.text,
+                          onSuccess: () => Navigator.of(context).pop(),
+                        ));
                   },
-                  child: Text('Confirm'),
+                  child: Text(AppLocalizations.of(context)!.save),
                 ),
               ],
             ),
