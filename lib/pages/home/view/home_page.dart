@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/app.dart';
 import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
+import 'package:local_card_trading/pages/home/subpages/settings/cubit/settings_cubit.dart';
 import 'package:local_card_trading/pages/home/view/home_body.dart';
 import 'package:local_card_trading/pages/home/view/home_bottom_nav_bar.dart';
 
@@ -12,8 +13,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) => HomeBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => HomeBloc(),
+        ),
+      ],
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
@@ -29,7 +34,6 @@ class HomePage extends StatelessWidget {
         ),
         body: BlocListener<AppBloc, AppState>(
           listener: (context, state) {
-            print('LISTEN');
             if (state.errorMsg != '') {
               context.read<AppBloc>().add(const AppUserResetError());
 
@@ -37,7 +41,7 @@ class HomePage extends StatelessWidget {
                 context: context,
                 builder: (context) => AlertDialog(
                   title: const Text('Error'),
-                  content: Text(state.errorMsg!),
+                  content: Text(state.errorMsg),
                   actions: [
                     TextButton(
                       onPressed: () => Navigator.of(context).pop(),

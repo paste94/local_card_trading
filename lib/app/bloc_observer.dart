@@ -8,18 +8,21 @@ class AppBlocObserver extends BlocObserver {
   void onEvent(Bloc<dynamic, dynamic> bloc, Object? event) {
     super.onEvent(bloc, event);
     print(event);
+    print('YYYYYOOOOOO');
   }
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
     print(error);
     super.onError(bloc, error, stackTrace);
+    print('YYYYYOOOOOO');
   }
 
   @override
   void onChange(BlocBase<dynamic> bloc, Change<dynamic> change) {
     super.onChange(bloc, change);
     print(change);
+    print('YYYYYOOOOOO');
   }
 
   @override
@@ -29,5 +32,6 @@ class AppBlocObserver extends BlocObserver {
   ) {
     super.onTransition(bloc, transition);
     print(transition);
+    print('YYYYYOOOOOO');
   }
 }
