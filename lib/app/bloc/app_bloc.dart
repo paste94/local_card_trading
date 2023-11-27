@@ -18,7 +18,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ) {
     on<_AppUserChanged>(_onUserChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
-    on<AppUserUpdateName>(_onAppUserUpdateName);
+    // on<AppUserUpdateName>(_onAppUserUpdateName);
     on<AppUserError>(_onAppUserError);
     on<AppUserResetError>(_onAppUserResetError);
 
@@ -40,21 +40,21 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     unawaited(_authenticationRepository.logOut());
   }
 
-  Future<void> _onAppUserUpdateName(
-    AppUserUpdateName event,
-    Emitter<AppState> emit,
-  ) async {
-    try {
-      await _authenticationRepository.updateUserName(event.newName);
-      event.onSuccess();
-    } on NetworkFailure catch (e) {
-      emit(
-        state.copyWith(
-          errorMsg: e.message,
-        ),
-      );
-    }
-  }
+  // Future<void> _onAppUserUpdateName(
+  //   AppUserUpdateName event,
+  //   Emitter<AppState> emit,
+  // ) async {
+  //   try {
+  //     await _authenticationRepository.updateUserName(event.newName);
+  //     event.onSuccess();
+  //   } on UpdateFailure catch (e) {
+  //     emit(
+  //       state.copyWith(
+  //         errorMsg: e.message,
+  //       ),
+  //     );
+  //   }
+  // }
 
   void _onAppUserError(AppUserError event, Emitter<AppState> emit) {
     emit(

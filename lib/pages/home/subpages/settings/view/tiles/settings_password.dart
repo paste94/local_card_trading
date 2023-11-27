@@ -33,15 +33,17 @@ class SettingsPassword extends StatelessWidget {
     final User user = context.select((AppBloc bloc) => bloc.state.user);
 
     return BlocProvider(
-      create: (context) => SettingsCubit(),
+      create: (context) => SettingsCubit(
+        context.read<AuthenticationRepository>(),
+      ),
       child: FractionallySizedBox(
         child: Column(
           children: [
-            Text(AppLocalizations.of(context)!.insert_current_password),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.9,
-              child: const _CurrentPasswordInput(),
-            ),
+            // Text(AppLocalizations.of(context)!.insert_current_password),
+            // SizedBox(
+            //   width: MediaQuery.of(context).size.width * 0.9,
+            //   child: const _CurrentPasswordInput(),
+            // ),
             Text(AppLocalizations.of(context)!.insert_new_password),
             SizedBox(
               width: MediaQuery.of(context).size.width * 0.9,

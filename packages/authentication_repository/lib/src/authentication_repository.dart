@@ -42,6 +42,10 @@ class SignUpWithEmailAndPasswordFailure implements Exception {
         return const SignUpWithEmailAndPasswordFailure(
           'Please enter a stronger password.',
         );
+      case 'network-request-failed':
+        return const SignUpWithEmailAndPasswordFailure(
+          'Unale to connect to the internet, please check your connection and retry',
+        );
       default:
         return const SignUpWithEmailAndPasswordFailure();
     }
@@ -80,6 +84,10 @@ class LogInWithEmailAndPasswordFailure implements Exception {
       case 'wrong-password':
         return const LogInWithEmailAndPasswordFailure(
           'Incorrect password, please try again.',
+        );
+      case 'network-request-failed':
+        return const LogInWithEmailAndPasswordFailure(
+          'Unale to connect to the internet, please check your connection and retry',
         );
       default:
         return const LogInWithEmailAndPasswordFailure();
@@ -136,6 +144,10 @@ class LogInWithGoogleFailure implements Exception {
         return const LogInWithGoogleFailure(
           'The credential verification ID received is invalid.',
         );
+      case 'network-request-failed':
+        return const LogInWithGoogleFailure(
+          'Unale to connect to the internet, please check your connection and retry',
+        );
       default:
         return const LogInWithGoogleFailure();
     }
@@ -145,19 +157,29 @@ class LogInWithGoogleFailure implements Exception {
   final String message;
 }
 
-class NetworkFailure implements Exception {
-  const NetworkFailure([
+class UpdateFailure implements Exception {
+  final code;
+
+  const UpdateFailure([
     this.message = 'An unknown exception occurred.',
+    this.code,
   ]);
 
-  factory NetworkFailure.fromCode(String code) {
+  factory UpdateFailure.fromCode(String code) {
     switch (code) {
-      case 'network-request-failed':
-        return const NetworkFailure(
-          'No internet connection, please connect your device to the internet and retry',
+      case 'requires-recent-login':
+        return UpdateFailure(
+          'Please reauthenticate',
+          code,
         );
+      case 'network-request-failed':
+        return UpdateFailure(
+          'No internet connection, please connect your device to the internet and retry',
+          code,
+        );
+
       default:
-        return const NetworkFailure();
+        return const UpdateFailure();
     }
   }
 
@@ -297,9 +319,19 @@ class AuthenticationRepository {
     try {
       await _firebaseAuth.currentUser?.updateDisplayName(newName);
     } on firebase_auth.FirebaseAuthException catch (e) {
-      throw NetworkFailure.fromCode(e.code);
+      throw UpdateFailure.fromCode(e.code);
     } catch (_) {
-      throw const NetworkFailure();
+      throw const UpdateFailure();
+    }
+  }
+
+  Future<void> updatePassword(String newPassword) async {
+    try {
+      await _firebaseAuth.currentUser?.updatePassword(newPassword);
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw UpdateFailure.fromCode(e.code);
+    } catch (_) {
+      throw const UpdateFailure();
     }
   }
 }

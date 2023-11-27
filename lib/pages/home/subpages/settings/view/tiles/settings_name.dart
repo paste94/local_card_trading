@@ -3,16 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/bloc/app_bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:local_card_trading/pages/home/subpages/settings/cubit/settings_cubit.dart';
 
-class SettingsName extends StatefulWidget {
+class SettingsName extends StatelessWidget {
   const SettingsName({super.key});
 
-  @override
-  State<SettingsName> createState() => _SettingsNameState();
-}
-
-class _SettingsNameState extends State<SettingsName> {
-  final _nameController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     final User user = context.select((AppBloc bloc) => bloc.state.user);
@@ -34,45 +29,57 @@ class _SettingsNameState extends State<SettingsName> {
   Widget _showModalEditName(BuildContext context) {
     final User user = context.select((AppBloc bloc) => bloc.state.user);
 
-    _nameController.text = user.name ?? '';
-    return FractionallySizedBox(
-      heightFactor: 0.6,
-      child: Column(
-        children: [
-          Text(AppLocalizations.of(context)!.insert_your_name),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: TextField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)?.name,
+    return BlocBuilder<SettingsCubit, SettingsState>(
+      buildWhen: (previous, current) => previous.name != current.name,
+      builder: (context, state) {
+        return FractionallySizedBox(
+          heightFactor: 0.6,
+          child: Column(
+            children: [
+              Text(AppLocalizations.of(context)!.insert_your_name),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: TextFormField(
+                  initialValue: state.name.value,
+                  onChanged: (name) =>
+                      context.read<SettingsCubit>().nameChanged(name),
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.name,
+                  ),
+                ),
               ),
-            ),
-          ),
-          const Divider(color: Colors.transparent),
-          SizedBox(
-            width: MediaQuery.of(context).size.width * 0.9,
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                TextButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  child: Text(AppLocalizations.of(context)!.cancel),
+              const Divider(color: Colors.transparent),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(AppLocalizations.of(context)!.cancel),
+                    ),
+                    TextButton(
+                      onPressed: () async {
+                        print('PRESSED');
+                        await context
+                            .read<SettingsCubit>()
+                            .changeNameFormSubmitted();
+                        print('FINISHED');
+                        Navigator.of(context).pop();
+                        // context.read<AppBloc>().add(AppUserUpdateName(
+                        //       _nameController.text,
+                        //       onSuccess: () => Navigator.of(context).pop(),
+                        //     ));
+                      },
+                      child: Text(AppLocalizations.of(context)!.save),
+                    ),
+                  ],
                 ),
-                TextButton(
-                  onPressed: () {
-                    context.read<AppBloc>().add(AppUserUpdateName(
-                          _nameController.text,
-                          onSuccess: () => Navigator.of(context).pop(),
-                        ));
-                  },
-                  child: Text(AppLocalizations.of(context)!.save),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
+        );
+      },
     );
   }
 }
