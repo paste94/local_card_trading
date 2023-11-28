@@ -15,7 +15,11 @@ class SettingsCubit extends Cubit<SettingsState> {
   final AuthenticationRepository _authenticationRepository;
 
   void nameChanged(String name) {
-    emit(state.copyWith(name: Name.dirty(name)));
+    emit(
+      state.copyWith(
+        name: Name.dirty(name),
+      ),
+    );
   }
 
   void currentPasswordChanged(String value) {
@@ -68,7 +72,7 @@ class SettingsCubit extends Cubit<SettingsState> {
     try {
       await _authenticationRepository.updateUserName(state.name.value);
       emit(state.copyWith(
-        status: FormzSubmissionStatus.initial,
+        status: FormzSubmissionStatus.success,
       ));
     } on UpdateFailure catch (e) {
       emit(
@@ -101,12 +105,14 @@ class SettingsCubit extends Cubit<SettingsState> {
 
   void resetCubit() {
     emit(state.copyWith(
+      // name: Name.dirty(name),
       currentPassword: const Password.pure(),
       newPassword: const Password.pure(),
       confirmNewPassword: const ConfirmedPassword.pure(),
       status: FormzSubmissionStatus.initial,
       isValid: false,
       isReauthRequired: false,
+      errorMsg: '',
     ));
   }
 

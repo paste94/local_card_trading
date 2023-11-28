@@ -23,6 +23,13 @@ final class SettingsState extends Equatable {
 
   @override
   List<Object> get props => [
+        name,
+        currentPassword,
+        newPassword,
+        confirmNewPassword,
+        status,
+        isValid,
+        isReauthRequired,
         errorMsg,
       ];
 
