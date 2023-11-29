@@ -98,6 +98,43 @@ class LogInWithEmailAndPasswordFailure implements Exception {
   final String message;
 }
 
+class UpdatePasswordFailure implements Exception {
+  /// {@macro log_in_with_email_and_password_failure}
+  const UpdatePasswordFailure([
+    this.message = 'An unknown exception occurred.',
+  ]);
+
+  /// Create an authentication message
+  /// from a firebase authentication exception code.
+  factory UpdatePasswordFailure.fromCode(String code) {
+    switch (code) {
+      case 'invalid-email':
+        return const UpdatePasswordFailure(
+          'Email is not valid or badly formatted.',
+        );
+      case 'user-disabled':
+        return const UpdatePasswordFailure(
+          'This user has been disabled. Please contact support for help.',
+        );
+      case 'user-not-found':
+        return const UpdatePasswordFailure(
+          'Email is not found, please create an account.',
+        );
+      case 'wrong-password':
+        return const UpdatePasswordFailure(
+          'Incorrect password, please try again.',
+        );
+      case 'network-request-failed':
+        return const UpdatePasswordFailure(
+          'Unale to connect to the internet, please check your connection and retry',
+        );
+      default:
+        return const UpdatePasswordFailure();
+    }
+  }
+  final String message;
+}
+
 /// {@template log_in_with_google_failure}
 /// Thrown during the sign in with google process if a failure occurs.
 /// https://pub.dev/documentation/firebase_auth/latest/firebase_auth/FirebaseAuth/signInWithCredential.html
@@ -157,29 +194,29 @@ class LogInWithGoogleFailure implements Exception {
   final String message;
 }
 
-class UpdateFailure implements Exception {
+class UpdateNameFailure implements Exception {
   final code;
 
-  const UpdateFailure([
+  const UpdateNameFailure([
     this.message = 'An unknown exception occurred.',
     this.code,
   ]);
 
-  factory UpdateFailure.fromCode(String code) {
+  factory UpdateNameFailure.fromCode(String code) {
     switch (code) {
       case 'requires-recent-login':
-        return UpdateFailure(
+        return UpdateNameFailure(
           'Please reauthenticate',
           code,
         );
       case 'network-request-failed':
-        return UpdateFailure(
+        return UpdateNameFailure(
           'No internet connection, please connect your device to the internet and retry',
           code,
         );
 
       default:
-        return const UpdateFailure();
+        return const UpdateNameFailure();
     }
   }
 
@@ -319,31 +356,43 @@ class AuthenticationRepository {
     try {
       await _firebaseAuth.currentUser?.updateDisplayName(newName);
     } on firebase_auth.FirebaseAuthException catch (e) {
-      throw UpdateFailure.fromCode(e.code);
+      throw UpdateNameFailure.fromCode(e.code);
     } catch (_) {
-      throw const UpdateFailure();
+      throw const UpdateNameFailure();
     }
   }
 
-  Future<void> updatePassword(String newPassword) async {
+  Future<void> updatePassword(
+    String currentPassword,
+    String newPassword,
+  ) async {
+    if (_firebaseAuth.currentUser == null ||
+        _firebaseAuth.currentUser!.email == null) {
+      throw UpdatePasswordFailure.fromCode('user-not-found');
+    }
     try {
+      final credential = firebase_auth.EmailAuthProvider.credential(
+        email: _firebaseAuth.currentUser!.email!,
+        password: currentPassword,
+      );
+      await _firebaseAuth.currentUser?.reauthenticateWithCredential(credential);
       await _firebaseAuth.currentUser?.updatePassword(newPassword);
     } on firebase_auth.FirebaseAuthException catch (e) {
-      throw UpdateFailure.fromCode(e.code);
+      throw UpdatePasswordFailure.fromCode(e.code);
     } catch (_) {
-      throw const UpdateFailure();
+      throw const UpdatePasswordFailure();
     }
   }
 }
 
 extension on firebase_auth.User {
-  /// Maps a [firebase_auth.User] into a [User].
   User get toUser {
     return User(
       id: uid,
       email: email,
       name: displayName,
       photo: photoURL,
+      loginMethods: providerData.map((profile) => profile.providerId).toList(),
     );
   }
 }

@@ -1,159 +1,139 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:local_card_trading/widgets/confirmed_password.dart';
+import 'package:local_card_trading/widgets/password.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/bloc/app_bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:local_card_trading/pages/home/subpages/settings/cubit/settings_cubit.dart';
 
-class SettingsPassword extends StatelessWidget {
+class SettingsPassword extends StatefulWidget {
   const SettingsPassword({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final SettingsCubit settingsCubit = context.read<SettingsCubit>();
+  State<SettingsPassword> createState() => _SettingsPasswordState();
+}
 
-    return BlocBuilder<SettingsCubit, SettingsState>(
-      buildWhen: (previous, current) =>
-          previous.newPassword != current.newPassword ||
-          previous.confirmNewPassword != current.confirmNewPassword,
-      builder: (context, state) {
-        return ListTile(
-          leading: const Icon(Icons.lock),
-          title: Text(AppLocalizations.of(context)!.password),
-          subtitle: const Text('***'),
-          trailing: const Icon(Icons.edit),
-          onTap: () => showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            showDragHandle: true,
-            builder: (context) => FractionallySizedBox(
-              child: Column(
-                children: [
-                  Text(AppLocalizations.of(context)!.insert_new_password),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: TextField(
-                      onChanged: (newPassword) =>
-                          settingsCubit.newPasswordChanged(newPassword),
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.password,
-                        errorText: state.newPassword.displayError != null
-                            ? AppLocalizations.of(context)!.invalid_password
-                            : null,
-                      ),
-                    ),
+class _SettingsPasswordState extends State<SettingsPassword> {
+  Password _currentPassword = const Password.pure();
+  Password _newPassword = const Password.pure();
+  ConfirmedPassword _confirmNewPassword = const ConfirmedPassword.pure();
+
+  void _showModal() {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      showDragHandle: true,
+      builder: (context) => StatefulBuilder(
+        builder: (BuildContext context, StateSetter setState) =>
+            FractionallySizedBox(
+          child: Column(
+            children: [
+              Text(AppLocalizations.of(context)!.insert_current_password),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: TextFormField(
+                  onChanged: (newVal) => setState(() {
+                    _currentPassword = Password.dirty(newVal);
+                  }),
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.password,
+                    errorText:
+                        _currentPassword.isValid || _currentPassword.isPure
+                            ? null
+                            : AppLocalizations.of(context)!.invalid_password,
                   ),
-                  Text(AppLocalizations.of(context)!.repeat_new_password),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: TextField(
-                      onChanged: (confirmNewPassword) => settingsCubit
-                          .confirmNewPasswordChanged(confirmNewPassword),
-                      obscureText: true,
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)!.password,
-                        errorText: state.confirmNewPassword.displayError != null
-                            ? AppLocalizations.of(context)!
-                                .invalid_repeat_password
-                            : null,
-                      ),
-                    ),
-                  ),
-                  const Divider(color: Colors.transparent),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.9,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
-                          child: Text(AppLocalizations.of(context)!.cancel),
-                        ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Text(AppLocalizations.of(context)!.save),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                ),
               ),
-            ),
+              Text(AppLocalizations.of(context)!.insert_new_password),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: TextFormField(
+                  onChanged: (newVal) => setState(() {
+                    _newPassword = Password.dirty(newVal);
+                    _confirmNewPassword = ConfirmedPassword.dirty(
+                        password: _confirmNewPassword.value, value: newVal);
+                  }),
+                  obscureText: true,
+                  decoration: InputDecoration(
+                    labelText: AppLocalizations.of(context)!.password,
+                    errorText: _newPassword.isValid || _newPassword.isPure
+                        ? null
+                        : AppLocalizations.of(context)!.invalid_password,
+                  ),
+                ),
+              ),
+              Text(AppLocalizations.of(context)!.repeat_new_password),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: TextFormField(
+                  obscureText: true,
+                  onChanged: (newVal) => setState(() {
+                    _confirmNewPassword = ConfirmedPassword.dirty(
+                      password: newVal,
+                      value: _newPassword.value,
+                    );
+                  }),
+                  decoration: InputDecoration(
+                      labelText: AppLocalizations.of(context)!.repeat_password,
+                      errorText: _confirmNewPassword.isPure ||
+                              _confirmNewPassword.isValid
+                          ? null
+                          : AppLocalizations.of(context)!
+                              .invalid_repeat_password),
+                ),
+              ),
+              const Divider(color: Colors.transparent),
+              SizedBox(
+                width: MediaQuery.of(context).size.width * 0.9,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    TextButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      child: Text(AppLocalizations.of(context)!.cancel),
+                    ),
+                    TextButton(
+                      onPressed: _currentPassword.isValid &&
+                              _newPassword.isValid &&
+                              _confirmNewPassword.isValid
+                          ? () => context
+                              .read<AppBloc>()
+                              .add(AppUserUpdatePassword(
+                                _currentPassword.value,
+                                _newPassword.value,
+                                onSuccess: () => Navigator.of(context).pop(),
+                              ))
+                          : null,
+                      child: Text(AppLocalizations.of(context)!.save),
+                    ),
+                  ],
+                ),
+              ),
+            ],
           ),
-        );
-      },
-    );
+        ),
+      ),
+    ).whenComplete(() => setState(() {
+          _currentPassword = const Password.pure();
+          _newPassword = const Password.pure();
+          _confirmNewPassword = const ConfirmedPassword.pure();
+        }));
   }
-}
-
-class _CurrentPasswordInput extends StatelessWidget {
-  const _CurrentPasswordInput(this.cubit);
-  final SettingsCubit cubit;
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, SettingsState>(
-      buildWhen: (previous, current) =>
-          previous.currentPassword != current.currentPassword,
-      builder: (context, state) => TextField(
-        onChanged: (currentPassword) =>
-            cubit.currentPasswordChanged(currentPassword),
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: AppLocalizations.of(context)!.password,
-          errorText: state.currentPassword.displayError != null
-              ? AppLocalizations.of(context)!.invalid_password
-              : null,
-        ),
-      ),
-    );
-  }
-}
+    final User user = context.select((AppBloc bloc) => bloc.state.user);
 
-class _NewPasswordInput extends StatelessWidget {
-  const _NewPasswordInput();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, SettingsState>(
-      buildWhen: (previous, current) =>
-          previous.newPassword != current.newPassword,
-      builder: (context, state) => TextField(
-        onChanged: (newPassword) =>
-            context.read<SettingsCubit>().newPasswordChanged(newPassword),
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: AppLocalizations.of(context)!.password,
-          errorText: state.newPassword.displayError != null
-              ? AppLocalizations.of(context)!.invalid_password
-              : null,
-        ),
-      ),
-    );
-  }
-}
-
-class _ConfirmNewPassword extends StatelessWidget {
-  const _ConfirmNewPassword();
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocBuilder<SettingsCubit, SettingsState>(
-      buildWhen: (previous, current) =>
-          previous.confirmNewPassword != current.confirmNewPassword,
-      builder: (context, state) => TextField(
-        onChanged: (confirmNewPassword) => context
-            .read<SettingsCubit>()
-            .confirmNewPasswordChanged(confirmNewPassword),
-        obscureText: true,
-        decoration: InputDecoration(
-          labelText: AppLocalizations.of(context)!.password,
-          errorText: state.confirmNewPassword.displayError != null
-              ? AppLocalizations.of(context)!.invalid_repeat_password
-              : null,
-        ),
-      ),
+    return ListTile(
+      leading: const Icon(Icons.lock),
+      title: Text(AppLocalizations.of(context)!.password),
+      subtitle: const Text('***'),
+      trailing: user.loginMethods!.contains('google.com')
+          ? null
+          : const Icon(Icons.edit),
+      onTap:
+          user.loginMethods!.contains('google.com') ? null : () => _showModal(),
     );
   }
 }

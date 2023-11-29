@@ -1,4 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:equatable/equatable.dart';
 
 /// {@template user}
@@ -13,6 +12,7 @@ class User extends Equatable {
     this.email,
     this.name,
     this.photo,
+    this.loginMethods,
   });
 
   /// The current user's email address.
@@ -27,6 +27,8 @@ class User extends Equatable {
   /// Url for the current user's photo.
   final String? photo;
 
+  final List<String>? loginMethods;
+
   /// Empty user which represents an unauthenticated user.
   static const empty = User(id: '');
 
@@ -37,5 +39,5 @@ class User extends Equatable {
   bool get isNotEmpty => this != User.empty;
 
   @override
-  List<Object?> get props => [email, id, name, photo];
+  List<Object?> get props => [email, id, name, photo, loginMethods];
 }

@@ -1,33 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:formz/formz.dart';
 import 'package:local_card_trading/app/bloc/app_bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:local_card_trading/pages/home/subpages/settings/cubit/settings_cubit.dart';
 
-class SettingsName extends StatelessWidget {
+class SettingsName extends StatefulWidget {
   const SettingsName({super.key});
+
+  @override
+  State<SettingsName> createState() => _SettingsNameState();
+}
+
+class _SettingsNameState extends State<SettingsName> {
+  final TextEditingController _nameController = TextEditingController();
+
+  void _onConfirm() {
+    context.read<AppBloc>().add(
+          AppUserUpdateName(
+            _nameController.text,
+            onSuccess: Navigator.of(context).pop,
+          ),
+        );
+  }
 
   @override
   Widget build(BuildContext context) {
     final User user = context.select((AppBloc bloc) => bloc.state.user);
-    final SettingsCubit settingsCubit = context.read<SettingsCubit>();
-    settingsCubit.nameChanged(user.name ?? '');
 
-    return BlocBuilder<SettingsCubit, SettingsState>(
-      buildWhen: (previous, current) => previous.name != current.name,
-      builder: (context, state) {
-        return ListTile(
-          leading: const Icon(Icons.person),
-          title: Text(AppLocalizations.of(context)!.name),
-          subtitle: Text(state.name.value),
-          trailing: const Icon(Icons.edit),
-          onTap: () => showModalBottomSheet(
-            context: context,
-            isScrollControlled: true,
-            showDragHandle: true,
-            builder: (context) => FractionallySizedBox(
+    return ListTile(
+      leading: const Icon(Icons.person),
+      title: Text(AppLocalizations.of(context)!.name),
+      subtitle: Text(user.name ?? ''),
+      trailing: const Icon(Icons.edit),
+      onTap: () => showModalBottomSheet(
+          context: context,
+          isScrollControlled: true,
+          showDragHandle: true,
+          builder: (context) {
+            _nameController.text = user.name ?? '';
+            return FractionallySizedBox(
               heightFactor: 0.6,
               child: Column(
                 children: [
@@ -35,9 +46,8 @@ class SettingsName extends StatelessWidget {
                   SizedBox(
                     width: MediaQuery.of(context).size.width * 0.9,
                     child: TextFormField(
+                      controller: _nameController,
                       autofocus: true,
-                      initialValue: state.name.value,
-                      onChanged: (name) => settingsCubit.nameChanged(name),
                       decoration: InputDecoration(
                         labelText: AppLocalizations.of(context)!.name,
                       ),
@@ -50,13 +60,11 @@ class SettingsName extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.end,
                       children: [
                         TextButton(
-                          onPressed: () => Navigator.of(context).pop(),
+                          onPressed: Navigator.of(context).pop,
                           child: Text(AppLocalizations.of(context)!.cancel),
                         ),
                         TextButton(
-                          onPressed: () => settingsCubit
-                              .changeNameFormSubmitted()
-                              .then((_) => Navigator.of(context).pop()),
+                          onPressed: _onConfirm,
                           child: Text(AppLocalizations.of(context)!.save),
                         ),
                       ],
@@ -64,10 +72,8 @@ class SettingsName extends StatelessWidget {
                   ),
                 ],
               ),
-            ),
-          ).whenComplete(() => settingsCubit.resetCubit()),
-        );
-      },
+            );
+          }),
     );
   }
 }

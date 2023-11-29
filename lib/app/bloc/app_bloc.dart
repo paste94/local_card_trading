@@ -18,7 +18,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         ) {
     on<_AppUserChanged>(_onUserChanged);
     on<AppLogoutRequested>(_onLogoutRequested);
-    // on<AppUserUpdateName>(_onAppUserUpdateName);
+    on<AppUserUpdateName>(_onAppUserUpdateName);
+    on<AppUserUpdatePassword>(_onAppUserUpdatePassword);
     on<AppUserError>(_onAppUserError);
     on<AppUserResetError>(_onAppUserResetError);
 
@@ -36,40 +37,62 @@ class AppBloc extends Bloc<AppEvent, AppState> {
         : const AppState.unauthenticated());
   }
 
-  void _onLogoutRequested(AppLogoutRequested event, Emitter<AppState> emit) {
+  void _onLogoutRequested(
+    AppLogoutRequested event,
+    Emitter<AppState> emit,
+  ) {
     unawaited(_authenticationRepository.logOut());
   }
 
-  // Future<void> _onAppUserUpdateName(
-  //   AppUserUpdateName event,
-  //   Emitter<AppState> emit,
-  // ) async {
-  //   try {
-  //     await _authenticationRepository.updateUserName(event.newName);
-  //     event.onSuccess();
-  //   } on UpdateFailure catch (e) {
-  //     emit(
-  //       state.copyWith(
-  //         errorMsg: e.message,
-  //       ),
-  //     );
-  //   }
-  // }
-
-  void _onAppUserError(AppUserError event, Emitter<AppState> emit) {
-    emit(
-      state.copyWith(
-        errorMsg: event.errorMsg,
-      ),
-    );
+  Future<void> _onAppUserUpdateName(
+    AppUserUpdateName event,
+    Emitter<AppState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      await _authenticationRepository.updateUserName(event.newName);
+      emit(state.copyWith(isLoading: false));
+      event.onSuccess();
+    } on UpdateNameFailure catch (e) {
+      emit(state.copyWith(
+        isLoading: false,
+        errorMsg: e.message,
+      ));
+    }
   }
 
-  void _onAppUserResetError(AppUserResetError event, Emitter<AppState> emit) {
-    emit(
-      state.copyWith(
-        errorMsg: '',
-      ),
-    );
+  Future<void> _onAppUserUpdatePassword(
+    AppUserUpdatePassword event,
+    Emitter<AppState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      await _authenticationRepository.updatePassword(
+        event.currentPassword,
+        event.newPassword,
+      );
+      emit(state.copyWith(isLoading: false));
+      event.onSuccess();
+    } on UpdatePasswordFailure catch (e) {
+      emit(state.copyWith(
+        isLoading: false,
+        errorMsg: e.message,
+      ));
+    }
+  }
+
+  void _onAppUserError(
+    AppUserError event,
+    Emitter<AppState> emit,
+  ) {
+    emit(state.copyWith(errorMsg: event.errorMsg));
+  }
+
+  void _onAppUserResetError(
+    AppUserResetError event,
+    Emitter<AppState> emit,
+  ) {
+    emit(state.copyWith(errorMsg: ''));
   }
 
   @override

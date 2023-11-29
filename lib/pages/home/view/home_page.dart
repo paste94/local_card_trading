@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/app.dart';
 import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
-import 'package:local_card_trading/pages/home/subpages/settings/cubit/settings_cubit.dart';
 import 'package:local_card_trading/pages/home/view/home_body.dart';
 import 'package:local_card_trading/pages/home/view/home_bottom_nav_bar.dart';
 
@@ -13,6 +12,8 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BuildContext? dialogContext;
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(
@@ -26,9 +27,8 @@ class HomePage extends StatelessWidget {
             IconButton(
               key: const Key('homePage_logout_iconButton'),
               icon: const Icon(Icons.exit_to_app),
-              onPressed: () {
-                context.read<AppBloc>().add(const AppLogoutRequested());
-              },
+              onPressed: () =>
+                  context.read<AppBloc>().add(const AppLogoutRequested()),
             ),
           ],
         ),
@@ -36,7 +36,6 @@ class HomePage extends StatelessWidget {
           listener: (context, state) {
             if (state.errorMsg != '') {
               context.read<AppBloc>().add(const AppUserResetError());
-
               showDialog(
                 context: context,
                 builder: (context) => AlertDialog(
@@ -49,7 +48,36 @@ class HomePage extends StatelessWidget {
                     )
                   ],
                 ),
+              ).whenComplete(
+                () => context.read<AppBloc>().add(const AppUserResetError()),
               );
+            }
+            if (state.isLoading) {
+              showDialog(
+                  barrierDismissible: false,
+                  context: context,
+                  builder: (context) {
+                    dialogContext = context;
+                    return const Dialog(
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(vertical: 20),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            CircularProgressIndicator(),
+                            SizedBox(height: 15),
+                            Text('Loading...'),
+                          ],
+                        ),
+                      ),
+                    );
+                  });
+            }
+            if (!state.isLoading) {
+              if (dialogContext != null) {
+                Navigator.of(dialogContext!).pop();
+                dialogContext = null;
+              }
             }
           },
           child: const HomeBody(),
