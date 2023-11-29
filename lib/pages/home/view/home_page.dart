@@ -23,14 +23,6 @@ class HomePage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Home'),
-          actions: <Widget>[
-            IconButton(
-              key: const Key('homePage_logout_iconButton'),
-              icon: const Icon(Icons.exit_to_app),
-              onPressed: () =>
-                  context.read<AppBloc>().add(const AppLogoutRequested()),
-            ),
-          ],
         ),
         body: BlocListener<AppBloc, AppState>(
           listener: (context, state) {
