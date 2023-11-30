@@ -26,6 +26,10 @@ class HomePage extends StatelessWidget {
         ),
         body: BlocListener<AppBloc, AppState>(
           listener: (context, state) {
+            if (!state.isLoading && dialogContext != null) {
+              Navigator.of(dialogContext!).pop();
+              dialogContext = null;
+            }
             if (state.errorMsg != '') {
               context.read<AppBloc>().add(const AppUserResetError());
               showDialog(
@@ -64,12 +68,6 @@ class HomePage extends StatelessWidget {
                       ),
                     );
                   });
-            }
-            if (!state.isLoading) {
-              if (dialogContext != null) {
-                Navigator.of(dialogContext!).pop();
-                dialogContext = null;
-              }
             }
           },
           child: const HomeBody(),

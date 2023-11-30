@@ -54,6 +54,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       emit(state.copyWith(isLoading: false));
       event.onSuccess();
     } on UpdateNameFailure catch (e) {
+      print('ERROR - ${e.message}');
       emit(state.copyWith(
         isLoading: false,
         errorMsg: e.message,
