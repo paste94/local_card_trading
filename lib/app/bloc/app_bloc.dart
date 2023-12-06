@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
@@ -20,6 +21,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<AppLogoutRequested>(_onLogoutRequested);
     on<AppUserUpdateName>(_onAppUserUpdateName);
     on<AppUserUpdatePassword>(_onAppUserUpdatePassword);
+    on<AppUserUpdatePhoto>(_onAppUserUpdatePhoto);
     on<AppUserError>(_onAppUserError);
     on<AppUserResetError>(_onAppUserResetError);
 
@@ -74,6 +76,24 @@ class AppBloc extends Bloc<AppEvent, AppState> {
       );
       emit(state.copyWith(isLoading: false));
       event.onSuccess();
+    } on UpdatePasswordFailure catch (e) {
+      emit(state.copyWith(
+        isLoading: false,
+        errorMsg: e.message,
+      ));
+    }
+  }
+
+  Future<void> _onAppUserUpdatePhoto(
+    AppUserUpdatePhoto event,
+    Emitter<AppState> emit,
+  ) async {
+    try {
+      emit(state.copyWith(isLoading: true));
+      await _authenticationRepository.updateImage(
+        event.newPhoto,
+      );
+      emit(state.copyWith(isLoading: false));
     } on UpdatePasswordFailure catch (e) {
       emit(state.copyWith(
         isLoading: false,

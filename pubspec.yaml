@@ -30,6 +30,8 @@ environment:
 dependencies:
   authentication_repository:
     path: packages/authentication_repository
+  storage_repository:
+    path: packages/storage_repository
   flutter:
     sdk: flutter
   firebase_core: ^2.13.0
@@ -53,6 +55,8 @@ dependencies:
   flow_builder: ^0.0.9
   google_fonts: ^6.1.0
   font_awesome_flutter: ^10.6.0
+  image_cropper: ^5.0.1
+  firebase_storage: ^11.5.3
 
 dev_dependencies:
   flutter_test:

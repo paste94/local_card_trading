@@ -1,12 +1,13 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cache/cache.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
+import 'package:storage_repository/storage_repository.dart';
 
 /// {@template sign_up_with_email_and_password_failure}
 /// Thrown during the sign up process if a failure occurs.
@@ -223,6 +224,35 @@ class UpdateNameFailure implements Exception {
   final String message;
 }
 
+class UpdatePhotoFailure implements Exception {
+  final code;
+
+  const UpdatePhotoFailure([
+    this.message = 'An unknown exception occurred.',
+    this.code,
+  ]);
+
+  factory UpdatePhotoFailure.fromCode(String code) {
+    switch (code) {
+      case 'requires-recent-login':
+        return UpdatePhotoFailure(
+          'Please reauthenticate',
+          code,
+        );
+      case 'network-request-failed':
+        return UpdatePhotoFailure(
+          'No internet connection, please connect your device to the internet and retry',
+          code,
+        );
+
+      default:
+        return const UpdatePhotoFailure();
+    }
+  }
+
+  final String message;
+}
+
 /// Thrown during the logout process if a failure occurs.
 class LogOutFailure implements Exception {}
 
@@ -242,7 +272,7 @@ class AuthenticationRepository {
   final CacheClient _cache;
   final firebase_auth.FirebaseAuth _firebaseAuth;
   final GoogleSignIn _googleSignIn;
-  final _db = FirebaseFirestore.instance;
+  final _storageRepository = StorageRepository();
 
   /// Whether or not the current environment is web
   /// Should only be overridden for testing purposes. Otherwise,
@@ -381,6 +411,26 @@ class AuthenticationRepository {
       throw UpdatePasswordFailure.fromCode(e.code);
     } catch (_) {
       throw const UpdatePasswordFailure();
+    }
+  }
+
+  Future<void> updateImage(
+    File newImage,
+  ) async {
+    if (_firebaseAuth.currentUser == null ||
+        _firebaseAuth.currentUser!.email == null) {
+      throw UpdatePhotoFailure.fromCode('user-not-found');
+    }
+    try {
+      final downloadURL = await _storageRepository.loadUserPhotoProfile(
+        file: newImage,
+        userID: _firebaseAuth.currentUser!.uid,
+      );
+      await _firebaseAuth.currentUser!.updatePhotoURL(downloadURL);
+    } on firebase_auth.FirebaseAuthException catch (e) {
+      throw UpdatePhotoFailure.fromCode(e.code);
+    } catch (_) {
+      throw const UpdatePhotoFailure();
     }
   }
 }
