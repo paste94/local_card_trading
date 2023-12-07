@@ -31,6 +31,7 @@ class StorageRepository {
       print('STORAGE PATH ${storagePath.getDownloadURL()}');
       return storagePath.getDownloadURL();
     } on FirebaseException catch (e) {
+      print('ERROR: ${e.code}');
       throw LoadImageFailure.fromCode(e.code);
     } catch (_) {
       throw LoadImageFailure();

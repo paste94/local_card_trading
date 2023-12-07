@@ -27,14 +27,15 @@ Future<File?> _pickImage({
       CropAspectRatioPreset.square,
     ],
     cropStyle: CropStyle.circle,
-    aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+    aspectRatio: const CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
     uiSettings: [
       AndroidUiSettings(
-          toolbarTitle: 'Cropper',
-          toolbarColor: Colors.deepOrange,
-          toolbarWidgetColor: Colors.white,
-          initAspectRatio: CropAspectRatioPreset.original,
-          lockAspectRatio: false),
+        toolbarTitle: 'Cropper',
+        toolbarColor: Colors.deepOrange,
+        toolbarWidgetColor: Colors.white,
+        initAspectRatio: CropAspectRatioPreset.original,
+        lockAspectRatio: true,
+      ),
       IOSUiSettings(
         title: 'Cropper',
       ),
@@ -71,7 +72,12 @@ Future<File?> showImagePickerModal({
                     Icons.camera_alt,
                     color: Colors.black,
                   ),
-                  onPressed: () {},
+                  onPressed: () => _pickImage(
+                    context: context,
+                    from: ImageSourceType.camera,
+                  )
+                      .then((img) => pickedImage = img)
+                      .then((_) => Navigator.of(context).pop()),
                 ),
               ),
               Text('Camera'),
