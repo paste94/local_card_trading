@@ -3,7 +3,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/bloc/app_bloc.dart';
+import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
 import 'package:local_card_trading/pages/home/widgets/image_picker.dart';
+import 'package:local_card_trading/pages/pic_details/view/pic_details.dart';
 import 'package:photo_view/photo_view.dart';
 
 class SettingsPhoto extends StatefulWidget {
@@ -35,13 +37,7 @@ class _SettingsPhotoState extends State<SettingsPhoto> {
       children: [
         GestureDetector(
           onTap: () {
-            Navigator.push(context, MaterialPageRoute(builder: (_) {
-              return _DetailScreen(
-                tag: 'profile_img_tag',
-                url: user.photo ?? '',
-                onEditPressed: _getImage,
-              );
-            }));
+            context.read<HomeBloc>().add(const AppUserSelectPicDetails(true));
           },
           child: Hero(
             tag: 'profile_img_tag',
@@ -81,57 +77,6 @@ class _SettingsPhotoState extends State<SettingsPhoto> {
           ),
         )
       ],
-    );
-  }
-}
-
-class _DetailScreen extends StatefulWidget {
-  final String tag;
-  final String url;
-  final void Function() onEditPressed;
-
-  const _DetailScreen(
-      {Key? key,
-      required this.tag,
-      required this.url,
-      required this.onEditPressed})
-      : super(key: key);
-
-  @override
-  _DetailScreenState createState() => _DetailScreenState();
-}
-
-class _DetailScreenState extends State<_DetailScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.black,
-        foregroundColor: Colors.white,
-        actions: [
-          IconButton(
-            icon: const Icon(Icons.edit),
-            onPressed: widget.onEditPressed,
-          )
-        ],
-      ),
-      body: GestureDetector(
-        child: Center(
-          child: Hero(
-            tag: 'profile_img_tag',
-            child: PhotoView(
-              imageProvider: CachedNetworkImageProvider(widget.url),
-            ),
-            // CachedNetworkImage(
-            //   imageUrl: widget.url,
-            //   errorWidget: Icon(Icons.error),
-            // ),
-          ),
-        ),
-        onTap: () {
-          Navigator.pop(context);
-        },
-      ),
     );
   }
 }

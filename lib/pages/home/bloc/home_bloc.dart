@@ -8,9 +8,17 @@ part 'home_state.dart';
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   HomeBloc() : super(const HomeState.selectPage(SelectedPage.buy)) {
     on<HomePageSelected>(_onHomePageChanged);
+    on<AppUserSelectPicDetails>(_onAppUsetSelectPicDetails);
   }
 
   void _onHomePageChanged(HomePageSelected event, Emitter<HomeState> emit) {
-    emit(HomeState.selectPage(event.selectedPage));
+    emit(state.copyWith(selectedPage: event.selectedPage));
+  }
+
+  void _onAppUsetSelectPicDetails(
+    AppUserSelectPicDetails event,
+    Emitter<HomeState> emit,
+  ) {
+    emit(state.copyWith(isPicDetailsSelected: event.isSelected));
   }
 }

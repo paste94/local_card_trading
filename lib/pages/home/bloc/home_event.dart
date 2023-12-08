@@ -12,3 +12,9 @@ final class HomePageSelected extends HomeEvent {
 
   final SelectedPage selectedPage;
 }
+
+final class AppUserSelectPicDetails extends HomeEvent {
+  const AppUserSelectPicDetails(this.isSelected);
+
+  final bool isSelected;
+}
