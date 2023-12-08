@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:local_card_trading/pages/home/subpages/subpages.dart';
 
-enum SelectedPage { buy, myCollection, sell, settings }
+enum SelectedPage { buy, myCollection, sell, settings, photo_img_details }
 
 /// Edit here to add pages
 final Map<SelectedPage, Item> _navItems = {
