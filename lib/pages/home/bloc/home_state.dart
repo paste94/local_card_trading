@@ -23,5 +23,8 @@ class HomeState extends Equatable {
   }
 
   @override
-  List<Object> get props => [selectedPage, isPicDetailsSelected];
+  List<Object> get props => [
+        selectedPage,
+        isPicDetailsSelected,
+      ];
 }

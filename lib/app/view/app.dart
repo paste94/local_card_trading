@@ -3,7 +3,6 @@ import 'package:flow_builder/flow_builder.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/app.dart';
-import 'package:local_card_trading/theme.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class App extends StatelessWidget {
@@ -33,13 +32,61 @@ class AppView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    BuildContext? dialogContext;
+
     return MaterialApp(
-      // theme: theme,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: FlowBuilder<AppStatus>(
-        state: context.select((AppBloc bloc) => bloc.state.status),
-        onGeneratePages: onGenerateAppViewPages,
+      home: BlocListener<AppBloc, AppState>(
+        listener: (context, state) {
+          if (!state.isLoading && dialogContext != null) {
+            Navigator.of(dialogContext!).pop();
+            dialogContext = null;
+          }
+          if (state.errorMsg != '') {
+            context.read<AppBloc>().add(const AppUserResetError());
+            showDialog(
+              context: context,
+              builder: (context) => AlertDialog(
+                title: const Text('Error'),
+                content: Text(state.errorMsg),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.of(context).pop(),
+                    child: const Text('Ok'),
+                  )
+                ],
+              ),
+            ).whenComplete(
+              () => context.read<AppBloc>().add(const AppUserResetError()),
+            );
+          }
+          if (state.isLoading) {
+            showDialog(
+                barrierDismissible: false,
+                context: context,
+                builder: (context) {
+                  dialogContext = context;
+                  return const Dialog(
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(vertical: 20),
+                      child: Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          CircularProgressIndicator(),
+                          SizedBox(height: 15),
+                          Text('Loading...'),
+                        ],
+                      ),
+                    ),
+                  );
+                });
+          }
+        },
+        child: FlowBuilder<AppStatus>(
+          state: context.select((AppBloc bloc) => bloc.state.status),
+          onGeneratePages: onGenerateAppViewPages,
+        ),
       ),
     );
   }

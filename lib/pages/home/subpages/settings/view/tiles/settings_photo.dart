@@ -5,8 +5,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/bloc/app_bloc.dart';
 import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
 import 'package:local_card_trading/pages/home/widgets/image_picker.dart';
-import 'package:local_card_trading/pages/pic_details/view/pic_details.dart';
-import 'package:photo_view/photo_view.dart';
 
 class SettingsPhoto extends StatefulWidget {
   const SettingsPhoto({super.key});

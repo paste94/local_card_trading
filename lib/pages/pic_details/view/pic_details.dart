@@ -1,8 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
-import 'package:photo_view/photo_view.dart';
 
 class DetailScreen extends StatefulWidget {
   final String tag;
@@ -23,9 +21,8 @@ class DetailScreen extends StatefulWidget {
 class _DetailScreenState extends State<DetailScreen> {
   @override
   void dispose() {
-    context.read<HomeBloc>().add(const AppUserSelectPicDetails(false));
+    context.read<HomeBloc>(); //.add(const AppUserSelectPicDetails(false));
     print('DISPOSE');
-
     super.dispose();
   }
 
@@ -46,9 +43,12 @@ class _DetailScreenState extends State<DetailScreen> {
         child: Center(
           child: Hero(
             tag: 'profile_img_tag',
-            child: PhotoView(
-              imageProvider: CachedNetworkImageProvider(widget.url),
-            ),
+            child: Placeholder(),
+            // child: PhotoView(
+            //   imageProvider: const CachedNetworkImageProvider(
+            //       'picsum.photos/250?image=9',
+            //       scale: 1.0), //(widget.url),
+            // ),
             // CachedNetworkImage(
             //   imageUrl: widget.url,
             //   errorWidget: Icon(Icons.error),
