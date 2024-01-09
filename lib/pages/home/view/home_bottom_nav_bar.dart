@@ -21,7 +21,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
           previous.selectedPage != current.selectedPage,
       listener: (context, state) => setState(
         () => _selectedPageIndex =
-            SelectedPage.values.indexOf(state.selectedPage),
+            SelectedHomePage.values.indexOf(state.selectedPage),
       ),
       child: BottomNavigationBar(
         items: bottomNavItems,
@@ -30,7 +30,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
         unselectedItemColor: Colors.black,
         onTap: (index) => context.read<HomeBloc>().add(
               HomePageSelected(
-                SelectedPage.values[index],
+                SelectedHomePage.values[index],
               ),
             ),
       ),

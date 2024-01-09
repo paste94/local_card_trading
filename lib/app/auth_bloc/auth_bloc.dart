@@ -24,6 +24,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     on<AuthUserUpdatePhoto>(_onAuthUserUpdatePhoto);
     on<AuthUserError>(_onAuthUserError);
     on<AuthUserResetError>(_onAuthUserResetError);
+    on<GoToAddCardToCollectionPage>(_onGoToAddCardToCollectionPage);
+    on<GoToHomePage>(_onGoToHomePage);
 
     _userSubscription = _authenticationRepository.user.listen(
       (user) => add(_AuthUserChanged(user)),
@@ -114,6 +116,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
     Emitter<AuthState> emit,
   ) {
     emit(state.copyWith(errorMsg: ''));
+  }
+
+  void _onGoToAddCardToCollectionPage(
+      GoToAddCardToCollectionPage event, Emitter<AuthState> emit) {
+    emit(
+      state.copyWith(selectedPage: SelectedPage.addCardToCollection),
+    );
+  }
+
+  void _onGoToHomePage(GoToHomePage event, Emitter<AuthState> emit) {
+    emit(
+      state.copyWith(selectedPage: SelectedPage.home),
+    );
   }
 
   @override

@@ -28,11 +28,11 @@ class HomePage extends StatelessWidget {
         floatingActionButton: BlocBuilder<HomeBloc, HomeState>(
           builder: (context, state) {
             return Visibility(
-              visible: state.selectedPage == SelectedPage.myCollection,
+              visible: state.selectedPage == SelectedHomePage.myCollection,
               child: FloatingActionButton(
-                onPressed: () => {
-                  //https://techpotatoes.com/2021/07/20/flutter-development-series-part-5-bloc-pattern-and-navigation-in-flutter/
-                },
+                onPressed: () => context
+                    .read<AuthBloc>()
+                    .add(const GoToAddCardToCollectionPage()),
               ),
             );
           },

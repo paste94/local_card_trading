@@ -10,7 +10,7 @@ sealed class HomeEvent extends Equatable {
 final class HomePageSelected extends HomeEvent {
   const HomePageSelected(this.selectedPage);
 
-  final SelectedPage selectedPage;
+  final SelectedHomePage selectedPage;
 }
 
 final class AppUserSelectPicDetails extends HomeEvent {

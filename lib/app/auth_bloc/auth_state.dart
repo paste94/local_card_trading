@@ -5,9 +5,15 @@ enum AuthStatus {
   unauthenticated,
 }
 
+enum SelectedPage {
+  home,
+  addCardToCollection,
+}
+
 final class AuthState extends Equatable {
   const AuthState._({
     required this.status,
+    this.selectedPage = SelectedPage.home,
     this.user = User.empty,
     this.errorMsg = '',
     this.isLoading = false,
@@ -20,18 +26,21 @@ final class AuthState extends Equatable {
       : this._(status: AuthStatus.authenticated, user: user);
 
   final AuthStatus status;
+  final SelectedPage selectedPage;
   final User user;
   final String errorMsg;
   final bool isLoading;
 
   AuthState copyWith({
     AuthStatus? status,
+    SelectedPage? selectedPage,
     User? user,
     String? errorMsg,
     bool? isLoading,
   }) {
     return AuthState._(
       status: status ?? this.status,
+      selectedPage: selectedPage ?? this.selectedPage,
       user: user ?? this.user,
       errorMsg: errorMsg ?? this.errorMsg,
       isLoading: isLoading ?? this.isLoading,
@@ -39,5 +48,5 @@ final class AuthState extends Equatable {
   }
 
   @override
-  List<Object> get props => [status, user, errorMsg, isLoading];
+  List<Object> get props => [status, selectedPage, user, errorMsg, isLoading];
 }

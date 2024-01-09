@@ -24,7 +24,7 @@ class _HomeBodyState extends State<HomeBody> {
         print('LISTEN');
         setState(
           () => _selectedPageIndex =
-              SelectedPage.values.indexOf(state.selectedPage),
+              SelectedHomePage.values.indexOf(state.selectedPage),
         );
         if (state.isPicDetailsSelected) {
           print('SET TO TRUE');

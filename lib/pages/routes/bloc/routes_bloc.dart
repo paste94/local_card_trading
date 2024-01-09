@@ -6,8 +6,21 @@ part 'routes_state.dart';
 
 class RoutesBloc extends Bloc<RoutesEvent, RoutesState> {
   RoutesBloc() : super(const RoutesState(selectedPage: SelectedPage.home)) {
-    on<RoutesEvent>((event, emit) {
-      // TODO: implement event handler
-    });
+    on<GoToAddCardToCollection>(_onGoToAddCardToCollection);
+    on<GoToHome>(_onGoToHome);
+  }
+
+  void _onGoToAddCardToCollection(
+    GoToAddCardToCollection event,
+    Emitter<RoutesState> emit,
+  ) {
+    emit(state.copyWith(selectedPage: SelectedPage.addCardToCollection));
+  }
+
+  void _onGoToHome(
+    GoToHome event,
+    Emitter<RoutesState> emit,
+  ) {
+    emit(state.copyWith(selectedPage: SelectedPage.home));
   }
 }

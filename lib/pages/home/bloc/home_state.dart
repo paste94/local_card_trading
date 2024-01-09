@@ -6,14 +6,14 @@ class HomeState extends Equatable {
     this.isPicDetailsSelected = false,
   });
 
-  final SelectedPage selectedPage;
+  final SelectedHomePage selectedPage;
   final bool isPicDetailsSelected;
 
-  const HomeState.selectPage(SelectedPage selectedPage)
+  const HomeState.selectPage(SelectedHomePage selectedPage)
       : this._(selectedPage: selectedPage);
 
   HomeState copyWith({
-    SelectedPage? selectedPage,
+    SelectedHomePage? selectedPage,
     bool? isPicDetailsSelected,
   }) {
     return HomeState._(

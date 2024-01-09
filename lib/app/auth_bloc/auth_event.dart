@@ -60,3 +60,11 @@ final class AuthUserSetIsLoading extends AuthEvent {
 final class AuthUserResetIsReauthRequired extends AuthEvent {
   const AuthUserResetIsReauthRequired();
 }
+
+final class GoToAddCardToCollectionPage extends AuthEvent {
+  const GoToAddCardToCollectionPage();
+}
+
+final class GoToHomePage extends AuthEvent {
+  const GoToHomePage();
+}

@@ -6,7 +6,7 @@ part 'home_event.dart';
 part 'home_state.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
-  HomeBloc() : super(const HomeState.selectPage(SelectedPage.buy)) {
+  HomeBloc() : super(const HomeState.selectPage(SelectedHomePage.buy)) {
     on<HomePageSelected>(_onHomePageChanged);
     on<AppUserSelectPicDetails>(_onAppUsetSelectPicDetails);
   }

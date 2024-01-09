@@ -83,8 +83,8 @@ class AppView extends StatelessWidget {
                 });
           }
         },
-        child: FlowBuilder<AuthStatus>(
-          state: context.select((AuthBloc bloc) => bloc.state.status),
+        child: FlowBuilder<AuthState>(
+          state: context.select((AuthBloc bloc) => bloc.state),
           onGeneratePages: onGenerateAppViewPages,
         ),
       ),
