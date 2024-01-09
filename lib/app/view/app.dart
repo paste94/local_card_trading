@@ -18,7 +18,7 @@ class App extends StatelessWidget {
     return RepositoryProvider.value(
       value: _authenticationRepository,
       child: BlocProvider(
-        create: (_) => AppBloc(
+        create: (_) => AuthBloc(
           authenticationRepository: _authenticationRepository,
         ),
         child: const AppView(),
@@ -37,14 +37,14 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: BlocListener<AppBloc, AppState>(
+      home: BlocListener<AuthBloc, AuthState>(
         listener: (context, state) {
           if (!state.isLoading && dialogContext != null) {
             Navigator.of(dialogContext!).pop();
             dialogContext = null;
           }
           if (state.errorMsg != '') {
-            context.read<AppBloc>().add(const AppUserResetError());
+            context.read<AuthBloc>().add(const AuthUserResetError());
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -58,7 +58,7 @@ class AppView extends StatelessWidget {
                 ],
               ),
             ).whenComplete(
-              () => context.read<AppBloc>().add(const AppUserResetError()),
+              () => context.read<AuthBloc>().add(const AuthUserResetError()),
             );
           }
           if (state.isLoading) {
@@ -83,8 +83,8 @@ class AppView extends StatelessWidget {
                 });
           }
         },
-        child: FlowBuilder<AppStatus>(
-          state: context.select((AppBloc bloc) => bloc.state.status),
+        child: FlowBuilder<AuthStatus>(
+          state: context.select((AuthBloc bloc) => bloc.state.status),
           onGeneratePages: onGenerateAppViewPages,
         ),
       ),

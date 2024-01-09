@@ -2,7 +2,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_card_trading/app/bloc/app_bloc.dart';
+import 'package:local_card_trading/app/auth_bloc/auth_bloc.dart';
 import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
 import 'package:local_card_trading/pages/home/widgets/image_picker.dart';
 
@@ -22,14 +22,14 @@ class _SettingsPhotoState extends State<SettingsPhoto> {
       context: context,
     ).then((imgFile) {
       if (imgFile != null) {
-        context.read<AppBloc>().add(AppUserUpdatePhoto(imgFile));
+        context.read<AuthBloc>().add(AuthUserUpdatePhoto(imgFile));
       }
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final User user = context.select((AppBloc bloc) => bloc.state.user);
+    final User user = context.select((AuthBloc bloc) => bloc.state.user);
 
     return Stack(
       children: [

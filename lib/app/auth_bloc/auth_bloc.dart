@@ -5,50 +5,50 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'app_event.dart';
-part 'app_state.dart';
+part 'auth_event.dart';
+part 'auth_state.dart';
 
-class AppBloc extends Bloc<AppEvent, AppState> {
-  AppBloc({
+class AuthBloc extends Bloc<AuthEvent, AuthState> {
+  AuthBloc({
     required AuthenticationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
         super(
           authenticationRepository.currentUser.isNotEmpty
-              ? AppState.authenticated(authenticationRepository.currentUser)
-              : const AppState.unauthenticated(),
+              ? AuthState.authenticated(authenticationRepository.currentUser)
+              : const AuthState.unauthenticated(),
         ) {
-    on<_AppUserChanged>(_onUserChanged);
-    on<AppLogoutRequested>(_onLogoutRequested);
-    on<AppUserUpdateName>(_onAppUserUpdateName);
-    on<AppUserUpdatePassword>(_onAppUserUpdatePassword);
-    on<AppUserUpdatePhoto>(_onAppUserUpdatePhoto);
-    on<AppUserError>(_onAppUserError);
-    on<AppUserResetError>(_onAppUserResetError);
+    on<_AuthUserChanged>(_onUserChanged);
+    on<AuthLogoutRequested>(_onLogoutRequested);
+    on<AuthUserUpdateName>(_onAuthUserUpdateName);
+    on<AuthUserUpdatePassword>(_onAuthUserUpdatePassword);
+    on<AuthUserUpdatePhoto>(_onAuthUserUpdatePhoto);
+    on<AuthUserError>(_onAuthUserError);
+    on<AuthUserResetError>(_onAuthUserResetError);
 
     _userSubscription = _authenticationRepository.user.listen(
-      (user) => add(_AppUserChanged(user)),
+      (user) => add(_AuthUserChanged(user)),
     );
   }
 
   final AuthenticationRepository _authenticationRepository;
   late final StreamSubscription<User> _userSubscription;
 
-  void _onUserChanged(_AppUserChanged event, Emitter<AppState> emit) {
+  void _onUserChanged(_AuthUserChanged event, Emitter<AuthState> emit) {
     emit(event.user.isNotEmpty
-        ? AppState.authenticated(event.user)
-        : const AppState.unauthenticated());
+        ? AuthState.authenticated(event.user)
+        : const AuthState.unauthenticated());
   }
 
   void _onLogoutRequested(
-    AppLogoutRequested event,
-    Emitter<AppState> emit,
+    AuthLogoutRequested event,
+    Emitter<AuthState> emit,
   ) {
     unawaited(_authenticationRepository.logOut());
   }
 
-  Future<void> _onAppUserUpdateName(
-    AppUserUpdateName event,
-    Emitter<AppState> emit,
+  Future<void> _onAuthUserUpdateName(
+    AuthUserUpdateName event,
+    Emitter<AuthState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -64,9 +64,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  Future<void> _onAppUserUpdatePassword(
-    AppUserUpdatePassword event,
-    Emitter<AppState> emit,
+  Future<void> _onAuthUserUpdatePassword(
+    AuthUserUpdatePassword event,
+    Emitter<AuthState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -84,9 +84,9 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  Future<void> _onAppUserUpdatePhoto(
-    AppUserUpdatePhoto event,
-    Emitter<AppState> emit,
+  Future<void> _onAuthUserUpdatePhoto(
+    AuthUserUpdatePhoto event,
+    Emitter<AuthState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -102,16 +102,16 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     }
   }
 
-  void _onAppUserError(
-    AppUserError event,
-    Emitter<AppState> emit,
+  void _onAuthUserError(
+    AuthUserError event,
+    Emitter<AuthState> emit,
   ) {
     emit(state.copyWith(errorMsg: event.errorMsg));
   }
 
-  void _onAppUserResetError(
-    AppUserResetError event,
-    Emitter<AppState> emit,
+  void _onAuthUserResetError(
+    AuthUserResetError event,
+    Emitter<AuthState> emit,
   ) {
     emit(state.copyWith(errorMsg: ''));
   }

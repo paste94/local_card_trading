@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:local_card_trading/widgets/confirmed_password.dart';
 import 'package:local_card_trading/widgets/password.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_card_trading/app/bloc/app_bloc.dart';
+import 'package:local_card_trading/app/auth_bloc/auth_bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
 class SettingsPassword extends StatefulWidget {
@@ -98,8 +98,8 @@ class _SettingsPasswordState extends State<SettingsPassword> {
                               _newPassword.isValid &&
                               _confirmNewPassword.isValid
                           ? () => context
-                              .read<AppBloc>()
-                              .add(AppUserUpdatePassword(
+                              .read<AuthBloc>()
+                              .add(AuthUserUpdatePassword(
                                 _currentPassword.value,
                                 _newPassword.value,
                                 onSuccess: () => Navigator.of(context).pop(),
@@ -123,7 +123,7 @@ class _SettingsPasswordState extends State<SettingsPassword> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = context.select((AppBloc bloc) => bloc.state.user);
+    final User user = context.select((AuthBloc bloc) => bloc.state.user);
 
     return ListTile(
       leading: const Icon(Icons.lock),

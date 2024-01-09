@@ -4,13 +4,13 @@ import 'package:local_card_trading/pages/home/home.dart';
 import 'package:local_card_trading/pages/login/login.dart';
 
 List<Page<dynamic>> onGenerateAppViewPages(
-  AppStatus state,
+  AuthStatus state,
   List<Page<dynamic>> pages,
 ) {
   switch (state) {
-    case AppStatus.authenticated:
+    case AuthStatus.authenticated:
       return [HomePage.page()];
-    case AppStatus.unauthenticated:
+    case AuthStatus.unauthenticated:
       return [LoginPage.page()];
   }
 }

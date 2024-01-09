@@ -14,6 +14,18 @@ class DetailScreen extends StatefulWidget {
     this.onEditPressed,
   }) : super(key: key);
 
+  static Page<void> page({
+    tag,
+    url,
+    onEditPressed,
+  }) =>
+      MaterialPage<void>(
+          child: DetailScreen(
+        tag: tag,
+        url: url,
+        onEditPressed: onEditPressed,
+      ));
+
   @override
   _DetailScreenState createState() => _DetailScreenState();
 }
