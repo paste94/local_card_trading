@@ -5,8 +5,8 @@ import 'package:local_card_trading/app/app.dart';
 class AddCardToCollectionPage extends StatelessWidget {
   const AddCardToCollectionPage({super.key});
 
-  static Page<void> page() =>
-      const MaterialPage<void>(child: AddCardToCollectionPage());
+  // static Page<void> page() =>
+  //     const MaterialPage<void>(child: AddCardToCollectionPage());
 
   @override
   Widget build(BuildContext context) {
@@ -16,16 +16,20 @@ class AddCardToCollectionPage extends StatelessWidget {
           if (didPop) {
             return;
           }
-          context.read<AuthBloc>().add(const GoToHomePage());
+          context.read<AppBloc>().add(const GoToHomePage());
         },
         child: Scaffold(
           appBar: AppBar(
             title: const Text('Details'),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back),
+            leading: BackButton(
               onPressed: () =>
-                  context.read<AuthBloc>().add(const GoToHomePage()),
+                  context.read<AppBloc>().add(const GoToHomePage()),
             ),
+            // IconButton(
+            //   icon: const Icon(Icons.arrow_back),
+            //   onPressed: () =>
+            //       context.read<AppBloc>().add(const GoToHomePage()),
+            // ),
           ),
           body: const Text('Add Card to collection'),
         ));

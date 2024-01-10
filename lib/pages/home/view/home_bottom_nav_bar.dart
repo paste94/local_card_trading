@@ -16,6 +16,7 @@ class _HomeBottomNavigationBarState extends State<HomeBottomNavigationBar> {
 
   @override
   Widget build(BuildContext context) {
+    _selectedPageIndex = context.read<HomeBloc>().state.selectedPage.index;
     return BlocListener<HomeBloc, HomeState>(
       listenWhen: (previous, current) =>
           previous.selectedPage != current.selectedPage,

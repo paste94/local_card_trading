@@ -1,4 +1,4 @@
-part of 'auth_bloc.dart';
+part of 'app_bloc.dart';
 
 enum AuthStatus {
   authenticated,
@@ -10,8 +10,8 @@ enum SelectedPage {
   addCardToCollection,
 }
 
-final class AuthState extends Equatable {
-  const AuthState._({
+final class AppState extends Equatable {
+  const AppState._({
     required this.status,
     this.selectedPage = SelectedPage.home,
     this.user = User.empty,
@@ -19,10 +19,9 @@ final class AuthState extends Equatable {
     this.isLoading = false,
   });
 
-  const AuthState.unauthenticated()
-      : this._(status: AuthStatus.unauthenticated);
+  const AppState.unauthenticated() : this._(status: AuthStatus.unauthenticated);
 
-  const AuthState.authenticated(User user)
+  const AppState.authenticated(User user)
       : this._(status: AuthStatus.authenticated, user: user);
 
   final AuthStatus status;
@@ -31,14 +30,14 @@ final class AuthState extends Equatable {
   final String errorMsg;
   final bool isLoading;
 
-  AuthState copyWith({
+  AppState copyWith({
     AuthStatus? status,
     SelectedPage? selectedPage,
     User? user,
     String? errorMsg,
     bool? isLoading,
   }) {
-    return AuthState._(
+    return AppState._(
       status: status ?? this.status,
       selectedPage: selectedPage ?? this.selectedPage,
       user: user ?? this.user,
@@ -48,5 +47,11 @@ final class AuthState extends Equatable {
   }
 
   @override
-  List<Object> get props => [status, selectedPage, user, errorMsg, isLoading];
+  List<Object> get props => [
+        status,
+        selectedPage,
+        user,
+        errorMsg,
+        isLoading,
+      ];
 }

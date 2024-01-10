@@ -10,13 +10,17 @@ import 'package:local_card_trading/pages/home/view/home_bottom_nav_bar.dart';
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  static Page<void> page() => const MaterialPage<void>(child: HomePage());
+  // static Page page() {
+  //   return const MaterialPage(child: HomePage());
+  // }
+
+  // static Page<void> page() => const MaterialPage<void>(child: HomePage());
 
   @override
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => HomeBloc()),
+        // BlocProvider(create: (_) => HomeBloc()),
         BlocProvider(create: (_) => MyCollectionCubit()),
       ],
       child: Scaffold(
@@ -31,7 +35,7 @@ class HomePage extends StatelessWidget {
               visible: state.selectedPage == SelectedHomePage.myCollection,
               child: FloatingActionButton(
                 onPressed: () => context
-                    .read<AuthBloc>()
+                    .read<AppBloc>()
                     .add(const GoToAddCardToCollectionPage()),
               ),
             );

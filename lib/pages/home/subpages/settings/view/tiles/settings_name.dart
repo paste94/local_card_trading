@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_card_trading/app/auth_bloc/auth_bloc.dart';
+import 'package:local_card_trading/app/bloc/app_bloc.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 
 class SettingsName extends StatefulWidget {
@@ -15,8 +15,8 @@ class _SettingsNameState extends State<SettingsName> {
   final TextEditingController _nameController = TextEditingController();
 
   void _onConfirm() {
-    context.read<AuthBloc>().add(
-          AuthUserUpdateName(
+    context.read<AppBloc>().add(
+          UserUpdateName(
             _nameController.text,
             onSuccess: Navigator.of(context).pop,
           ),
@@ -25,7 +25,7 @@ class _SettingsNameState extends State<SettingsName> {
 
   @override
   Widget build(BuildContext context) {
-    final User user = context.select((AuthBloc bloc) => bloc.state.user);
+    final User user = context.select((AppBloc bloc) => bloc.state.user);
 
     return ListTile(
       leading: const Icon(Icons.person),

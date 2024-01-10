@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/app/app.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
 
 class App extends StatelessWidget {
   const App({
@@ -17,10 +18,17 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return RepositoryProvider.value(
       value: _authenticationRepository,
-      child: BlocProvider(
-        create: (_) => AuthBloc(
-          authenticationRepository: _authenticationRepository,
-        ),
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            create: (_) => AppBloc(
+              authenticationRepository: _authenticationRepository,
+            ),
+          ),
+          BlocProvider(
+            create: (context) => HomeBloc(),
+          ),
+        ],
         child: const AppView(),
       ),
     );
@@ -37,14 +45,14 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: BlocListener<AuthBloc, AuthState>(
+      home: BlocListener<AppBloc, AppState>(
         listener: (context, state) {
           if (!state.isLoading && dialogContext != null) {
             Navigator.of(dialogContext!).pop();
             dialogContext = null;
           }
           if (state.errorMsg != '') {
-            context.read<AuthBloc>().add(const AuthUserResetError());
+            context.read<AppBloc>().add(const UserResetError());
             showDialog(
               context: context,
               builder: (context) => AlertDialog(
@@ -58,7 +66,7 @@ class AppView extends StatelessWidget {
                 ],
               ),
             ).whenComplete(
-              () => context.read<AuthBloc>().add(const AuthUserResetError()),
+              () => context.read<AppBloc>().add(const UserResetError()),
             );
           }
           if (state.isLoading) {
@@ -83,8 +91,8 @@ class AppView extends StatelessWidget {
                 });
           }
         },
-        child: FlowBuilder<AuthState>(
-          state: context.select((AuthBloc bloc) => bloc.state),
+        child: FlowBuilder<AppState>(
+          state: context.watch<AppBloc>().state,
           onGeneratePages: onGenerateAppViewPages,
         ),
       ),

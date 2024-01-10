@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:local_card_trading/app/auth_bloc/auth_bloc.dart';
+import 'package:local_card_trading/app/bloc/app_bloc.dart';
 
 class SettingsLogout extends StatelessWidget {
   const SettingsLogout({super.key});
@@ -28,7 +28,7 @@ class SettingsLogout extends StatelessWidget {
                 child: Text(AppLocalizations.of(context)!.cancel)),
             TextButton(
               onPressed: () {
-                context.read<AuthBloc>().add(const AuthLogoutRequested());
+                context.read<AppBloc>().add(const LogoutRequested());
                 Navigator.of(context).pop();
               },
               child: Text(AppLocalizations.of(context)!.logout),

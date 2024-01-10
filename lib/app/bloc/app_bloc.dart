@@ -5,52 +5,52 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 
-part 'auth_event.dart';
-part 'auth_state.dart';
+part 'app_event.dart';
+part 'app_state.dart';
 
-class AuthBloc extends Bloc<AuthEvent, AuthState> {
-  AuthBloc({
+class AppBloc extends Bloc<AppEvent, AppState> {
+  AppBloc({
     required AuthenticationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
         super(
           authenticationRepository.currentUser.isNotEmpty
-              ? AuthState.authenticated(authenticationRepository.currentUser)
-              : const AuthState.unauthenticated(),
+              ? AppState.authenticated(authenticationRepository.currentUser)
+              : const AppState.unauthenticated(),
         ) {
-    on<_AuthUserChanged>(_onUserChanged);
-    on<AuthLogoutRequested>(_onLogoutRequested);
-    on<AuthUserUpdateName>(_onAuthUserUpdateName);
-    on<AuthUserUpdatePassword>(_onAuthUserUpdatePassword);
-    on<AuthUserUpdatePhoto>(_onAuthUserUpdatePhoto);
-    on<AuthUserError>(_onAuthUserError);
-    on<AuthUserResetError>(_onAuthUserResetError);
+    on<_UserChanged>(_onUserChanged);
+    on<LogoutRequested>(_onLogoutRequested);
+    on<UserUpdateName>(_onAuthUserUpdateName);
+    on<UserUpdatePassword>(_onAuthUserUpdatePassword);
+    on<UserUpdatePhoto>(_onAuthUserUpdatePhoto);
+    on<UserError>(_onAuthUserError);
+    on<UserResetError>(_onAuthUserResetError);
     on<GoToAddCardToCollectionPage>(_onGoToAddCardToCollectionPage);
     on<GoToHomePage>(_onGoToHomePage);
 
     _userSubscription = _authenticationRepository.user.listen(
-      (user) => add(_AuthUserChanged(user)),
+      (user) => add(_UserChanged(user)),
     );
   }
 
   final AuthenticationRepository _authenticationRepository;
   late final StreamSubscription<User> _userSubscription;
 
-  void _onUserChanged(_AuthUserChanged event, Emitter<AuthState> emit) {
+  void _onUserChanged(_UserChanged event, Emitter<AppState> emit) {
     emit(event.user.isNotEmpty
-        ? AuthState.authenticated(event.user)
-        : const AuthState.unauthenticated());
+        ? AppState.authenticated(event.user)
+        : const AppState.unauthenticated());
   }
 
   void _onLogoutRequested(
-    AuthLogoutRequested event,
-    Emitter<AuthState> emit,
+    LogoutRequested event,
+    Emitter<AppState> emit,
   ) {
     unawaited(_authenticationRepository.logOut());
   }
 
   Future<void> _onAuthUserUpdateName(
-    AuthUserUpdateName event,
-    Emitter<AuthState> emit,
+    UserUpdateName event,
+    Emitter<AppState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -66,8 +66,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onAuthUserUpdatePassword(
-    AuthUserUpdatePassword event,
-    Emitter<AuthState> emit,
+    UserUpdatePassword event,
+    Emitter<AppState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -86,8 +86,8 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   Future<void> _onAuthUserUpdatePhoto(
-    AuthUserUpdatePhoto event,
-    Emitter<AuthState> emit,
+    UserUpdatePhoto event,
+    Emitter<AppState> emit,
   ) async {
     try {
       emit(state.copyWith(isLoading: true));
@@ -104,27 +104,27 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   }
 
   void _onAuthUserError(
-    AuthUserError event,
-    Emitter<AuthState> emit,
+    UserError event,
+    Emitter<AppState> emit,
   ) {
     emit(state.copyWith(errorMsg: event.errorMsg));
   }
 
   void _onAuthUserResetError(
-    AuthUserResetError event,
-    Emitter<AuthState> emit,
+    UserResetError event,
+    Emitter<AppState> emit,
   ) {
     emit(state.copyWith(errorMsg: ''));
   }
 
   void _onGoToAddCardToCollectionPage(
-      GoToAddCardToCollectionPage event, Emitter<AuthState> emit) {
+      GoToAddCardToCollectionPage event, Emitter<AppState> emit) {
     emit(
       state.copyWith(selectedPage: SelectedPage.addCardToCollection),
     );
   }
 
-  void _onGoToHomePage(GoToHomePage event, Emitter<AuthState> emit) {
+  void _onGoToHomePage(GoToHomePage event, Emitter<AppState> emit) {
     emit(
       state.copyWith(selectedPage: SelectedPage.home),
     );
