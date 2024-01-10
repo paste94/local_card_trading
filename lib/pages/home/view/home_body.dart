@@ -21,13 +21,11 @@ class _HomeBodyState extends State<HomeBody> {
 
     return BlocListener<HomeBloc, HomeState>(
       listener: (context, state) {
-        print('LISTEN');
         setState(
           () => _selectedPageIndex =
               SelectedHomePage.values.indexOf(state.selectedPage),
         );
         if (state.isPicDetailsSelected) {
-          print('SET TO TRUE');
           Navigator.push(context, MaterialPageRoute(builder: (_) {
             return DetailScreen(
               tag: 'profile_img_tag',

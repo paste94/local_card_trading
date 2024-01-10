@@ -101,14 +101,10 @@ class LoginCubit extends Cubit<LoginState> {
   @override
   void onChange(Change<LoginState> change) {
     super.onChange(change);
-
-    print(change);
   }
 
   @override
   void onError(Object error, StackTrace stackTrace) {
-    print('$error, $stackTrace');
-
     super.onError(error, stackTrace);
   }
 }

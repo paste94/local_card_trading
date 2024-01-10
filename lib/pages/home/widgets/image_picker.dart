@@ -79,7 +79,7 @@ Future<File?> showImagePickerModal({
                       .then((_) => Navigator.of(context).pop()),
                 ),
               ),
-              Text('Camera'),
+              const Text('Camera'),
             ],
           ),
           const VerticalDivider(
@@ -105,7 +105,7 @@ Future<File?> showImagePickerModal({
                       .then((_) => Navigator.of(context).pop()),
                 ),
               ),
-              Text('Gallery'),
+              const Text('Gallery'),
             ],
           ),
         ],

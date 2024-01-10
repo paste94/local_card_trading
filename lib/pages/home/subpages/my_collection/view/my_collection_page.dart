@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../cubit/my_collection_cubit.dart';
@@ -13,11 +12,10 @@ class MyCollectionPage extends StatelessWidget {
       children: [
         TextField(
           onChanged: (value) {
-            print('***********' + value);
             context.read<MyCollectionCubit>().searchCardTextChanged(value);
           },
         ),
-        Divider(),
+        const Divider(),
         // BlocListener<MyCollectionCubit, MyCollectionState>(
         //   listener: (context, state) {
         //     print('LISTEN ${state}');
@@ -28,11 +26,10 @@ class MyCollectionPage extends StatelessWidget {
           buildWhen: (previous, current) =>
               previous.searchCardText != current.searchCardText,
           builder: (context, state) {
-            print('LISTEN');
             if (state.isSearchPageOpen) {
-              return Text('OPEN');
+              return const Text('OPEN');
             } else {
-              return Text('CLOSED');
+              return const Text('CLOSED');
             }
           },
         ),

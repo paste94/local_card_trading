@@ -9,13 +9,13 @@ class CardSearchPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.black, //change your color here
         ),
-        title: Text("Sample"),
+        title: const Text("Sample"),
         centerTitle: true,
       ),
-      body: Center(
+      body: const Center(
           child: Hero(
         tag: 'OpenSearchTag',
         child: Placeholder(),

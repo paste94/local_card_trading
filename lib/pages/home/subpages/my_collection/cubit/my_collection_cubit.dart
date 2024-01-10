@@ -7,7 +7,6 @@ class MyCollectionCubit extends Cubit<MyCollectionState> {
   MyCollectionCubit() : super(const MyCollectionState.initialState());
 
   void searchCardTextChanged(String value) {
-    print('objectTTTT ${value}');
     emit(state.copyWith(
       searchCardText: value,
     ));
@@ -17,6 +16,5 @@ class MyCollectionCubit extends Cubit<MyCollectionState> {
   void onChange(Change<MyCollectionState> change) {
     // TODO: implement onChange
     super.onChange(change);
-    print('AAAAAAAAAAASSSSSSSS ${change}');
   }
 }

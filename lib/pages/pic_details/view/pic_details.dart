@@ -27,14 +27,13 @@ class DetailScreen extends StatefulWidget {
       ));
 
   @override
-  _DetailScreenState createState() => _DetailScreenState();
+  DetailScreenState createState() => DetailScreenState();
 }
 
-class _DetailScreenState extends State<DetailScreen> {
+class DetailScreenState extends State<DetailScreen> {
   @override
   void dispose() {
     context.read<HomeBloc>(); //.add(const AppUserSelectPicDetails(false));
-    print('DISPOSE');
     super.dispose();
   }
 
@@ -52,7 +51,7 @@ class _DetailScreenState extends State<DetailScreen> {
         ],
       ),
       body: GestureDetector(
-        child: Center(
+        child: const Center(
           child: Hero(
             tag: 'profile_img_tag',
             child: Placeholder(),

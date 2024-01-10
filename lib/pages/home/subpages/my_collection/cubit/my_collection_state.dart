@@ -14,7 +14,6 @@ class MyCollectionState extends Equatable {
   MyCollectionState copyWith({
     String? searchCardText,
   }) {
-    print('objectTTTTTTTTTTT ${searchCardText}');
     return MyCollectionState._(
       isSearchPageOpen: searchCardText != '',
       searchCardText: searchCardText ?? this.searchCardText,
