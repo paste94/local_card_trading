@@ -3,6 +3,7 @@ import 'package:local_card_trading/app/app.dart';
 import 'package:local_card_trading/pages/add_card_to_collection/add_card_to_collection.dart';
 import 'package:local_card_trading/pages/home/home.dart';
 import 'package:local_card_trading/pages/login/login.dart';
+import 'package:local_card_trading/pages/pic_details/pic_details.dart';
 
 List<Page<dynamic>> onGenerateAppViewPages(
   AppState state,
@@ -15,14 +16,17 @@ List<Page<dynamic>> onGenerateAppViewPages(
       switch (selectedPage) {
         case SelectedPage.home:
           return [
-            const MaterialPage(
-              child: HomePage(),
-            ),
+            HomePage.page(),
           ];
         case SelectedPage.addCardToCollection:
           return [
+            HomePage.page(),
+            AddCardToCollectionPage.page(),
+          ];
+        case SelectedPage.profilePicDetails:
+          return [
             const MaterialPage(
-              child: AddCardToCollectionPage(),
+              child: DetailScreen(tag: 'profile_img_tag', url: ''),
             ),
           ];
       }

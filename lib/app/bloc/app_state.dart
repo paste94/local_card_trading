@@ -8,6 +8,7 @@ enum AuthStatus {
 enum SelectedPage {
   home,
   addCardToCollection,
+  profilePicDetails,
 }
 
 final class AppState extends Equatable {

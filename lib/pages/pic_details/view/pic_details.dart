@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:local_card_trading/pages/home/bloc/home_bloc.dart';
@@ -51,19 +52,18 @@ class DetailScreenState extends State<DetailScreen> {
         ],
       ),
       body: GestureDetector(
-        child: const Center(
+        child: Center(
           child: Hero(
             tag: 'profile_img_tag',
-            child: Placeholder(),
+            // child: Placeholder(),
             // child: PhotoView(
             //   imageProvider: const CachedNetworkImageProvider(
             //       'picsum.photos/250?image=9',
             //       scale: 1.0), //(widget.url),
             // ),
-            // CachedNetworkImage(
-            //   imageUrl: widget.url,
-            //   errorWidget: Icon(Icons.error),
-            // ),
+            child: CachedNetworkImage(
+              imageUrl: widget.url,
+            ),
           ),
         ),
         onTap: () {

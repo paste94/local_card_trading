@@ -14,7 +14,7 @@ class HomePage extends StatelessWidget {
   //   return const MaterialPage(child: HomePage());
   // }
 
-  // static Page<void> page() => const MaterialPage<void>(child: HomePage());
+  static Page<void> page() => const MaterialPage<void>(child: HomePage());
 
   @override
   Widget build(BuildContext context) {
