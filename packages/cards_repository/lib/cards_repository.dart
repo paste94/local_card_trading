@@ -1,1 +1,1 @@
-export 'src/cards_repository.dart';
+export 'src/cards_provider.dart';

@@ -1,4 +1,4 @@
-name: card_repository
+name: cards_repository
 description: Dart package which develops model and repository to connect to scryfall api
 version: 1.0.0
 publish_to: none

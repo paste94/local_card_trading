@@ -51,5 +51,9 @@
 
   "insert_current_password":"Insert current password",
   "insert_new_password":"Insert new password",
-  "repeat_new_password":"Repeat new password"
+  "repeat_new_password":"Repeat new password",
+
+
+
+  "search_card":"Search card name"
 }
