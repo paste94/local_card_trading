@@ -53,7 +53,7 @@
   "insert_new_password":"Insert new password",
   "repeat_new_password":"Repeat new password",
 
-
+  "connection_error":"Connection error, please connect to the internet to proceed",
 
   "search_card":"Search card name"
 }

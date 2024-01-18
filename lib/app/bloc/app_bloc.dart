@@ -26,6 +26,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<UserResetError>(_onAuthUserResetError);
     on<GoToAddCardToCollectionPage>(_onGoToAddCardToCollectionPage);
     on<GoToHomePage>(_onGoToHomePage);
+    on<ConnectionError>(_onConnectionError);
+    on<CleanConnectionError>(_onCleanConnectionError);
 
     _userSubscription = _authenticationRepository.user.listen(
       (user) => add(_UserChanged(user)),
@@ -128,6 +130,20 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(
       state.copyWith(selectedPage: SelectedPage.home),
     );
+  }
+
+  void _onConnectionError(
+    ConnectionError event,
+    Emitter<AppState> emit,
+  ) {
+    emit(state.copyWith(connectionError: true));
+  }
+
+  void _onCleanConnectionError(
+    CleanConnectionError event,
+    Emitter<AppState> emit,
+  ) {
+    emit(state.copyWith(connectionError: false));
   }
 
   @override

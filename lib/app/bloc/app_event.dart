@@ -68,3 +68,11 @@ final class GoToAddCardToCollectionPage extends AppEvent {
 final class GoToHomePage extends AppEvent {
   const GoToHomePage();
 }
+
+final class ConnectionError extends AppEvent {
+  const ConnectionError();
+}
+
+final class CleanConnectionError extends AppEvent {
+  const CleanConnectionError();
+}

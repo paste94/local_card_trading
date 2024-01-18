@@ -54,5 +54,7 @@
   "insert_new_password":"Inserire la nuova password",
   "repeat_new_password":"Ripetere la nuova password",
 
+  "connection_error":"Errore di connessione alla rete internet, riconnettere e riprovare",
+
   "search_card":"Nome della carta"
 }

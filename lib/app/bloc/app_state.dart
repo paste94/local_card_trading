@@ -18,6 +18,7 @@ final class AppState extends Equatable {
     this.user = User.empty,
     this.errorMsg = '',
     this.isLoading = false,
+    this.connectionError = false,
   });
 
   const AppState.unauthenticated() : this._(status: AuthStatus.unauthenticated);
@@ -30,6 +31,7 @@ final class AppState extends Equatable {
   final User user;
   final String errorMsg;
   final bool isLoading;
+  final bool connectionError;
 
   AppState copyWith({
     AuthStatus? status,
@@ -37,6 +39,7 @@ final class AppState extends Equatable {
     User? user,
     String? errorMsg,
     bool? isLoading,
+    bool? connectionError,
   }) {
     return AppState._(
       status: status ?? this.status,
@@ -44,6 +47,7 @@ final class AppState extends Equatable {
       user: user ?? this.user,
       errorMsg: errorMsg ?? this.errorMsg,
       isLoading: isLoading ?? this.isLoading,
+      connectionError: connectionError ?? this.connectionError,
     );
   }
 
@@ -54,5 +58,6 @@ final class AppState extends Equatable {
         user,
         errorMsg,
         isLoading,
+        connectionError,
       ];
 }

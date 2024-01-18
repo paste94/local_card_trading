@@ -42,6 +42,22 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     BuildContext? dialogContext;
 
+    MaterialBanner mb = MaterialBanner(
+      padding: const EdgeInsets.all(20),
+      leading: Icon(Icons.error),
+      backgroundColor: Colors.red,
+      content: Text(AppLocalizations.of(context)?.connection_error ?? ''),
+      actions: <Widget>[
+        TextButton(
+          style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all(Colors.black87)),
+          onPressed: () =>
+              context.read<AppBloc>().add(const CleanConnectionError()),
+          child: Text('OK'),
+        ),
+      ],
+    );
+
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -89,6 +105,31 @@ class AppView extends StatelessWidget {
                     ),
                   );
                 });
+          }
+          if (state.connectionError) {
+            ScaffoldMessenger.of(context).showMaterialBanner(
+              MaterialBanner(
+                padding: const EdgeInsets.all(20),
+                leading: Icon(Icons.error),
+                backgroundColor: Colors.red,
+                content:
+                    Text(AppLocalizations.of(context)?.connection_error ?? ''),
+                actions: <Widget>[
+                  TextButton(
+                    style: ButtonStyle(
+                        foregroundColor:
+                            MaterialStateProperty.all(Colors.black87)),
+                    onPressed: () => context
+                        .read<AppBloc>()
+                        .add(const CleanConnectionError()),
+                    child: Text('OK'),
+                  ),
+                ],
+              ),
+            );
+          }
+          if (!state.connectionError) {
+            ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
           }
         },
         child: FlowBuilder<AppState>(
