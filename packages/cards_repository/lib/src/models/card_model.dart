@@ -6,12 +6,11 @@ class MtgCard {
   late Uri _imageUri;
 
   MtgCard.fromJson(Map<String, dynamic> parsedJson) {
-    print(parsedJson);
     _id = parsedJson['id'];
     _language = parsedJson['lang'];
     _name = parsedJson['name'];
     _setName = parsedJson['set_name'];
-    _imageUri = parsedJson['image_uris']['normal'];
+    _imageUri = Uri.parse(parsedJson['image_uris']['normal']);
     _setName = parsedJson['set_name'];
   }
 

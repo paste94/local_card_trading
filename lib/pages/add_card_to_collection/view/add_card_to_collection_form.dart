@@ -10,9 +10,9 @@ class AddCardToCollectionForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      alignment: const Alignment(0, -1 / 3),
-      child: SingleChildScrollView(
+    return SingleChildScrollView(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -31,43 +31,67 @@ class _CardNameInput extends StatelessWidget {
 
     return BlocBuilder<SelectedCardBloc, SelectedCardState>(
       builder: (context, state) {
-        return Column(
+        return Row(
           children: [
-            Autocomplete<String>(
-              fieldViewBuilder: (BuildContext context,
-                  TextEditingController controller,
-                  FocusNode focusNode,
-                  VoidCallback onFieldSubmitted) {
-                return TextFormField(
-                  onChanged: (name) => context
-                      .read<SelectedCardBloc>()
-                      .add(InputNameChanged(name)),
-                  decoration: InputDecoration(
-                    labelText: AppLocalizations.of(context)?.search_card,
-                    helperText: '',
-                  ),
-                  controller: controller,
-                  focusNode: focusNode,
-                  onFieldSubmitted: (String value) {
-                    onFieldSubmitted();
-                  },
-                );
-              },
-              optionsBuilder: (TextEditingValue textEditingValue) async {
-                if (textEditingValue.text.isEmpty) {
-                  return [];
-                }
-                try {
-                  return await api.autoCompleteCardName(textEditingValue.text);
-                } catch (e) {
-                  context.read<AppBloc>().add(const ConnectionError());
-                  return [];
-                }
-              },
-              onSelected: (String selection) {
-                context.read<SelectedCardBloc>().add(CardSelected(selection));
-              },
+            Expanded(
+              flex: 8,
+              child: Autocomplete<String>(
+                fieldViewBuilder: (BuildContext context,
+                    TextEditingController controller,
+                    FocusNode focus,
+                    VoidCallback onFieldSubmitted) {
+                  return BlocListener<SelectedCardBloc, SelectedCardState>(
+                    listenWhen: (previous, current) =>
+                        previous.isInputNameSelected &&
+                        !current.isInputNameSelected,
+                    listener: (context, state) {
+                      controller.text = state.inputName;
+                      Future.delayed(
+                        const Duration(milliseconds: 10),
+                        () => focus.requestFocus(),
+                      );
+                    },
+                    child: TextFormField(
+                      onChanged: (name) => context
+                          .read<SelectedCardBloc>()
+                          .add(InputNameChanged(name)),
+                      decoration: InputDecoration(
+                        labelText: AppLocalizations.of(context)?.search_card,
+                      ),
+                      autofocus: true,
+                      enabled: !state.isInputNameSelected,
+                      controller: controller,
+                      focusNode: focus,
+                      onFieldSubmitted: (String value) => onFieldSubmitted(),
+                    ),
+                  );
+                },
+                optionsBuilder: (TextEditingValue textEditingValue) async {
+                  if (textEditingValue.text.isEmpty) {
+                    return [];
+                  }
+                  try {
+                    return await api
+                        .autoCompleteCardName(textEditingValue.text);
+                  } catch (e) {
+                    context.read<AppBloc>().add(const ConnectionError());
+                    return [];
+                  }
+                },
+                onSelected: (String selection) {
+                  context.read<SelectedCardBloc>().add(CardSelected(selection));
+                },
+              ),
             ),
+            Expanded(
+              flex: 1,
+              child: IconButton(
+                icon: const Icon(Icons.clear),
+                onPressed: () {
+                  context.read<SelectedCardBloc>().add(const CardDeselected());
+                },
+              ),
+            )
           ],
         );
       },

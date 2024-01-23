@@ -16,3 +16,7 @@ final class CardSelected extends SelectedCardEvent {
   const CardSelected(this.inputName);
   final String inputName;
 }
+
+final class CardDeselected extends SelectedCardEvent {
+  const CardDeselected();
+}

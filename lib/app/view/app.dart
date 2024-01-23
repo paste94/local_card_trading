@@ -42,22 +42,6 @@ class AppView extends StatelessWidget {
   Widget build(BuildContext context) {
     BuildContext? dialogContext;
 
-    MaterialBanner mb = MaterialBanner(
-      padding: const EdgeInsets.all(20),
-      leading: Icon(Icons.error),
-      backgroundColor: Colors.red,
-      content: Text(AppLocalizations.of(context)?.connection_error ?? ''),
-      actions: <Widget>[
-        TextButton(
-          style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all(Colors.black87)),
-          onPressed: () =>
-              context.read<AppBloc>().add(const CleanConnectionError()),
-          child: Text('OK'),
-        ),
-      ],
-    );
-
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
@@ -110,7 +94,7 @@ class AppView extends StatelessWidget {
             ScaffoldMessenger.of(context).showMaterialBanner(
               MaterialBanner(
                 padding: const EdgeInsets.all(20),
-                leading: Icon(Icons.error),
+                leading: const Icon(Icons.error),
                 backgroundColor: Colors.red,
                 content:
                     Text(AppLocalizations.of(context)?.connection_error ?? ''),
@@ -122,7 +106,7 @@ class AppView extends StatelessWidget {
                     onPressed: () => context
                         .read<AppBloc>()
                         .add(const CleanConnectionError()),
-                    child: Text('OK'),
+                    child: const Text('OK'),
                   ),
                 ],
               ),
