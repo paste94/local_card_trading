@@ -1,7 +1,7 @@
-part of 'selected_card_bloc.dart';
+part of 'search_card_bloc.dart';
 
-class SelectedCardState extends Equatable {
-  const SelectedCardState({
+class SearchCardState extends Equatable {
+  const SearchCardState({
     this.inputName = '',
     this.isInputNameSelected = false,
     this.selectedCard,
@@ -25,14 +25,14 @@ class SelectedCardState extends Equatable {
         searchSetsList,
       ];
 
-  SelectedCardState copyWith({
+  SearchCardState copyWith({
     String? inputName,
     bool? isInputNameSelected,
     MtgCard? selectedCard,
     List<MtgCard>? searchCardsList,
     List<MtgSet>? searchSetsList,
   }) {
-    return SelectedCardState(
+    return SearchCardState(
       inputName: inputName ?? this.inputName,
       isInputNameSelected: isInputNameSelected ?? this.isInputNameSelected,
       selectedCard: selectedCard ?? this.selectedCard,
@@ -42,4 +42,4 @@ class SelectedCardState extends Equatable {
   }
 }
 
-final class SelectedCardInitial extends SelectedCardState {}
+final class SelectedCardInitial extends SearchCardState {}

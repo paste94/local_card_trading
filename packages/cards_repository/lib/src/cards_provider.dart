@@ -20,7 +20,7 @@ class CardsProvider {
     return stringList;
   }
 
-  Future<void> getCardsFromName(String query) async {
+  Future<Iterable<MtgCard>> getCardsFromName(String query) async {
     final url = Uri.https(_baseUrl, '/cards/search', <String, String?>{
       'q': query,
       'unique': 'prints',
@@ -30,5 +30,6 @@ class CardsProvider {
     final List jsonList = json['data'];
     Iterable<MtgCard> mtgCardList = jsonList.map((e) => MtgCard.fromJson(e));
     print('***listOfJson***: ${mtgCardList.map((e) => e.setName)}');
+    return mtgCardList;
   }
 }
