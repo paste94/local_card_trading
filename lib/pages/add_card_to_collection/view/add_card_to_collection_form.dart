@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cards_repository/cards_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -114,15 +115,14 @@ class _CardList extends StatelessWidget {
     return BlocBuilder<SearchCardBloc, SearchCardState>(
       builder: (context, state) {
         return state.isSearchCardListLoading
-            ? CircularProgressIndicator()
+            ? const Center(child: CircularProgressIndicator())
             : Expanded(
                 child: GridView.count(
-                  crossAxisCount: 2,
-                  childAspectRatio: (0.67),
-                  children: state.searchCardsList
-                      .map((card) => _SearchCardPreview(card: card))
-                      .toList(),
-                ),
+                    crossAxisCount: 2,
+                    childAspectRatio: (0.6),
+                    children: state.searchCardsList
+                        .map((card) => _SearchCardPreview(card: card))
+                        .toList()),
               );
       },
     );
@@ -144,20 +144,35 @@ class _SearchCardPreview extends StatelessWidget {
         ),
         borderRadius: const BorderRadius.all(Radius.circular(12)),
       ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(
-              height: 190,
-              width: 2000,
-              child: Image.network(card.imageUri.toString()),
+      //TODO: Enlarge on click
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Padding(
+            padding: const EdgeInsets.only(top: 8.0),
+            child: CachedNetworkImage(
+              imageUrl: card.imageUriSmall.toString(),
+              placeholder: (_, __) => const SizedBox(
+                height: 204,
+                child: Center(child: CircularProgressIndicator()),
+              ),
+              errorWidget: (_, __, ___) => const SizedBox(
+                height: 204,
+                child: Icon(Icons.image_not_supported),
+              ),
             ),
-            const Divider(),
-            Text(card.setName),
-          ],
-        ),
+
+            ///Image.network(card.imageUriSmall.toString()),
+          ),
+          const Divider(),
+          Padding(
+            padding: const EdgeInsets.only(left: 8.0),
+            child: Align(
+              alignment: Alignment.bottomLeft,
+              child: Text(card.setName),
+            ),
+          ),
+        ],
       ),
     );
   }
