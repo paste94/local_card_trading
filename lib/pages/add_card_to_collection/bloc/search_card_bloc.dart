@@ -27,11 +27,13 @@ class SearchCardBloc extends Bloc<SearchCardEvent, SearchCardState> {
     CardSelected event,
     Emitter<SearchCardState> emit,
   ) async {
+    emit(state.copyWith(isSearchCardListLoading: true));
     Iterable<MtgCard> iterable = await api.getCardsFromName(event.inputName)
       ..toList();
     emit(state.copyWith(
       inputName: event.inputName,
       isInputNameSelected: true,
+      isSearchCardListLoading: false,
       searchCardsList: iterable.toList(),
     ));
   }

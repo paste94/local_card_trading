@@ -113,15 +113,17 @@ class _CardList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<SearchCardBloc, SearchCardState>(
       builder: (context, state) {
-        return Expanded(
-          child: GridView.count(
-            crossAxisCount: 2,
-            childAspectRatio: (0.67),
-            children: state.searchCardsList
-                .map((card) => _SearchCardPreview(card: card))
-                .toList(),
-          ),
-        );
+        return state.isSearchCardListLoading
+            ? CircularProgressIndicator()
+            : Expanded(
+                child: GridView.count(
+                  crossAxisCount: 2,
+                  childAspectRatio: (0.67),
+                  children: state.searchCardsList
+                      .map((card) => _SearchCardPreview(card: card))
+                      .toList(),
+                ),
+              );
       },
     );
   }

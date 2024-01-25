@@ -5,12 +5,14 @@ class SearchCardState extends Equatable {
     this.inputName = '',
     this.isInputNameSelected = false,
     this.selectedCard,
+    this.isSearchCardListLoading = false,
     this.searchCardsList = const [],
     this.searchSetsList = const [],
   });
 
   final String inputName;
   final bool isInputNameSelected;
+  final bool isSearchCardListLoading;
 
   final MtgCard? selectedCard;
   final List<MtgCard> searchCardsList;
@@ -20,6 +22,7 @@ class SearchCardState extends Equatable {
   List<Object?> get props => [
         inputName,
         isInputNameSelected,
+        isSearchCardListLoading,
         selectedCard,
         searchCardsList,
         searchSetsList,
@@ -28,6 +31,7 @@ class SearchCardState extends Equatable {
   SearchCardState copyWith({
     String? inputName,
     bool? isInputNameSelected,
+    bool? isSearchCardListLoading,
     MtgCard? selectedCard,
     List<MtgCard>? searchCardsList,
     List<MtgSet>? searchSetsList,
@@ -35,6 +39,8 @@ class SearchCardState extends Equatable {
     return SearchCardState(
       inputName: inputName ?? this.inputName,
       isInputNameSelected: isInputNameSelected ?? this.isInputNameSelected,
+      isSearchCardListLoading:
+          isSearchCardListLoading ?? this.isSearchCardListLoading,
       selectedCard: selectedCard ?? this.selectedCard,
       searchCardsList: searchCardsList ?? this.searchCardsList,
       searchSetsList: searchSetsList ?? this.searchSetsList,
