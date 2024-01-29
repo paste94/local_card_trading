@@ -6,6 +6,7 @@ class SearchCardState extends Equatable {
     this.isInputNameSelected = false,
     this.selectedCard,
     this.isSearchCardListLoading = false,
+    this.searchCardError = '',
     this.searchCardsList = const [],
     this.searchSetsList = const [],
   });
@@ -13,6 +14,7 @@ class SearchCardState extends Equatable {
   final String inputName;
   final bool isInputNameSelected;
   final bool isSearchCardListLoading;
+  final String searchCardError;
 
   final MtgCard? selectedCard;
   final List<MtgCard> searchCardsList;
@@ -26,6 +28,7 @@ class SearchCardState extends Equatable {
         selectedCard,
         searchCardsList,
         searchSetsList,
+        searchCardError,
       ];
 
   SearchCardState copyWith({
@@ -35,6 +38,7 @@ class SearchCardState extends Equatable {
     MtgCard? selectedCard,
     List<MtgCard>? searchCardsList,
     List<MtgSet>? searchSetsList,
+    String? searchCardError,
   }) {
     return SearchCardState(
       inputName: inputName ?? this.inputName,
@@ -44,6 +48,7 @@ class SearchCardState extends Equatable {
       selectedCard: selectedCard ?? this.selectedCard,
       searchCardsList: searchCardsList ?? this.searchCardsList,
       searchSetsList: searchSetsList ?? this.searchSetsList,
+      searchCardError: searchCardError ?? this.searchCardError,
     );
   }
 }

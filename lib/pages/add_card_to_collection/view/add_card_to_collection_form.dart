@@ -2,7 +2,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cards_repository/cards_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:local_card_trading/app/app.dart';
 import 'package:local_card_trading/pages/add_card_to_collection/bloc/search_card_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -11,15 +10,48 @@ class AddCardToCollectionForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          _CardNameInput(),
-          Divider(),
-          _CardList(),
-        ],
+    return BlocListener<SearchCardBloc, SearchCardState>(
+      listener: (context, state) {
+        if (state.searchCardError.isEmpty) {
+          ScaffoldMessenger.of(context).hideCurrentMaterialBanner();
+        }
+        if (state.searchCardError.isNotEmpty) {
+          ScaffoldMessenger.of(context).showMaterialBanner(
+            MaterialBanner(
+              padding: const EdgeInsets.all(20),
+              leading: const Icon(Icons.error),
+              backgroundColor: Colors.red,
+              content: Text(state.searchCardError),
+              actions: <Widget>[
+                TextButton(
+                  style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all(Colors.black87)),
+                  onPressed: () => context
+                      .read<SearchCardBloc>()
+                      .add(const SearchCardCleanError()),
+                  child: const Text('OK'),
+                ),
+              ],
+            ),
+          );
+        }
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          title: const Text('Details'),
+        ),
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              _CardNameInput(),
+              Divider(),
+              _CardList(),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -32,71 +64,153 @@ class _CardNameInput extends StatelessWidget {
 
     return BlocBuilder<SearchCardBloc, SearchCardState>(
       builder: (context, state) {
-        return Row(
-          children: [
-            Expanded(
-              flex: 8,
-              child: Autocomplete<String>(
-                fieldViewBuilder: (BuildContext context,
-                    TextEditingController controller,
-                    FocusNode focus,
-                    VoidCallback onFieldSubmitted) {
-                  return BlocListener<SearchCardBloc, SearchCardState>(
-                    listenWhen: (previous, current) =>
-                        previous.isInputNameSelected &&
-                        !current.isInputNameSelected,
-                    listener: (context, state) {
-                      controller.text = state.inputName;
-                      Future.delayed(
-                        const Duration(milliseconds: 10),
-                        () => focus.requestFocus(),
-                      );
-                    },
-                    child: TextFormField(
-                      onChanged: (name) => context
-                          .read<SearchCardBloc>()
-                          .add(InputNameChanged(name)),
-                      decoration: InputDecoration(
-                        labelText: AppLocalizations.of(context)?.search_card,
-                      ),
-                      autofocus: true,
-                      enabled: !state.isInputNameSelected,
-                      controller: controller,
-                      focusNode: focus,
-                      onFieldSubmitted: (String value) => onFieldSubmitted(),
-                    ),
-                  );
-                },
-                optionsBuilder: (TextEditingValue textEditingValue) async {
-                  if (textEditingValue.text.isEmpty) {
-                    return [];
-                  }
-                  try {
-                    return await api
-                        .autoCompleteCardName(textEditingValue.text);
-                  } catch (e) {
-                    context.read<AppBloc>().add(const ConnectionError());
-                    return [];
-                  }
-                },
-                onSelected: (String selection) =>
-                    context.read<SearchCardBloc>().add(CardSelected(selection)),
-              ),
-            ),
-            Expanded(
-              flex: 1,
-              child: IconButton(
-                icon: const Icon(Icons.clear),
-                onPressed: () =>
-                    context.read<SearchCardBloc>().add(const CardDeselected()),
-              ),
-            )
-          ],
+        return TextFormField(
+          onChanged: (name) =>
+              context.read<SearchCardBloc>().add(InputNameChanged(name)),
+          decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)?.search_card,
+          ),
+          autofocus: true,
+          enabled: !state.isInputNameSelected,
         );
+        // Row(
+        //   children: [
+        //     Expanded(
+        //       flex: 8,
+        //       child: Autocomplete<String>(
+        //         fieldViewBuilder: (BuildContext context,
+        //             TextEditingController controller,
+        //             FocusNode focus,
+        //             VoidCallback onFieldSubmitted) {
+        //           return BlocListener<SearchCardBloc, SearchCardState>(
+        //             listenWhen: (previous, current) =>
+        //                 previous.isInputNameSelected &&
+        //                 !current.isInputNameSelected,
+        //             listener: (context, state) {
+        //               controller.text = state.inputName;
+        //               Future.delayed(
+        //                 const Duration(milliseconds: 10),
+        //                 () => focus.requestFocus(),
+        //               );
+        //             },
+        //             child: TextFormField(
+        //               onChanged: (name) => context
+        //                   .read<SearchCardBloc>()
+        //                   .add(InputNameChanged(name)),
+        //               decoration: InputDecoration(
+        //                 labelText: AppLocalizations.of(context)?.search_card,
+        //               ),
+        //               autofocus: true,
+        //               enabled: !state.isInputNameSelected,
+        //               controller: controller,
+        //               focusNode: focus,
+        //               onFieldSubmitted: (String value) => onFieldSubmitted(),
+        //             ),
+        //           );
+        //         },
+        //         optionsBuilder: (TextEditingValue textEditingValue) async {
+        //           if (textEditingValue.text.isEmpty) {
+        //             return [];
+        //           }
+        //           try {
+        //             return await api
+        //                 .autoCompleteCardName(textEditingValue.text);
+        //           } catch (e) {
+        //             context.read<AppBloc>().add(const ConnectionError());
+        //             return [];
+        //           }
+        //         },
+        //         onSelected: (String selection) =>
+        //             context.read<SearchCardBloc>().add(CardSelected(selection)),
+        //       ),
+        //     ),
+        //     Expanded(
+        //       flex: 1,
+        //       child: IconButton(
+        //         icon: const Icon(Icons.clear),
+        //         onPressed: () =>
+        //             context.read<SearchCardBloc>().add(const CardDeselected()),
+        //       ),
+        //     )
+        //   ],
+        // );
       },
     );
   }
 }
+
+// class _CardNameInput extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     final api = CardsProvider();
+
+//     return BlocBuilder<SearchCardBloc, SearchCardState>(
+//       builder: (context, state) {
+//         return Row(
+//           children: [
+//             Expanded(
+//               flex: 8,
+//               child: Autocomplete<String>(
+//                 fieldViewBuilder: (BuildContext context,
+//                     TextEditingController controller,
+//                     FocusNode focus,
+//                     VoidCallback onFieldSubmitted) {
+//                   return BlocListener<SearchCardBloc, SearchCardState>(
+//                     listenWhen: (previous, current) =>
+//                         previous.isInputNameSelected &&
+//                         !current.isInputNameSelected,
+//                     listener: (context, state) {
+//                       controller.text = state.inputName;
+//                       Future.delayed(
+//                         const Duration(milliseconds: 10),
+//                         () => focus.requestFocus(),
+//                       );
+//                     },
+//                     child: TextFormField(
+//                       onChanged: (name) => context
+//                           .read<SearchCardBloc>()
+//                           .add(InputNameChanged(name)),
+//                       decoration: InputDecoration(
+//                         labelText: AppLocalizations.of(context)?.search_card,
+//                       ),
+//                       autofocus: true,
+//                       enabled: !state.isInputNameSelected,
+//                       controller: controller,
+//                       focusNode: focus,
+//                       onFieldSubmitted: (String value) => onFieldSubmitted(),
+//                     ),
+//                   );
+//                 },
+//                 optionsBuilder: (TextEditingValue textEditingValue) async {
+//                   if (textEditingValue.text.isEmpty) {
+//                     return [];
+//                   }
+//                   try {
+//                     return await api
+//                         .autoCompleteCardName(textEditingValue.text);
+//                   } catch (e) {
+//                     context.read<AppBloc>().add(const ConnectionError());
+//                     return [];
+//                   }
+//                 },
+//                 onSelected: (String selection) =>
+//                     context.read<SearchCardBloc>().add(CardSelected(selection)),
+//               ),
+//             ),
+//             Expanded(
+//               flex: 1,
+//               child: IconButton(
+//                 icon: const Icon(Icons.clear),
+//                 onPressed: () =>
+//                     context.read<SearchCardBloc>().add(const CardDeselected()),
+//               ),
+//             )
+//           ],
+//         );
+//       },
+//     );
+//   }
+// }
 
 class _SetNameInput extends StatelessWidget {
   const _SetNameInput({super.key});
@@ -151,7 +265,7 @@ class _SearchCardPreview extends StatelessWidget {
           Padding(
             padding: const EdgeInsets.only(top: 8.0),
             child: CachedNetworkImage(
-              imageUrl: card.imageUriSmall.toString(),
+              imageUrl: card.imageUriSmall[0].toString(),
               placeholder: (_, __) => const SizedBox(
                 height: 204,
                 child: Center(child: CircularProgressIndicator()),

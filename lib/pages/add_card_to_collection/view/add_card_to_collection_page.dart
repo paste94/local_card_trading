@@ -15,14 +15,9 @@ class AddCardToCollectionPage extends StatelessWidget {
     return PopScope(
       canPop: false,
       onPopInvoked: (_) => context.read<AppBloc>().add(const GoToHomePage()),
-      child: Scaffold(
-        appBar: AppBar(
-          title: const Text('Details'),
-        ),
-        body: BlocProvider(
-          create: (context) => SearchCardBloc(),
-          child: const AddCardToCollectionForm(),
-        ),
+      child: BlocProvider(
+        create: (context) => SearchCardBloc(),
+        child: const AddCardToCollectionForm(),
       ),
     );
   }
