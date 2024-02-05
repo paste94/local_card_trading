@@ -24,8 +24,8 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     on<UserUpdatePhoto>(_onAuthUserUpdatePhoto);
     on<UserError>(_onAuthUserError);
     on<UserResetError>(_onAuthUserResetError);
-    on<GoToAddCardToCollectionPage>(_onGoToAddCardToCollectionPage);
-    on<GoToHomePage>(_onGoToHomePage);
+    on<NavigateToAddCardToCollectionPage>(_onNavigateToAddCardToCollectionPage);
+    on<CloseAddCardToCollectionPage>(_onCloseAddCardToCollectionPage);
     on<ConnectionError>(_onConnectionError);
     on<CleanConnectionError>(_onCleanConnectionError);
 
@@ -119,16 +119,17 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     emit(state.copyWith(errorMsg: ''));
   }
 
-  void _onGoToAddCardToCollectionPage(
-      GoToAddCardToCollectionPage event, Emitter<AppState> emit) {
+  void _onNavigateToAddCardToCollectionPage(
+      NavigateToAddCardToCollectionPage event, Emitter<AppState> emit) {
     emit(
-      state.copyWith(selectedPage: SelectedPage.addCardToCollection),
+      state.copyWith(isNavigationAddCardToCollection: true),
     );
   }
 
-  void _onGoToHomePage(GoToHomePage event, Emitter<AppState> emit) {
+  void _onCloseAddCardToCollectionPage(
+      CloseAddCardToCollectionPage event, Emitter<AppState> emit) {
     emit(
-      state.copyWith(selectedPage: SelectedPage.home),
+      state.copyWith(isNavigationAddCardToCollection: false),
     );
   }
 

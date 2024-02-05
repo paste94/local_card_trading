@@ -36,7 +36,7 @@ class HomePage extends StatelessWidget {
               child: FloatingActionButton(
                 onPressed: () => context
                     .read<AppBloc>()
-                    .add(const GoToAddCardToCollectionPage()),
+                    .add(const NavigateToAddCardToCollectionPage()),
               ),
             );
           },

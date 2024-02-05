@@ -33,7 +33,7 @@ class CardsProvider {
       late Iterable<MtgCard> mtgCardList =
           jsonList.map((e) => MtgCard.fromJson(e));
       return mtgCardList;
-    } on SocketException catch (e) {
+    } on SocketException catch (_) {
       throw CardsProviderConnectionError();
     }
     // print(jsonList);

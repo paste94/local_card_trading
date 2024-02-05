@@ -61,12 +61,12 @@ final class AuthUserResetIsReauthRequired extends AppEvent {
   const AuthUserResetIsReauthRequired();
 }
 
-final class GoToAddCardToCollectionPage extends AppEvent {
-  const GoToAddCardToCollectionPage();
+final class NavigateToAddCardToCollectionPage extends AppEvent {
+  const NavigateToAddCardToCollectionPage();
 }
 
-final class GoToHomePage extends AppEvent {
-  const GoToHomePage();
+final class CloseAddCardToCollectionPage extends AppEvent {
+  const CloseAddCardToCollectionPage();
 }
 
 final class ConnectionError extends AppEvent {

@@ -60,8 +60,6 @@ class AddCardToCollectionForm extends StatelessWidget {
 class _CardNameInput extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final api = CardsProvider();
-
     return BlocBuilder<SearchCardBloc, SearchCardState>(
       builder: (context, state) {
         return TextFormField(
@@ -283,7 +281,7 @@ class _SearchCardPreview extends StatelessWidget {
             padding: const EdgeInsets.only(left: 8.0),
             child: Align(
               alignment: Alignment.bottomLeft,
-              child: Text(card.setName),
+              child: Text(card.name),
             ),
           ),
         ],

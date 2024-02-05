@@ -12,24 +12,30 @@ List<Page<dynamic>> onGenerateAppViewPages(
   AuthStatus authStatus = state.status;
   switch (authStatus) {
     case AuthStatus.authenticated:
-      SelectedPage selectedPage = state.selectedPage;
-      switch (selectedPage) {
-        case SelectedPage.home:
-          return [
-            HomePage.page(),
-          ];
-        case SelectedPage.addCardToCollection:
-          return [
-            HomePage.page(),
-            AddCardToCollectionPage.page(),
-          ];
-        case SelectedPage.profilePicDetails:
-          return [
-            const MaterialPage(
-              child: DetailScreen(tag: 'profile_img_tag', url: ''),
-            ),
-          ];
-      }
+      return [
+        HomePage.page(),
+        if (state.isNavigationAddCardToCollection)
+          AddCardToCollectionPage.page()
+      ];
+    // SelectedPage selectedPage = state.selectedPage;
+
+    // switch (selectedPage) {
+    //   case SelectedPage.home:
+    //     return [
+    //       HomePage.page(),
+    //     ];
+    //   case SelectedPage.addCardToCollection:
+    //     return [
+    //       HomePage.page(),
+    //       AddCardToCollectionPage.page(),
+    //     ];
+    //   case SelectedPage.profilePicDetails:
+    //     return [
+    //       const MaterialPage(
+    //         child: DetailScreen(tag: 'profile_img_tag', url: ''),
+    //       ),
+    //     ];
+    // }
     case AuthStatus.unauthenticated:
       return [LoginPage.page()];
   }

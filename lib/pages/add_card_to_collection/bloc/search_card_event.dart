@@ -14,9 +14,16 @@ final class InputNameChanged extends SearchCardEvent {
 }
 
 final class CardSelected extends SearchCardEvent {
-  const CardSelected(this.inputName);
+  const CardSelected(this.card);
 
-  final String inputName;
+  final MtgCard card;
+
+  @override
+  List<Object> get props => [card];
+}
+
+final class CardDeselected extends SearchCardEvent {
+  const CardDeselected();
 }
 
 final class SearchCardCleanError extends SearchCardEvent {

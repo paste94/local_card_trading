@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:cards_repository/cards_repository.dart';
@@ -13,6 +11,7 @@ class SearchCardBloc extends Bloc<SearchCardEvent, SearchCardState> {
   SearchCardBloc() : super(SelectedCardInitial()) {
     on<InputNameChanged>(_onInputNameChanged);
     on<CardSelected>(_onCardSelected);
+    on<CardDeselected>(_onCardDeselected);
     on<SearchCardCleanError>(_onSearchCardCleanError);
   }
 
@@ -54,14 +53,17 @@ class SearchCardBloc extends Bloc<SearchCardEvent, SearchCardState> {
     CardSelected event,
     Emitter<SearchCardState> emit,
   ) async {
-    emit(state.copyWith(isSearchCardListLoading: true));
-    Iterable<MtgCard> iterable = await api.getCardsFromName(event.inputName)
-      ..toList();
     emit(state.copyWith(
-      inputName: event.inputName,
-      isInputNameSelected: true,
-      isSearchCardListLoading: false,
-      searchCardsList: iterable.toList(),
+      selectedCard: event.card,
+    ));
+  }
+
+  Future<void> _onCardDeselected(
+    CardDeselected event,
+    Emitter<SearchCardState> emit,
+  ) async {
+    emit(state.copyWith(
+      selectedCard: null,
     ));
   }
 
