@@ -6,7 +6,7 @@ import 'package:local_card_trading/pages/login/login.dart';
 import 'package:local_card_trading/pages/pic_details/pic_details.dart';
 
 List<Page<dynamic>> onGenerateAppViewPages(
-  AppState state,
+  User user,
   List<Page<dynamic>> pages,
 ) {
   AuthStatus authStatus = state.status;

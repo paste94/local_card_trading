@@ -1,0 +1,60 @@
+{
+
+  "app_name":"Local Card Trading",
+
+  "date_format":"dd/MM/yyyy",
+  
+  "enter_email":"Email",
+  "invalid_email":"Email non valida, ricontrolla",
+
+  "password":"Password",
+  "invalid_password":"La password deve essere lunga almeno 8 caratteri e contenere un numero e un simbolo ",
+    
+  "repeat_password":"Ripeti Password",
+  "repeat_invalid_password":"Le password non coincidono",
+
+  "birth_date":"Data di Nascita",
+  "invalid_birth_date":"Spiacente, devi essere maggiorenne",
+
+  "repeat_password":"Ripeti Password",
+  "invalid_repeat_password":"Password differenti!",
+
+  "name":"Nome",
+  "invalid_name":"Assicurati che il nome sia valido",
+
+  "form_not_valid":"Form non valido",
+
+  "login":"Accedi",
+  "login_with_google":"Accedi con Google",
+  "auth_error":"Errore di autenticazione, riprovare",
+  "registration_error":"Errore di registrazione, riprovare",
+
+  "click_to_register": "Tocca qui per registrarti!",
+
+  "register":"Registrati",
+  "click_to_log_in":"Tocca qui per accedere!",
+
+  "logout":"Esci",
+  "account":"Profilo",
+
+  "error_occurred":"Si è verificato un errore",
+  "ok":"Ok",
+  "save":"Salva",
+  "confirm_ans":"Confermare?",
+  "cancel":"Annulla",
+  "confirm_dialog":"Sicuro di volere uscire dall'app?",
+
+  "logoud_dialog_title":"Conferma Disconnessione",
+  "logoud_dialog_text":"Sicuro di volerti disconnettere?",
+
+  "user_settings":"Impostazioni utente",
+  "insert_your_name":"Inserire il nome utente",
+
+  "insert_current_password":"Inserire password attuale",
+  "insert_new_password":"Inserire la nuova password",
+  "repeat_new_password":"Ripetere la nuova password",
+
+  "connection_error":"Errore di connessione alla rete internet, riconnettere e riprovare",
+
+  "search_card":"Nome della carta"
+}

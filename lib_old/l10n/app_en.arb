@@ -1,0 +1,59 @@
+{
+
+  "app_name":"Local Card Trading",
+
+  "date_format":"MM/dd/yyyy",
+
+  "enter_email":"Email",
+  "invalid_email":"Please ensure the email entered is valid",
+  
+  "password":"Password",
+  "invalid_password":"Password must be at least 8 characters and contain at least one letter and number",
+  
+  "repeat_password":"Repeat Password",
+  "repeat_invalid_password":"Passwords do not match",
+  
+  "birth_date":"Birth Date",
+  "invalid_birth_date":"You must be at least 18",
+
+  "repeat_password":"Repeat Password",
+  "invalid_repeat_password":"Different passwords!",
+
+  "name":"Name",
+  "invalid_name":"Please ensure the name is valid",
+  
+  "form_not_valid":"Form not valid",
+
+  "login":"Login",
+  "login_with_google":"Login with Google",
+  "auth_error":"Authentication Error, please try again",
+  "registration_error":"Registration Error, please try again",
+  "click_to_register": "Click here to register!",
+
+  "register":"Register",
+  "click_to_log_in":"Click here to log in!",
+
+  "logout":"Logout",
+  "account":"Account",
+
+  "error_occurred":"An error occurred",
+  "ok":"Ok",
+  "save":"Save",
+  "confirm_ans":"Confirm?",
+  "cancel":"Cancel",
+  "confirm_dialog":"Are you sure you want to log out?",
+
+  "logoud_dialog_title":"Confirm Logout",
+  "logoud_dialog_text":"Are you really sure you want to log out?",
+
+  "user_settings":"User Settings",
+  "insert_your_name":"Insert your name",
+
+  "insert_current_password":"Insert current password",
+  "insert_new_password":"Insert new password",
+  "repeat_new_password":"Repeat new password",
+
+  "connection_error":"Connection error, please connect to the internet to proceed",
+
+  "search_card":"Search card name"
+}
