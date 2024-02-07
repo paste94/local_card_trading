@@ -19,6 +19,7 @@ class Authentication extends _$Authentication {
     required String password,
   }) async {
     try {
+      state = const AuthenticationState.loading();
       await _authRepo.logInWithEmailAndPassword(
         email: email,
         password: password,
@@ -26,10 +27,9 @@ class Authentication extends _$Authentication {
       _userSubscription = _authRepo.user.listen(
         (user) => _userChanged(user),
       );
-    } on LogInWithEmailAndPasswordFailure catch (e) {
-      state = AuthenticationState.unauthenticated(message: e.message);
     } catch (e) {
-      state = AuthenticationState.unauthenticated(message: e.toString());
+      state = const AuthenticationState.initial();
+      rethrow;
     }
   }
 

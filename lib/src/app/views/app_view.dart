@@ -11,9 +11,8 @@ class AppView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    AuthenticationState authState = ref.read(authenticationProvider);
+    AuthenticationState authState = ref.watch(authenticationProvider);
 
-    print('**************** $authState');
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

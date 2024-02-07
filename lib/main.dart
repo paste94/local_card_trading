@@ -5,6 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/firebase_options.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:local_card_trading/src/app/views/app_view.dart';
+import 'package:local_card_trading/src/core/observers/my_observer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,7 +19,10 @@ Future<void> main() async {
   final authenticationRepository = AuthenticationRepository();
   await authenticationRepository.user.first;
 
-  runApp(const ProviderScope(
-    child: AppView(),
+  runApp(ProviderScope(
+    observers: [
+      LogObserver(),
+    ],
+    child: const AppView(),
   ));
 }

@@ -19,39 +19,6 @@ mixin _$LoginState {
   Email get email => throw _privateConstructorUsedError;
   Password get password => throw _privateConstructorUsedError;
   bool get isValid => throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Email email, Password password, bool isValid)
-        initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Email email, Password password, bool isValid)? initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Email email, Password password, bool isValid)? initial,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_LoginState value) initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_LoginState value)? initial,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_LoginState value)? initial,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $LoginStateCopyWith<LoginState> get copyWith =>
@@ -146,12 +113,11 @@ class __$$LoginStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$LoginStateImpl extends _LoginState with DiagnosticableTreeMixin {
+class _$LoginStateImpl with DiagnosticableTreeMixin implements _LoginState {
   const _$LoginStateImpl(
       {this.email = const Email.pure(),
       this.password = const Password.pure(),
-      this.isValid = false})
-      : super._();
+      this.isValid = false});
 
   @override
   @JsonKey()
@@ -165,14 +131,14 @@ class _$LoginStateImpl extends _LoginState with DiagnosticableTreeMixin {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'LoginState.initial(email: $email, password: $password, isValid: $isValid)';
+    return 'LoginState(email: $email, password: $password, isValid: $isValid)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'LoginState.initial'))
+      ..add(DiagnosticsProperty('type', 'LoginState'))
       ..add(DiagnosticsProperty('email', email))
       ..add(DiagnosticsProperty('password', password))
       ..add(DiagnosticsProperty('isValid', isValid));
@@ -197,71 +163,13 @@ class _$LoginStateImpl extends _LoginState with DiagnosticableTreeMixin {
   @pragma('vm:prefer-inline')
   _$$LoginStateImplCopyWith<_$LoginStateImpl> get copyWith =>
       __$$LoginStateImplCopyWithImpl<_$LoginStateImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function(Email email, Password password, bool isValid)
-        initial,
-  }) {
-    return initial(email, password, isValid);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function(Email email, Password password, bool isValid)? initial,
-  }) {
-    return initial?.call(email, password, isValid);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function(Email email, Password password, bool isValid)? initial,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(email, password, isValid);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_LoginState value) initial,
-  }) {
-    return initial(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_LoginState value)? initial,
-  }) {
-    return initial?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_LoginState value)? initial,
-    required TResult orElse(),
-  }) {
-    if (initial != null) {
-      return initial(this);
-    }
-    return orElse();
-  }
 }
 
-abstract class _LoginState extends LoginState {
+abstract class _LoginState implements LoginState {
   const factory _LoginState(
       {final Email email,
       final Password password,
       final bool isValid}) = _$LoginStateImpl;
-  const _LoginState._() : super._();
 
   @override
   Email get email;

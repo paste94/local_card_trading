@@ -10,7 +10,11 @@ part 'login_provider.g.dart';
 class Login extends _$Login {
   @override
   LoginState build() {
-    return const LoginState.initial();
+    return const LoginState();
+  }
+
+  void clear() {
+    state = const LoginState();
   }
 
   void emailChanged(String email) {
