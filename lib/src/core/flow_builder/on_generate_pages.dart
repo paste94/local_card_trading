@@ -3,6 +3,7 @@ import 'package:local_card_trading/src/core/widgets/custom_dialog.dart';
 import 'package:local_card_trading/src/core/widgets/error_snackbar.dart';
 import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
 import 'package:local_card_trading/src/feature/auth/view/login_view.dart';
+import 'package:local_card_trading/src/feature/auth/view/register_view.dart';
 import 'package:local_card_trading/src/feature/home/view/home_view.dart';
 
 List<Page<dynamic>> onGenerateAppViewPages(
@@ -11,6 +12,8 @@ List<Page<dynamic>> onGenerateAppViewPages(
 ) {
   return authStatus.maybeWhen(
     authenticated: (usr) => [HomeView.page()],
-    orElse: () => [LoginView.page()],
+    login: () => [LoginView.page()],
+    register: () => pages + [RegisterView.page()],
+    orElse: () => pages,
   );
 }

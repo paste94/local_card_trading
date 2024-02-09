@@ -5,15 +5,12 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:local_card_trading/src/core/widgets/email.dart';
-import 'package:local_card_trading/src/core/widgets/error_snackbar.dart';
 import 'package:local_card_trading/src/core/widgets/password.dart';
 import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
-
   static Page<void> page() => const MaterialPage<void>(child: LoginView());
-
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginViewState();
 }
@@ -42,12 +39,6 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.watch(authenticationProvider).maybeWhen(
-        unauthenticated: (errorMsg) => {
-              ScaffoldMessenger.of(context)
-                  .showSnackBar(SnackBar(content: Text(errorMsg ?? '')))
-            },
-        orElse: () {});
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.login)),
       body: Padding(
@@ -134,7 +125,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   Widget _signUpButton() => TextButton(
         key: const Key('LoginView_createAccount_flatButton'),
-        onPressed: () => {},
+        onPressed: () => {
+          ref.read(authenticationProvider.notifier).openRegisterPage(),
+        },
         child: Text(
           AppLocalizations.of(context)?.click_to_register ?? '',
           style: TextStyle(color: Theme.of(context).primaryColor),

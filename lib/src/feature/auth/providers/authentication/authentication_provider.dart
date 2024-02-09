@@ -11,7 +11,7 @@ class Authentication extends _$Authentication {
 
   @override
   AuthenticationState build() {
-    return const AuthenticationState.initial();
+    return const AuthenticationState.login();
   }
 
   Future<void> login({
@@ -28,12 +28,20 @@ class Authentication extends _$Authentication {
         (user) => _userChanged(user),
       );
     } catch (e) {
-      state = const AuthenticationState.initial();
+      state = const AuthenticationState.login();
       rethrow;
     }
   }
 
   void _userChanged(User user) {
     state = AuthenticationState.authenticated(user: user);
+  }
+
+  void openRegisterPage() {
+    state = const AuthenticationState.register();
+  }
+
+  void closeRegisterPage() {
+    state = const AuthenticationState.login();
   }
 }
