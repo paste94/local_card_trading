@@ -10,10 +10,12 @@ List<Page<dynamic>> onGenerateAppViewPages(
   AuthenticationState authStatus,
   List<Page<dynamic>> pages,
 ) {
-  return authStatus.maybeWhen(
-    authenticated: (usr) => [HomeView.page()],
-    login: () => [LoginView.page()],
-    register: () => pages + [RegisterView.page()],
-    orElse: () => pages,
-  );
+  if (authStatus.user == null) {
+    return [
+      LoginView.page(),
+      if (authStatus.wannaRegister) RegisterView.page(),
+    ];
+  } else {
+    return [HomeView.page()];
+  }
 }

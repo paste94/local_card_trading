@@ -16,55 +16,12 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthenticationState {
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() login,
-    required TResult Function() register,
-    required TResult Function() loading,
-    required TResult Function(User user) authenticated,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? login,
-    TResult? Function()? register,
-    TResult? Function()? loading,
-    TResult? Function(User user)? authenticated,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? login,
-    TResult Function()? register,
-    TResult Function()? loading,
-    TResult Function(User user)? authenticated,
-    required TResult orElse(),
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Login value) login,
-    required TResult Function(_Register value) register,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Authenticated value) authenticated,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Login value)? login,
-    TResult? Function(_Register value)? register,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Authenticated value)? authenticated,
-  }) =>
-      throw _privateConstructorUsedError;
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Login value)? login,
-    TResult Function(_Register value)? register,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Authenticated value)? authenticated,
-    required TResult orElse(),
-  }) =>
+  bool get wannaRegister => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError;
+  User? get user => throw _privateConstructorUsedError;
+
+  @JsonKey(ignore: true)
+  $AuthenticationStateCopyWith<AuthenticationState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
@@ -73,6 +30,8 @@ abstract class $AuthenticationStateCopyWith<$Res> {
   factory $AuthenticationStateCopyWith(
           AuthenticationState value, $Res Function(AuthenticationState) then) =
       _$AuthenticationStateCopyWithImpl<$Res, AuthenticationState>;
+  @useResult
+  $Res call({bool wannaRegister, bool loading, User? user});
 }
 
 /// @nodoc
@@ -84,492 +43,130 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? wannaRegister = null,
+    Object? loading = null,
+    Object? user = freezed,
+  }) {
+    return _then(_value.copyWith(
+      wannaRegister: null == wannaRegister
+          ? _value.wannaRegister
+          : wannaRegister // ignore: cast_nullable_to_non_nullable
+              as bool,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      user: freezed == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as User?,
+    ) as $Val);
+  }
 }
 
 /// @nodoc
-abstract class _$$LoginImplCopyWith<$Res> {
-  factory _$$LoginImplCopyWith(
-          _$LoginImpl value, $Res Function(_$LoginImpl) then) =
-      __$$LoginImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$LoginImplCopyWithImpl<$Res>
-    extends _$AuthenticationStateCopyWithImpl<$Res, _$LoginImpl>
-    implements _$$LoginImplCopyWith<$Res> {
-  __$$LoginImplCopyWithImpl(
-      _$LoginImpl _value, $Res Function(_$LoginImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$LoginImpl implements _Login {
-  const _$LoginImpl();
-
+abstract class _$$AuthenticationStateImplCopyWith<$Res>
+    implements $AuthenticationStateCopyWith<$Res> {
+  factory _$$AuthenticationStateImplCopyWith(_$AuthenticationStateImpl value,
+          $Res Function(_$AuthenticationStateImpl) then) =
+      __$$AuthenticationStateImplCopyWithImpl<$Res>;
   @override
-  String toString() {
-    return 'AuthenticationState.login()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoginImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() login,
-    required TResult Function() register,
-    required TResult Function() loading,
-    required TResult Function(User user) authenticated,
-  }) {
-    return login();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? login,
-    TResult? Function()? register,
-    TResult? Function()? loading,
-    TResult? Function(User user)? authenticated,
-  }) {
-    return login?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? login,
-    TResult Function()? register,
-    TResult Function()? loading,
-    TResult Function(User user)? authenticated,
-    required TResult orElse(),
-  }) {
-    if (login != null) {
-      return login();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Login value) login,
-    required TResult Function(_Register value) register,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Authenticated value) authenticated,
-  }) {
-    return login(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Login value)? login,
-    TResult? Function(_Register value)? register,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Authenticated value)? authenticated,
-  }) {
-    return login?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Login value)? login,
-    TResult Function(_Register value)? register,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Authenticated value)? authenticated,
-    required TResult orElse(),
-  }) {
-    if (login != null) {
-      return login(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Login implements AuthenticationState {
-  const factory _Login() = _$LoginImpl;
-}
-
-/// @nodoc
-abstract class _$$RegisterImplCopyWith<$Res> {
-  factory _$$RegisterImplCopyWith(
-          _$RegisterImpl value, $Res Function(_$RegisterImpl) then) =
-      __$$RegisterImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$RegisterImplCopyWithImpl<$Res>
-    extends _$AuthenticationStateCopyWithImpl<$Res, _$RegisterImpl>
-    implements _$$RegisterImplCopyWith<$Res> {
-  __$$RegisterImplCopyWithImpl(
-      _$RegisterImpl _value, $Res Function(_$RegisterImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$RegisterImpl implements _Register {
-  const _$RegisterImpl();
-
-  @override
-  String toString() {
-    return 'AuthenticationState.register()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$RegisterImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() login,
-    required TResult Function() register,
-    required TResult Function() loading,
-    required TResult Function(User user) authenticated,
-  }) {
-    return register();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? login,
-    TResult? Function()? register,
-    TResult? Function()? loading,
-    TResult? Function(User user)? authenticated,
-  }) {
-    return register?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? login,
-    TResult Function()? register,
-    TResult Function()? loading,
-    TResult Function(User user)? authenticated,
-    required TResult orElse(),
-  }) {
-    if (register != null) {
-      return register();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Login value) login,
-    required TResult Function(_Register value) register,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Authenticated value) authenticated,
-  }) {
-    return register(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Login value)? login,
-    TResult? Function(_Register value)? register,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Authenticated value)? authenticated,
-  }) {
-    return register?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Login value)? login,
-    TResult Function(_Register value)? register,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Authenticated value)? authenticated,
-    required TResult orElse(),
-  }) {
-    if (register != null) {
-      return register(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Register implements AuthenticationState {
-  const factory _Register() = _$RegisterImpl;
-}
-
-/// @nodoc
-abstract class _$$LoadingImplCopyWith<$Res> {
-  factory _$$LoadingImplCopyWith(
-          _$LoadingImpl value, $Res Function(_$LoadingImpl) then) =
-      __$$LoadingImplCopyWithImpl<$Res>;
-}
-
-/// @nodoc
-class __$$LoadingImplCopyWithImpl<$Res>
-    extends _$AuthenticationStateCopyWithImpl<$Res, _$LoadingImpl>
-    implements _$$LoadingImplCopyWith<$Res> {
-  __$$LoadingImplCopyWithImpl(
-      _$LoadingImpl _value, $Res Function(_$LoadingImpl) _then)
-      : super(_value, _then);
-}
-
-/// @nodoc
-
-class _$LoadingImpl implements _Loading {
-  const _$LoadingImpl();
-
-  @override
-  String toString() {
-    return 'AuthenticationState.loading()';
-  }
-
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LoadingImpl);
-  }
-
-  @override
-  int get hashCode => runtimeType.hashCode;
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() login,
-    required TResult Function() register,
-    required TResult Function() loading,
-    required TResult Function(User user) authenticated,
-  }) {
-    return loading();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? login,
-    TResult? Function()? register,
-    TResult? Function()? loading,
-    TResult? Function(User user)? authenticated,
-  }) {
-    return loading?.call();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? login,
-    TResult Function()? register,
-    TResult Function()? loading,
-    TResult Function(User user)? authenticated,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading();
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Login value) login,
-    required TResult Function(_Register value) register,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Authenticated value) authenticated,
-  }) {
-    return loading(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Login value)? login,
-    TResult? Function(_Register value)? register,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Authenticated value)? authenticated,
-  }) {
-    return loading?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Login value)? login,
-    TResult Function(_Register value)? register,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Authenticated value)? authenticated,
-    required TResult orElse(),
-  }) {
-    if (loading != null) {
-      return loading(this);
-    }
-    return orElse();
-  }
-}
-
-abstract class _Loading implements AuthenticationState {
-  const factory _Loading() = _$LoadingImpl;
-}
-
-/// @nodoc
-abstract class _$$AuthenticatedImplCopyWith<$Res> {
-  factory _$$AuthenticatedImplCopyWith(
-          _$AuthenticatedImpl value, $Res Function(_$AuthenticatedImpl) then) =
-      __$$AuthenticatedImplCopyWithImpl<$Res>;
   @useResult
-  $Res call({User user});
+  $Res call({bool wannaRegister, bool loading, User? user});
 }
 
 /// @nodoc
-class __$$AuthenticatedImplCopyWithImpl<$Res>
-    extends _$AuthenticationStateCopyWithImpl<$Res, _$AuthenticatedImpl>
-    implements _$$AuthenticatedImplCopyWith<$Res> {
-  __$$AuthenticatedImplCopyWithImpl(
-      _$AuthenticatedImpl _value, $Res Function(_$AuthenticatedImpl) _then)
+class __$$AuthenticationStateImplCopyWithImpl<$Res>
+    extends _$AuthenticationStateCopyWithImpl<$Res, _$AuthenticationStateImpl>
+    implements _$$AuthenticationStateImplCopyWith<$Res> {
+  __$$AuthenticationStateImplCopyWithImpl(_$AuthenticationStateImpl _value,
+      $Res Function(_$AuthenticationStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? user = null,
+    Object? wannaRegister = null,
+    Object? loading = null,
+    Object? user = freezed,
   }) {
-    return _then(_$AuthenticatedImpl(
-      user: null == user
+    return _then(_$AuthenticationStateImpl(
+      wannaRegister: null == wannaRegister
+          ? _value.wannaRegister
+          : wannaRegister // ignore: cast_nullable_to_non_nullable
+              as bool,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      user: freezed == user
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
-              as User,
+              as User?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$AuthenticatedImpl implements _Authenticated {
-  const _$AuthenticatedImpl({required this.user});
+class _$AuthenticationStateImpl implements _AuthenticationState {
+  const _$AuthenticationStateImpl(
+      {this.wannaRegister = false, this.loading = false, this.user});
 
   @override
-  final User user;
+  @JsonKey()
+  final bool wannaRegister;
+  @override
+  @JsonKey()
+  final bool loading;
+  @override
+  final User? user;
 
   @override
   String toString() {
-    return 'AuthenticationState.authenticated(user: $user)';
+    return 'AuthenticationState(wannaRegister: $wannaRegister, loading: $loading, user: $user)';
   }
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$AuthenticatedImpl &&
+            other is _$AuthenticationStateImpl &&
+            (identical(other.wannaRegister, wannaRegister) ||
+                other.wannaRegister == wannaRegister) &&
+            (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, user);
+  int get hashCode => Object.hash(runtimeType, wannaRegister, loading, user);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$AuthenticatedImplCopyWith<_$AuthenticatedImpl> get copyWith =>
-      __$$AuthenticatedImplCopyWithImpl<_$AuthenticatedImpl>(this, _$identity);
-
-  @override
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>({
-    required TResult Function() login,
-    required TResult Function() register,
-    required TResult Function() loading,
-    required TResult Function(User user) authenticated,
-  }) {
-    return authenticated(user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? login,
-    TResult? Function()? register,
-    TResult? Function()? loading,
-    TResult? Function(User user)? authenticated,
-  }) {
-    return authenticated?.call(user);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? login,
-    TResult Function()? register,
-    TResult Function()? loading,
-    TResult Function(User user)? authenticated,
-    required TResult orElse(),
-  }) {
-    if (authenticated != null) {
-      return authenticated(user);
-    }
-    return orElse();
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>({
-    required TResult Function(_Login value) login,
-    required TResult Function(_Register value) register,
-    required TResult Function(_Loading value) loading,
-    required TResult Function(_Authenticated value) authenticated,
-  }) {
-    return authenticated(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(_Login value)? login,
-    TResult? Function(_Register value)? register,
-    TResult? Function(_Loading value)? loading,
-    TResult? Function(_Authenticated value)? authenticated,
-  }) {
-    return authenticated?.call(this);
-  }
-
-  @override
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>({
-    TResult Function(_Login value)? login,
-    TResult Function(_Register value)? register,
-    TResult Function(_Loading value)? loading,
-    TResult Function(_Authenticated value)? authenticated,
-    required TResult orElse(),
-  }) {
-    if (authenticated != null) {
-      return authenticated(this);
-    }
-    return orElse();
-  }
+  _$$AuthenticationStateImplCopyWith<_$AuthenticationStateImpl> get copyWith =>
+      __$$AuthenticationStateImplCopyWithImpl<_$AuthenticationStateImpl>(
+          this, _$identity);
 }
 
-abstract class _Authenticated implements AuthenticationState {
-  const factory _Authenticated({required final User user}) =
-      _$AuthenticatedImpl;
+abstract class _AuthenticationState implements AuthenticationState {
+  const factory _AuthenticationState(
+      {final bool wannaRegister,
+      final bool loading,
+      final User? user}) = _$AuthenticationStateImpl;
 
-  User get user;
+  @override
+  bool get wannaRegister;
+  @override
+  bool get loading;
+  @override
+  User? get user;
+  @override
   @JsonKey(ignore: true)
-  _$$AuthenticatedImplCopyWith<_$AuthenticatedImpl> get copyWith =>
+  _$$AuthenticationStateImplCopyWith<_$AuthenticationStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

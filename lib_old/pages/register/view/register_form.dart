@@ -80,7 +80,7 @@ class _PasswordInput extends StatelessWidget {
           key: const Key('signUpForm_passwordInput_textField'),
           onChanged: (password) =>
               context.read<RegisterCubit>().passwordChanged(password),
-          obscureText: true,
+          obscureText: true
           decoration: InputDecoration(
             labelText: AppLocalizations.of(context)!.password,
             errorText: state.password.displayError != null

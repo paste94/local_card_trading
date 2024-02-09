@@ -71,6 +71,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         key: const Key('LoginView_emailInput_textField'),
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
+        enabled: !ref.watch(authenticationProvider).loading,
         decoration: InputDecoration(
             labelText: AppLocalizations.of(context)?.enter_email,
             helperText: '',
@@ -83,6 +84,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         key: const Key('LoginView_passwordInput_textField'),
         controller: passwordController,
         obscureText: true,
+        enabled: !ref.watch(authenticationProvider).loading,
         decoration: InputDecoration(
           labelText: AppLocalizations.of(context)?.password,
           helperText: '',
@@ -92,9 +94,9 @@ class _LoginViewState extends ConsumerState<LoginView> {
         ),
       );
 
-  Widget _loginButton() => ref.watch(authenticationProvider).maybeWhen(
-        loading: () => const CircularProgressIndicator(),
-        orElse: () => ElevatedButton(
+  Widget _loginButton() => ref.watch(authenticationProvider).loading
+      ? const CircularProgressIndicator()
+      : ElevatedButton(
           key: const Key('LoginView_continue_raisedButton'),
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -104,8 +106,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
           ),
           onPressed: isValid ? _logInWithUsernamePassword : null,
           child: Text(AppLocalizations.of(context)?.login ?? ''),
-        ),
-      );
+        );
 
   ElevatedButton _googleLogin() => ElevatedButton.icon(
         key: const Key('LoginView_googleLogin_raisedButton'),
@@ -120,7 +121,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
           backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
         icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
-        onPressed: () => {},
+        onPressed:
+            ref.watch(authenticationProvider).loading ? null : _loginWithGoogle,
       );
 
   Widget _signUpButton() => TextButton(
@@ -134,19 +136,17 @@ class _LoginViewState extends ConsumerState<LoginView> {
         ),
       );
 
-  void _emailChanged() {
-    setState(() {
-      email = Email.dirty(emailController.text);
-      isValid = Formz.validate([email, password]);
-    });
-  }
+  void _emailChanged() => setState(() {
+        email = Email.dirty(emailController.text);
+        _checkValidity();
+      });
 
-  void _passwordChanged() {
-    setState(() {
-      password = Password.dirty(passwordController.text);
-      isValid = Formz.validate([password, password]);
-    });
-  }
+  void _passwordChanged() => setState(() {
+        password = Password.dirty(passwordController.text);
+        isValid = _checkValidity();
+      });
+
+  bool _checkValidity() => Formz.validate([email, password]);
 
   void _logInWithUsernamePassword() => ref
       .read(authenticationProvider.notifier)
@@ -154,6 +154,17 @@ class _LoginViewState extends ConsumerState<LoginView> {
         email: email.value,
         password: password.value,
       )
+      .catchError((error) => {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(error is LogInWithEmailAndPasswordFailure
+                  ? error.message
+                  : AppLocalizations.of(context)!.auth_error),
+            ))
+          });
+
+  void _loginWithGoogle() => ref
+      .read(authenticationProvider.notifier)
+      .loginWithGoogle()
       .catchError((error) => {
             ScaffoldMessenger.of(context).showSnackBar(SnackBar(
               content: Text(error is LogInWithEmailAndPasswordFailure

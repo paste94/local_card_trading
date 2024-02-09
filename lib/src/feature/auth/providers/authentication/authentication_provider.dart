@@ -11,7 +11,7 @@ class Authentication extends _$Authentication {
 
   @override
   AuthenticationState build() {
-    return const AuthenticationState.login();
+    return const AuthenticationState();
   }
 
   Future<void> login({
@@ -19,29 +19,61 @@ class Authentication extends _$Authentication {
     required String password,
   }) async {
     try {
-      state = const AuthenticationState.loading();
+      state = state.copyWith(loading: true);
       await _authRepo.logInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      _userSubscription = _authRepo.user.listen(
+      _authRepo.user.listen(
         (user) => _userChanged(user),
       );
     } catch (e) {
-      state = const AuthenticationState.login();
+      state = state.copyWith(loading: false);
+      rethrow;
+    }
+  }
+
+  Future<void> register({
+    required String email,
+    required String password,
+  }) async {
+    try {
+      state = state.copyWith(loading: true);
+      await _authRepo.signUp(
+        email: email,
+        password: password,
+      );
+      _authRepo.user.listen(
+        (user) => _userChanged(user),
+      );
+    } catch (e) {
+      state = state.copyWith(loading: false);
+      rethrow;
+    }
+  }
+
+  Future<void> loginWithGoogle() async {
+    try {
+      state = state.copyWith(loading: true);
+      await _authRepo.logInWithGoogle();
+      _authRepo.user.listen(
+        (user) => _userChanged(user),
+      );
+    } catch (e) {
+      state = state.copyWith(loading: false);
       rethrow;
     }
   }
 
   void _userChanged(User user) {
-    state = AuthenticationState.authenticated(user: user);
+    state = state.copyWith(user: user);
   }
 
   void openRegisterPage() {
-    state = const AuthenticationState.register();
+    state = state.copyWith(wannaRegister: true);
   }
 
   void closeRegisterPage() {
-    state = const AuthenticationState.login();
+    state = state.copyWith(wannaRegister: false);
   }
 }

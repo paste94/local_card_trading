@@ -1,6 +1,11 @@
+import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:formz/formz.dart';
+import 'package:local_card_trading/src/core/widgets/confirmed_password.dart';
+import 'package:local_card_trading/src/core/widgets/email.dart';
+import 'package:local_card_trading/src/core/widgets/password.dart';
 import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
 
 class RegisterView extends ConsumerStatefulWidget {
@@ -12,6 +17,24 @@ class RegisterView extends ConsumerStatefulWidget {
 }
 
 class _RegisterViewState extends ConsumerState<RegisterView> {
+  Email email = const Email.pure();
+  Password password = const Password.pure();
+  ConfirmedPassword confirmedPassword = ConfirmedPassword.pure();
+  bool isValid = false;
+
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController confirmedPasswordController =
+      TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    emailController.addListener(_emailChanged);
+    passwordController.addListener(_passwordChanged);
+    confirmedPasswordController.addListener(_confirmedPasswordChanged);
+  }
+
   @override
   Widget build(BuildContext context) {
     return PopScope(
@@ -28,156 +51,104 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Placeholder(),
-              TextButton(
-                  onPressed: () => ref
-                      .read(authenticationProvider.notifier)
-                      .closeRegisterPage(),
-                  child: Text('DIOCANE'))
+              const SizedBox(height: 16),
+              _emailInput(),
+              const SizedBox(height: 8),
+              _passwordInput(),
+              const SizedBox(height: 8),
+              _repeatPasswordInput(),
+              const SizedBox(height: 8),
+              _registerButton(),
             ],
           ),
         ),
       ),
     );
   }
+
+  TextField _emailInput() => TextField(
+        key: const Key('LoginView_emailInput_textField'),
+        keyboardType: TextInputType.emailAddress,
+        controller: emailController,
+        decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)?.enter_email,
+            helperText: '',
+            errorText: email.displayError != null
+                ? AppLocalizations.of(context)?.invalid_email
+                : null),
+      );
+
+  TextField _passwordInput() => TextField(
+        key: const Key('LoginView_passwordInput_textField'),
+        obscureText: true,
+        controller: passwordController,
+        decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)?.password,
+            helperText: '',
+            errorText: password.displayError != null
+                ? AppLocalizations.of(context)?.invalid_password
+                : null),
+      );
+
+  TextField _repeatPasswordInput() => TextField(
+        key: const Key('LoginView_repeatPasswordInput_textField'),
+        obscureText: true,
+        controller: confirmedPasswordController,
+        decoration: InputDecoration(
+            labelText: AppLocalizations.of(context)?.repeat_password,
+            helperText: '',
+            errorText: confirmedPassword.displayError != null
+                ? AppLocalizations.of(context)?.invalid_password
+                : null),
+      );
+
+  ElevatedButton _registerButton() => ElevatedButton(
+        key: const Key('signUpForm_continue_raisedButton'),
+        style: ElevatedButton.styleFrom(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+          backgroundColor: Colors.orangeAccent,
+        ),
+        onPressed: isValid ? _register : null,
+        child: Text(AppLocalizations.of(context)!.register),
+      );
+
+  void _emailChanged() => setState(() {
+        email = Email.dirty(emailController.text);
+        isValid = _checkValidity();
+      });
+
+  void _passwordChanged() => setState(() {
+        password = Password.dirty(passwordController.text);
+        confirmedPassword = ConfirmedPassword.dirty(
+          password: passwordController.text,
+          value: confirmedPasswordController.text,
+        );
+        isValid = _checkValidity();
+      });
+
+  void _confirmedPasswordChanged() => setState(() {
+        confirmedPassword = ConfirmedPassword.dirty(
+          password: passwordController.text,
+          value: confirmedPasswordController.text,
+        );
+        isValid = _checkValidity();
+      });
+
+  bool _checkValidity() =>
+      Formz.validate([email, password, confirmedPassword]) &&
+      password.value == confirmedPassword.value;
+
+  void _register() => ref
+      .read(authenticationProvider.notifier)
+      .register(email: email.value, password: password.value)
+      .catchError((error) => {
+            print('DIOCAN'),
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text(error is SignUpWithEmailAndPasswordFailure
+                  ? error.message
+                  : AppLocalizations.of(context)!.auth_error),
+            ))
+          });
 }
-
-// class RegisterForm extends StatelessWidget {
-//   const RegisterForm({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocListener<RegisterCubit, RegisterState>(
-//       listener: (context, state) {
-//         if (state.status.isSuccess) {
-//           Navigator.of(context).pop();
-//         } else if (state.status.isFailure) {
-//           ScaffoldMessenger.of(context)
-//             ..hideCurrentSnackBar()
-//             ..showSnackBar(
-//               SnackBar(
-//                 content: Text(
-//                   state.errorMessage ??
-//                       AppLocalizations.of(context)!.registration_error,
-//                 ),
-//               ),
-//             )
-//                 .closed
-//                 .then((value) => context.read<RegisterCubit>().resetError());
-//         }
-//       },
-//       child: Align(
-//         alignment: const Alignment(0, -1 / 3),
-//         child: Column(
-//           mainAxisSize: MainAxisSize.min,
-//           children: [
-//             _EmailInput(),
-//             const SizedBox(height: 8),
-//             _PasswordInput(),
-//             const SizedBox(height: 8),
-//             _ConfirmPasswordInput(),
-//             const SizedBox(height: 8),
-//             _RegisterButton(),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-
-// class _EmailInput extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<RegisterCubit, RegisterState>(
-//       buildWhen: (previous, current) => previous.email != current.email,
-//       builder: (context, state) {
-//         return TextField(
-//           key: const Key('signUpForm_emailInput_textField'),
-//           onChanged: (email) =>
-//               context.read<RegisterCubit>().emailChanged(email),
-//           keyboardType: TextInputType.emailAddress,
-//           decoration: InputDecoration(
-//             labelText: AppLocalizations.of(context)!.enter_email,
-//             errorText: state.email.displayError != null
-//                 ? AppLocalizations.of(context)!.invalid_email
-//                 : null,
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
-// class _PasswordInput extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<RegisterCubit, RegisterState>(
-//       buildWhen: (previous, current) => previous.password != current.password,
-//       builder: (context, state) {
-//         return TextField(
-//           key: const Key('signUpForm_passwordInput_textField'),
-//           onChanged: (password) =>
-//               context.read<RegisterCubit>().passwordChanged(password),
-//           obscureText: true,
-//           decoration: InputDecoration(
-//             labelText: AppLocalizations.of(context)!.password,
-//             errorText: state.password.displayError != null
-//                 ? AppLocalizations.of(context)!.invalid_password
-//                 : null,
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
-// class _ConfirmPasswordInput extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<RegisterCubit, RegisterState>(
-//       buildWhen: (previous, current) =>
-//           previous.password != current.password ||
-//           previous.confirmedPassword != current.confirmedPassword,
-//       builder: (context, state) {
-//         return TextField(
-//           key: const Key('signUpForm_confirmedPasswordInput_textField'),
-//           onChanged: (confirmPassword) => context
-//               .read<RegisterCubit>()
-//               .confirmedPasswordChanged(confirmPassword),
-//           obscureText: true,
-//           decoration: InputDecoration(
-//             labelText: AppLocalizations.of(context)!.repeat_password,
-//             errorText: state.confirmedPassword.displayError != null
-//                 ? AppLocalizations.of(context)!.invalid_repeat_password
-//                 : null,
-//           ),
-//         );
-//       },
-//     );
-//   }
-// }
-
-// class _RegisterButton extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return BlocBuilder<RegisterCubit, RegisterState>(
-//       builder: (context, state) {
-//         return state.status.isInProgress
-//             ? const CircularProgressIndicator()
-//             : ElevatedButton(
-//                 key: const Key('signUpForm_continue_raisedButton'),
-//                 style: ElevatedButton.styleFrom(
-//                   shape: RoundedRectangleBorder(
-//                     borderRadius: BorderRadius.circular(30),
-//                   ),
-//                   backgroundColor: Colors.orangeAccent,
-//                 ),
-//                 onPressed: state.isValid
-//                     ? () => context.read<RegisterCubit>().signUpFormSubmitted()
-//                     : null,
-//                 child: Text(AppLocalizations.of(context)!.register),
-//               );
-//       },
-//     );
-//   }
-// }
