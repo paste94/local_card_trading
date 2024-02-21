@@ -19,7 +19,7 @@ class RegisterView extends ConsumerStatefulWidget {
 class _RegisterViewState extends ConsumerState<RegisterView> {
   Email email = const Email.pure();
   Password password = const Password.pure();
-  ConfirmedPassword confirmedPassword = ConfirmedPassword.pure();
+  ConfirmedPassword confirmedPassword = const ConfirmedPassword.pure();
   bool isValid = false;
 
   final TextEditingController emailController = TextEditingController();

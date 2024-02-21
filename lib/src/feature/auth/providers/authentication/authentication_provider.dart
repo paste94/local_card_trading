@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
@@ -11,6 +13,9 @@ class Authentication extends _$Authentication {
 
   @override
   AuthenticationState build() {
+    _authRepo.user.listen(
+      (user) => _userChanged(user),
+    );
     return const AuthenticationState();
   }
 
@@ -23,9 +28,6 @@ class Authentication extends _$Authentication {
       await _authRepo.logInWithEmailAndPassword(
         email: email,
         password: password,
-      );
-      _authRepo.user.listen(
-        (user) => _userChanged(user),
       );
     } catch (e) {
       state = state.copyWith(loading: false);
@@ -43,9 +45,6 @@ class Authentication extends _$Authentication {
         email: email,
         password: password,
       );
-      _authRepo.user.listen(
-        (user) => _userChanged(user),
-      );
     } catch (e) {
       state = state.copyWith(loading: false);
       rethrow;
@@ -56,9 +55,6 @@ class Authentication extends _$Authentication {
     try {
       state = state.copyWith(loading: true);
       await _authRepo.logInWithGoogle();
-      _authRepo.user.listen(
-        (user) => _userChanged(user),
-      );
     } catch (e) {
       state = state.copyWith(loading: false);
       rethrow;
@@ -75,5 +71,15 @@ class Authentication extends _$Authentication {
 
   void closeRegisterPage() {
     state = state.copyWith(wannaRegister: false);
+  }
+
+  Future<void> userUpdatePhoto(File imgFile) async {
+    try {
+      state = state.copyWith(loading: true);
+      await _authRepo.updateImage(imgFile);
+    } catch (e) {
+      state = state.copyWith(loading: false);
+      rethrow;
+    }
   }
 }
