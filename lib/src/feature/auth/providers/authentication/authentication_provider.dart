@@ -29,6 +29,7 @@ class Authentication extends _$Authentication {
         email: email,
         password: password,
       );
+      state = state.copyWith(loading: false);
     } catch (e) {
       state = state.copyWith(loading: false);
       rethrow;
@@ -45,6 +46,7 @@ class Authentication extends _$Authentication {
         email: email,
         password: password,
       );
+      state = state.copyWith(loading: false);
     } catch (e) {
       state = state.copyWith(loading: false);
       rethrow;
@@ -55,6 +57,18 @@ class Authentication extends _$Authentication {
     try {
       state = state.copyWith(loading: true);
       await _authRepo.logInWithGoogle();
+      state = state.copyWith(loading: false);
+    } catch (e) {
+      state = state.copyWith(loading: false);
+      rethrow;
+    }
+  }
+
+  Future<void> logout() async {
+    try {
+      state = state.copyWith(loading: true);
+      await _authRepo.logOut();
+      state = state.copyWith(loading: false);
     } catch (e) {
       state = state.copyWith(loading: false);
       rethrow;
@@ -77,7 +91,9 @@ class Authentication extends _$Authentication {
     try {
       state = state.copyWith(loading: true);
       await _authRepo.updateImage(imgFile);
+      state = state.copyWith(loading: false);
     } catch (e) {
+      print('ERROR ${e}');
       state = state.copyWith(loading: false);
       rethrow;
     }

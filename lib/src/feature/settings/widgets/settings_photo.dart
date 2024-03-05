@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -18,8 +17,11 @@ class SettingsPhoto extends ConsumerStatefulWidget {
 class _SettingsPhotoState extends ConsumerState<SettingsPhoto> {
   final _avatarSize = 48.0;
   final _buttonSize = 17.0;
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
   @override
   Widget build(BuildContext context) {
+    final ScaffoldMessengerState? scaffold = _scaffoldKey.currentState;
+
     return Stack(children: [
       SizedBox(
         height: 100,
@@ -51,13 +53,20 @@ class _SettingsPhotoState extends ConsumerState<SettingsPhoto> {
               color: Colors.black,
             ),
             onPressed: () async {
-              File? imgFile = await showImagePickerModal(context: context);
+              File? imgFile;
+              try {
+                imgFile = await showImagePickerModal(context: context);
+              } catch (error) {
+                scaffold?.showSnackBar(SnackBar(
+                  content: Text(error.toString()),
+                ));
+              }
               if (imgFile != null) {
                 ref
                     .read(authenticationProvider.notifier)
                     .userUpdatePhoto(imgFile)
                     .catchError((error) => {
-                          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                          scaffold?.showSnackBar(SnackBar(
                             content: Text(error is UpdatePhotoFailure
                                 ? error.message
                                 : AppLocalizations.of(context)!.auth_error),

@@ -20,6 +20,6 @@ Future<void> main() async {
     observers: [
       LogObserver(),
     ],
-    child: const AppView(),
+    child: AppView(),
   ));
 }

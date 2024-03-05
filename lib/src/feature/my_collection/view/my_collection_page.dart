@@ -12,6 +12,6 @@ class MyCollectionPage extends ConsumerStatefulWidget {
 class _MyCollectionPageState extends ConsumerState<MyCollectionPage> {
   @override
   Widget build(BuildContext context) {
-    return Text('COLLECTION');
+    return const Text('COLLECTION');
   }
 }

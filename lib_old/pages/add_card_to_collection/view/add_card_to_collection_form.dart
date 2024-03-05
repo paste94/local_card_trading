@@ -47,8 +47,8 @@ class AddCardToCollectionForm extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: [
               _CardNameInput(),
-              Divider(),
-              _CardList(),
+              const Divider(),
+              const _CardList(),
             ],
           ),
         ),
@@ -211,7 +211,7 @@ class _CardNameInput extends StatelessWidget {
 // }
 
 class _SetNameInput extends StatelessWidget {
-  const _SetNameInput({super.key});
+  const _SetNameInput();
 
   @override
   Widget build(BuildContext context) {
@@ -220,7 +220,7 @@ class _SetNameInput extends StatelessWidget {
 }
 
 class _CardList extends StatelessWidget {
-  const _CardList({super.key});
+  const _CardList();
 
   @override
   Widget build(BuildContext context) {
@@ -242,7 +242,7 @@ class _CardList extends StatelessWidget {
 }
 
 class _SearchCardPreview extends StatelessWidget {
-  const _SearchCardPreview({required this.card, super.key});
+  const _SearchCardPreview({required this.card});
 
   final MtgCard card;
 

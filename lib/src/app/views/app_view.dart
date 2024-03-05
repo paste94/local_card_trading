@@ -7,7 +7,8 @@ import 'package:local_card_trading/src/feature/auth/providers/authentication/sta
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class AppView extends ConsumerWidget {
-  const AppView({super.key});
+  AppView({super.key});
+  final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,6 +17,7 @@ class AppView extends ConsumerWidget {
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
+      scaffoldMessengerKey: _scaffoldKey,
       home: FlowBuilder<AuthenticationState>(
         state: authState,
         onGeneratePages: onGenerateAppViewPages,

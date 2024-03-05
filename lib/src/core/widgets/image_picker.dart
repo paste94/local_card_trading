@@ -6,14 +6,12 @@ import 'package:local_card_trading/constants/constants.dart';
 
 const _modalButtonSize = 30.0;
 
-Future<File?> _pickImage({
+Future<File?> _cropImage({
   required context,
   required from,
 }) async {
-  var source =
-      from == ImageSourceType.camera ? ImageSource.camera : ImageSource.gallery;
   XFile? image = await ImagePicker().pickImage(
-      source: source,
+      source: from,
       imageQuality: 50,
       preferredCameraDevice: CameraDevice.front);
   if (image == null) {
@@ -70,9 +68,9 @@ Future<File?> showImagePickerModal({
                     Icons.camera_alt,
                     color: Colors.black,
                   ),
-                  onPressed: () => _pickImage(
+                  onPressed: () => _cropImage(
                     context: context,
-                    from: ImageSourceType.camera,
+                    from: ImageSource.camera,
                   )
                       .then((img) => pickedImage = img)
                       .then((_) => Navigator.of(context).pop()),
@@ -96,9 +94,9 @@ Future<File?> showImagePickerModal({
                     Icons.photo,
                     color: Colors.black,
                   ),
-                  onPressed: () => _pickImage(
+                  onPressed: () => _cropImage(
                     context: context,
-                    from: ImageSourceType.gallery,
+                    from: ImageSource.gallery,
                   )
                       .then((img) => pickedImage = img)
                       .then((_) => Navigator.of(context).pop()),

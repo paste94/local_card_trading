@@ -8,6 +8,7 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 import 'package:storage_repository/storage_repository.dart';
+import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 /// {@template sign_up_with_email_and_password_failure}
 /// Thrown during the sign up process if a failure occurs.
@@ -419,6 +420,7 @@ class AuthenticationRepository {
   ) async {
     if (_firebaseAuth.currentUser == null ||
         _firebaseAuth.currentUser!.email == null) {
+      print('NOT FOUND ERROR');
       throw UpdatePhotoFailure.fromCode('user-not-found');
     }
     try {
@@ -428,8 +430,10 @@ class AuthenticationRepository {
       );
       await _firebaseAuth.currentUser!.updatePhotoURL(downloadURL);
     } on firebase_auth.FirebaseAuthException catch (e) {
+      print('AUTH ERROR $e');
       throw UpdatePhotoFailure.fromCode(e.code);
-    } catch (_) {
+    } catch (e) {
+      print('GENERIC ERROR $e');
       throw const UpdatePhotoFailure();
     }
   }

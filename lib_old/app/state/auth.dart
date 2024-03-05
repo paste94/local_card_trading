@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/app/state/app_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
