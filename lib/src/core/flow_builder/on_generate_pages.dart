@@ -18,7 +18,6 @@ List<Page<dynamic>> onGenerateAppViewPages(
   } else {
     return [
       HomeView.page(),
-      if (authStatus.loading) ProgressDialog.page(),
     ];
   }
 }

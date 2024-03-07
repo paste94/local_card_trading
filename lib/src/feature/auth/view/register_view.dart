@@ -1,4 +1,3 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -7,6 +6,7 @@ import 'package:local_card_trading/src/core/widgets/inputs/confirmed_password.da
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
 import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
+import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
 
 class RegisterView extends ConsumerStatefulWidget {
   const RegisterView({super.key});
@@ -37,6 +37,22 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AuthenticationState>(authenticationProvider, (previous, next) {
+      if (next.error != null) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(next.error!),
+              showCloseIcon: true,
+            ),
+          ).closed.then(
+                (value) =>
+                    ref.read(authenticationProvider.notifier).dismissError(),
+              );
+      }
+    });
+
     return PopScope(
       canPop: false,
       onPopInvoked: (canPop) {
@@ -142,13 +158,5 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
   void _register() => ref
       .read(authenticationProvider.notifier)
-      .register(email: email.value, password: password.value)
-      .catchError((error) => {
-            print('DIOCAN'),
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(error is SignUpWithEmailAndPasswordFailure
-                  ? error.message
-                  : AppLocalizations.of(context)!.auth_error),
-            ))
-          });
+      .register(email: email.value, password: password.value);
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
+import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
 import 'package:local_card_trading/src/feature/home/view/home_bottom_nav_items.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -14,8 +15,52 @@ class HomeView extends ConsumerStatefulWidget {
 
 class _HomeViewState extends ConsumerState<HomeView> {
   int _selectedPageIndex = 0;
+  BuildContext? dialogContext;
+
   @override
   Widget build(BuildContext context) {
+    ref.listen<AuthenticationState>(authenticationProvider, (previous, next) {
+      if (next.error != null) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(next.error!),
+              showCloseIcon: true,
+            ),
+          ).closed.then(
+                (value) =>
+                    ref.read(authenticationProvider.notifier).dismissError(),
+              );
+      }
+      if (next.loading) {
+        showDialog(
+            barrierDismissible: false,
+            context: context,
+            builder: (context) {
+              dialogContext = context;
+              return const Dialog(
+                child: Padding(
+                  padding: EdgeInsets.symmetric(vertical: 20),
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      CircularProgressIndicator(),
+                      SizedBox(height: 15),
+                      Text('Loading...')
+                    ],
+                  ),
+                ),
+              );
+            });
+      }
+      if (previous != null && previous.loading && !next.loading) {
+        if (dialogContext != null) {
+          Navigator.of(dialogContext!).pop();
+        }
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -24,8 +69,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
       bottomNavigationBar: _bottomNavBar(),
       floatingActionButton: Visibility(
         child: FloatingActionButton(
-            onPressed: () =>
-                {ref.read(authenticationProvider.notifier).openDialog()}),
+          onPressed: () =>
+              ref.read(authenticationProvider.notifier).openDialog(),
+        ),
       ),
     );
   }

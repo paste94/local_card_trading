@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -93,7 +95,14 @@ class _SettingsPasswordState extends ConsumerState<SettingsPassword> {
                       child: Text(AppLocalizations.of(context)!.cancel),
                     ),
                     TextButton(
-                      onPressed: () => {},
+                      onPressed: () => {
+                        ref
+                            .read(authenticationProvider.notifier)
+                            .updatePassword(
+                              _currentPassword.value,
+                              _newPassword.value,
+                            )
+                      },
                       // _currentPassword.isValid &&
                       //         _newPassword.isValid &&
                       //         _confirmNewPassword.isValid
