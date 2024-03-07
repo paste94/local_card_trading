@@ -9,7 +9,6 @@ part 'authentication_provider.g.dart';
 @riverpod
 class Authentication extends _$Authentication {
   final AuthenticationRepository _authRepo = AuthenticationRepository();
-  late final _userSubscription;
 
   @override
   AuthenticationState build() {
@@ -30,9 +29,12 @@ class Authentication extends _$Authentication {
         password: password,
       );
       state = state.copyWith(loading: false);
-    } catch (e) {
-      state = state.copyWith(loading: false);
-      rethrow;
+    } on LogInWithEmailAndPasswordFailure catch (e) {
+      state = state.copyWith(
+        loading: false,
+        error: e.message,
+      );
+      // rethrow;
     }
   }
 
@@ -47,9 +49,12 @@ class Authentication extends _$Authentication {
         password: password,
       );
       state = state.copyWith(loading: false);
-    } catch (e) {
-      state = state.copyWith(loading: false);
-      rethrow;
+    } on SignUpWithEmailAndPasswordFailure catch (e) {
+      state = state.copyWith(
+        loading: false,
+        error: e.message,
+      );
+      // rethrow;
     }
   }
 
@@ -58,9 +63,12 @@ class Authentication extends _$Authentication {
       state = state.copyWith(loading: true);
       await _authRepo.logInWithGoogle();
       state = state.copyWith(loading: false);
-    } catch (e) {
-      state = state.copyWith(loading: false);
-      rethrow;
+    } on LogInWithGoogleFailure catch (e) {
+      state = state.copyWith(
+        loading: false,
+        error: e.message,
+      );
+      // rethrow;
     }
   }
 
@@ -69,9 +77,12 @@ class Authentication extends _$Authentication {
       state = state.copyWith(loading: true);
       await _authRepo.logOut();
       state = state.copyWith(loading: false);
-    } catch (e) {
-      state = state.copyWith(loading: false);
-      rethrow;
+    } on LogOutFailure catch (e) {
+      state = state.copyWith(
+        loading: false,
+        error: e.message,
+      );
+      // rethrow;
     }
   }
 
@@ -87,15 +98,61 @@ class Authentication extends _$Authentication {
     state = state.copyWith(wannaRegister: false);
   }
 
+  void openDialog() {
+    state = state.copyWith(loading: true);
+  }
+
   Future<void> userUpdatePhoto(File imgFile) async {
     try {
       state = state.copyWith(loading: true);
       await _authRepo.updateImage(imgFile);
       state = state.copyWith(loading: false);
-    } catch (e) {
-      print('ERROR ${e}');
-      state = state.copyWith(loading: false);
-      rethrow;
+    } on UpdatePhotoFailure catch (e) {
+      state = state.copyWith(
+        loading: false,
+        error: e.message,
+      );
+      // rethrow;
     }
+  }
+
+  Future<void> updateName(String newName) async {
+    try {
+      state = state.copyWith(loading: true);
+      await _authRepo.updateUserName(newName);
+      state = state.copyWith(loading: false);
+    } on UpdateNameFailure catch (e) {
+      state = state.copyWith(
+        loading: false,
+        error: e.message,
+      );
+      // rethrow;
+    }
+  }
+
+  Future<void> updatePassword(
+    String currentPassword,
+    String newPassword,
+  ) async {
+    try {
+      state = state.copyWith(loading: true);
+      await _authRepo.updatePassword(
+        currentPassword,
+        newPassword,
+      );
+      state = state.copyWith(loading: false);
+    } on UpdatePasswordFailure catch (e) {
+      state = state.copyWith(
+        loading: false,
+        error: e.message,
+      );
+      // rethrow;
+    }
+  }
+
+  void dismissError() {
+    state = state.copyWith(
+      error: null,
+    );
   }
 }

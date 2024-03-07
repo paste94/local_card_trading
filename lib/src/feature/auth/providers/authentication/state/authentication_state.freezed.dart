@@ -19,6 +19,7 @@ mixin _$AuthenticationState {
   bool get wannaRegister => throw _privateConstructorUsedError;
   bool get loading => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
+  String? get error => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthenticationStateCopyWith<AuthenticationState> get copyWith =>
@@ -31,7 +32,7 @@ abstract class $AuthenticationStateCopyWith<$Res> {
           AuthenticationState value, $Res Function(AuthenticationState) then) =
       _$AuthenticationStateCopyWithImpl<$Res, AuthenticationState>;
   @useResult
-  $Res call({bool wannaRegister, bool loading, User? user});
+  $Res call({bool wannaRegister, bool loading, User? user, String? error});
 }
 
 /// @nodoc
@@ -50,6 +51,7 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
     Object? wannaRegister = null,
     Object? loading = null,
     Object? user = freezed,
+    Object? error = freezed,
   }) {
     return _then(_value.copyWith(
       wannaRegister: null == wannaRegister
@@ -64,6 +66,10 @@ class _$AuthenticationStateCopyWithImpl<$Res, $Val extends AuthenticationState>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -76,7 +82,7 @@ abstract class _$$AuthenticationStateImplCopyWith<$Res>
       __$$AuthenticationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool wannaRegister, bool loading, User? user});
+  $Res call({bool wannaRegister, bool loading, User? user, String? error});
 }
 
 /// @nodoc
@@ -93,6 +99,7 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
     Object? wannaRegister = null,
     Object? loading = null,
     Object? user = freezed,
+    Object? error = freezed,
   }) {
     return _then(_$AuthenticationStateImpl(
       wannaRegister: null == wannaRegister
@@ -107,6 +114,10 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      error: freezed == error
+          ? _value.error
+          : error // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -115,7 +126,10 @@ class __$$AuthenticationStateImplCopyWithImpl<$Res>
 
 class _$AuthenticationStateImpl implements _AuthenticationState {
   const _$AuthenticationStateImpl(
-      {this.wannaRegister = false, this.loading = false, this.user});
+      {this.wannaRegister = false,
+      this.loading = false,
+      this.user,
+      this.error});
 
   @override
   @JsonKey()
@@ -125,10 +139,12 @@ class _$AuthenticationStateImpl implements _AuthenticationState {
   final bool loading;
   @override
   final User? user;
+  @override
+  final String? error;
 
   @override
   String toString() {
-    return 'AuthenticationState(wannaRegister: $wannaRegister, loading: $loading, user: $user)';
+    return 'AuthenticationState(wannaRegister: $wannaRegister, loading: $loading, user: $user, error: $error)';
   }
 
   @override
@@ -139,11 +155,13 @@ class _$AuthenticationStateImpl implements _AuthenticationState {
             (identical(other.wannaRegister, wannaRegister) ||
                 other.wannaRegister == wannaRegister) &&
             (identical(other.loading, loading) || other.loading == loading) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.error, error) || other.error == error));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, wannaRegister, loading, user);
+  int get hashCode =>
+      Object.hash(runtimeType, wannaRegister, loading, user, error);
 
   @JsonKey(ignore: true)
   @override
@@ -157,7 +175,8 @@ abstract class _AuthenticationState implements AuthenticationState {
   const factory _AuthenticationState(
       {final bool wannaRegister,
       final bool loading,
-      final User? user}) = _$AuthenticationStateImpl;
+      final User? user,
+      final String? error}) = _$AuthenticationStateImpl;
 
   @override
   bool get wannaRegister;
@@ -165,6 +184,8 @@ abstract class _AuthenticationState implements AuthenticationState {
   bool get loading;
   @override
   User? get user;
+  @override
+  String? get error;
   @override
   @JsonKey(ignore: true)
   _$$AuthenticationStateImplCopyWith<_$AuthenticationStateImpl> get copyWith =>

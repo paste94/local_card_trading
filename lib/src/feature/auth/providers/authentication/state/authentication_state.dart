@@ -9,5 +9,6 @@ class AuthenticationState with _$AuthenticationState {
     @Default(false) bool wannaRegister,
     @Default(false) bool loading,
     User? user,
+    String? error,
   }) = _AuthenticationState;
 }

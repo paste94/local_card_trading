@@ -1,5 +1,6 @@
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:local_card_trading/src/core/widgets/custom_dialog.dart';
 import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
 import 'package:local_card_trading/src/feature/auth/view/login_view.dart';
 import 'package:local_card_trading/src/feature/auth/view/register_view.dart';
@@ -15,6 +16,9 @@ List<Page<dynamic>> onGenerateAppViewPages(
       if (authStatus.wannaRegister) RegisterView.page(),
     ];
   } else {
-    return [HomeView.page()];
+    return [
+      HomeView.page(),
+      if (authStatus.loading) ProgressDialog.page(),
+    ];
   }
 }

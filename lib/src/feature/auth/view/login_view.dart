@@ -1,12 +1,12 @@
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
-import 'package:local_card_trading/src/core/widgets/email.dart';
-import 'package:local_card_trading/src/core/widgets/password.dart';
+import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
+import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
 import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
+import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -39,6 +39,22 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
+    ref.listen<AuthenticationState>(authenticationProvider, (previous, next) {
+      if (next.error != null) {
+        ScaffoldMessenger.of(context)
+          ..hideCurrentSnackBar()
+          ..showSnackBar(
+            SnackBar(
+              content: Text(next.error!),
+              showCloseIcon: true,
+            ),
+          ).closed.then(
+                (value) =>
+                    ref.read(authenticationProvider.notifier).dismissError(),
+              );
+      }
+    });
+
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.login)),
       body: Padding(
@@ -148,28 +164,11 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   bool _checkValidity() => Formz.validate([email, password]);
 
-  void _logInWithUsernamePassword() => ref
-      .read(authenticationProvider.notifier)
-      .login(
-        email: email.value,
-        password: password.value,
-      )
-      .catchError((error) => {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(error is LogInWithEmailAndPasswordFailure
-                  ? error.message
-                  : AppLocalizations.of(context)!.auth_error),
-            ))
-          });
-
-  void _loginWithGoogle() => ref
-      .read(authenticationProvider.notifier)
-      .loginWithGoogle()
-      .catchError((error) => {
-            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-              content: Text(error is LogInWithEmailAndPasswordFailure
-                  ? error.message
-                  : AppLocalizations.of(context)!.auth_error),
-            ))
-          });
+  void _logInWithUsernamePassword() =>
+      ref.read(authenticationProvider.notifier).login(
+            email: email.value,
+            password: password.value,
+          );
+  void _loginWithGoogle() =>
+      ref.read(authenticationProvider.notifier).loginWithGoogle();
 }

@@ -18,6 +18,7 @@ class _SettingsPhotoState extends ConsumerState<SettingsPhoto> {
   final _avatarSize = 48.0;
   final _buttonSize = 17.0;
   final _scaffoldKey = GlobalKey<ScaffoldMessengerState>();
+
   @override
   Widget build(BuildContext context) {
     final ScaffoldMessengerState? scaffold = _scaffoldKey.currentState;

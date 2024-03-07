@@ -8,7 +8,6 @@ import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:meta/meta.dart';
 import 'package:storage_repository/storage_repository.dart';
-import 'package:firebase_core/firebase_core.dart' as firebase_core;
 
 /// {@template sign_up_with_email_and_password_failure}
 /// Thrown during the sign up process if a failure occurs.
@@ -255,7 +254,13 @@ class UpdatePhotoFailure implements Exception {
 }
 
 /// Thrown during the logout process if a failure occurs.
-class LogOutFailure implements Exception {}
+class LogOutFailure implements Exception {
+  final String message;
+
+  const LogOutFailure([
+    this.message = 'Log out exception occurred.',
+  ]);
+}
 
 /// {@template authentication_repository}
 /// Repository which manages user authentication.
@@ -334,17 +339,20 @@ class AuthenticationRepository {
         credential = userCredential.credential!;
       } else {
         final googleUser = await _googleSignIn.signIn();
-        final googleAuth = await googleUser!.authentication;
-        credential = firebase_auth.GoogleAuthProvider.credential(
-          accessToken: googleAuth.accessToken,
-          idToken: googleAuth.idToken,
-        );
+        if (googleUser != null) {
+          final googleAuth = await googleUser.authentication;
+          credential = firebase_auth.GoogleAuthProvider.credential(
+            accessToken: googleAuth.accessToken,
+            idToken: googleAuth.idToken,
+          );
+          await _firebaseAuth.signInWithCredential(credential);
+        }
       }
-
-      await _firebaseAuth.signInWithCredential(credential);
     } on firebase_auth.FirebaseAuthException catch (e) {
+      print('FirebaseAuthException: ${e}');
       throw LogInWithGoogleFailure.fromCode(e.code);
-    } catch (_) {
+    } catch (e, stackTrace) {
+      print('Exception: ${stackTrace}');
       throw const LogInWithGoogleFailure();
     }
   }

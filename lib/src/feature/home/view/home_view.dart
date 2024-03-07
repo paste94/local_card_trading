@@ -16,8 +16,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
   int _selectedPageIndex = 0;
   @override
   Widget build(BuildContext context) {
-    ref.watch(authenticationProvider).loading;
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Home'),
@@ -25,7 +23,9 @@ class _HomeViewState extends ConsumerState<HomeView> {
       body: widgetsList.elementAt(_selectedPageIndex),
       bottomNavigationBar: _bottomNavBar(),
       floatingActionButton: Visibility(
-        child: FloatingActionButton(onPressed: () => {}),
+        child: FloatingActionButton(
+            onPressed: () =>
+                {ref.read(authenticationProvider.notifier).openDialog()}),
       ),
     );
   }

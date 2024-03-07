@@ -8,8 +8,8 @@ class ProgressDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return const Dialog(
-      child: CircularProgressIndicator(),
+    return Scaffold(
+      backgroundColor: Colors.transparent,
     );
   }
 }
