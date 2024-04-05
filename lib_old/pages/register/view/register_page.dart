@@ -17,8 +17,7 @@ class RegisterPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8),
         child: BlocProvider<RegisterCubit>(
-          create: (_) =>
-              RegisterCubit(context.read<AuthenticationRepository>()),
+          create: (_) => RegisterCubit(context.read<NavigationRepository>()),
           child: const RegisterForm(),
         ),
       ),

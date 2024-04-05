@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
 
 class SettingsLogout extends ConsumerWidget {
   const SettingsLogout({super.key});
@@ -24,7 +24,7 @@ class SettingsLogout extends ConsumerWidget {
               ),
               TextButton(
                 onPressed: () => ref
-                    .read(authenticationProvider.notifier)
+                    .read(navigationProvider.notifier)
                     .logout()
                     .then(Navigator.of(context).pop),
                 child: Text(AppLocalizations.of(context)!.logout),

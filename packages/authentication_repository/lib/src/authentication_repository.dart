@@ -265,9 +265,9 @@ class LogOutFailure implements Exception {
 /// {@template authentication_repository}
 /// Repository which manages user authentication.
 /// {@endtemplate}
-class AuthenticationRepository {
+class NavigationRepository {
   /// {@macro authentication_repository}
-  AuthenticationRepository({
+  NavigationRepository({
     CacheClient? cache,
     firebase_auth.FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,

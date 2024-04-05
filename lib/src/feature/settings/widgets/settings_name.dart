@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
 
 class SettingsName extends ConsumerStatefulWidget {
   const SettingsName({super.key});
@@ -15,16 +15,16 @@ class _SettingsNameState extends ConsumerState<SettingsName> {
   final TextEditingController _nameController = TextEditingController();
 
   Future<void> _onConfirm() async {
-    if (ref.watch(authenticationProvider).user?.name != _nameController.text) {
+    if (ref.watch(navigationProvider).user?.name != _nameController.text) {
       await ref
-          .read(authenticationProvider.notifier)
+          .read(navigationProvider.notifier)
           .updateName(_nameController.text);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final User? user = ref.watch(authenticationProvider).user;
+    final User? user = ref.watch(navigationProvider).user;
 
     return ListTile(
       leading: const Icon(Icons.person),

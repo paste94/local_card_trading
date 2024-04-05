@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:local_card_trading/src/feature/home/view/home_bottom_nav_items.dart';
 
 class HomeView extends ConsumerStatefulWidget {
@@ -19,7 +19,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AuthenticationState>(authenticationProvider, (previous, next) {
+    ref.listen<NavigationState>(navigationProvider, (previous, next) {
       if (next.error != null) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
@@ -29,8 +29,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
               showCloseIcon: true,
             ),
           ).closed.then(
-                (value) =>
-                    ref.read(authenticationProvider.notifier).dismissError(),
+                (value) => ref.read(navigationProvider.notifier).dismissError(),
               );
       }
       if (next.loading) {
@@ -55,6 +54,7 @@ class _HomeViewState extends ConsumerState<HomeView> {
             });
       }
       if (previous != null && previous.loading && !next.loading) {
+        print('DISMISSSSSS');
         if (dialogContext != null) {
           Navigator.of(dialogContext!).pop();
         }
@@ -67,12 +67,12 @@ class _HomeViewState extends ConsumerState<HomeView> {
       ),
       body: widgetsList.elementAt(_selectedPageIndex),
       bottomNavigationBar: _bottomNavBar(),
-      floatingActionButton: Visibility(
-        child: FloatingActionButton(
-          onPressed: () =>
-              ref.read(authenticationProvider.notifier).openDialog(),
-        ),
-      ),
+      // floatingActionButton: Visibility(
+      //   child: FloatingActionButton(
+      //     onPressed: () =>
+      //         ref.read(navigationProvider.notifier).openDialog(),
+      //   ),
+      // ),
     );
   }
 

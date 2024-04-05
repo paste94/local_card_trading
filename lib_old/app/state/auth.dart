@@ -8,8 +8,7 @@ part 'auth.g.dart';
 
 @riverpod
 class AppState extends _$AppState {
-  final AuthenticationRepository _authenticationRepository =
-      AuthenticationRepository();
+  final NavigationRepository _authenticationRepository = NavigationRepository();
   late final StreamSubscription<User> _userSubscription;
 
   @override

@@ -1,21 +1,21 @@
 import 'dart:io';
 
 import 'package:authentication_repository/authentication_repository.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
+import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
-part 'authentication_provider.g.dart';
+part 'navigation_provider.g.dart';
 
 @riverpod
-class Authentication extends _$Authentication {
-  final AuthenticationRepository _authRepo = AuthenticationRepository();
+class Navigation extends _$Navigation {
+  final NavigationRepository _authRepo = NavigationRepository();
 
   @override
-  AuthenticationState build() {
+  NavigationState build() {
     _authRepo.user.listen(
       (user) => _userChanged(user),
     );
-    return const AuthenticationState();
+    return const NavigationState();
   }
 
   Future<void> login({
@@ -154,5 +154,13 @@ class Authentication extends _$Authentication {
     state = state.copyWith(
       error: null,
     );
+  }
+
+  void openAddCardPage() {
+    state = state.copyWith(isAddCardPageOpen: true);
+  }
+
+  void closeAddCardPage() {
+    state = state.copyWith(isAddCardPageOpen: false);
   }
 }

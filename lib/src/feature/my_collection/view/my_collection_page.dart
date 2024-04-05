@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
 
 class MyCollectionPage extends ConsumerStatefulWidget {
   const MyCollectionPage({super.key});
@@ -12,6 +13,12 @@ class MyCollectionPage extends ConsumerStatefulWidget {
 class _MyCollectionPageState extends ConsumerState<MyCollectionPage> {
   @override
   Widget build(BuildContext context) {
-    return const Text('COLLECTION');
+    return Scaffold(
+      body: const Text('COLLECTION'),
+      floatingActionButton: FloatingActionButton(
+        onPressed: ref.read(navigationProvider.notifier).openAddCardPage,
+        child: const Icon(Icons.add),
+      ),
+    );
   }
 }

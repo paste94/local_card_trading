@@ -5,8 +5,8 @@ import 'package:formz/formz.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/confirmed_password.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 
 class RegisterView extends ConsumerStatefulWidget {
   const RegisterView({super.key});
@@ -37,7 +37,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AuthenticationState>(authenticationProvider, (previous, next) {
+    ref.listen<NavigationState>(navigationProvider, (previous, next) {
       if (next.error != null) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
@@ -47,8 +47,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
               showCloseIcon: true,
             ),
           ).closed.then(
-                (value) =>
-                    ref.read(authenticationProvider.notifier).dismissError(),
+                (value) => ref.read(navigationProvider.notifier).dismissError(),
               );
       }
     });
@@ -57,7 +56,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
       canPop: false,
       onPopInvoked: (canPop) {
         if (!canPop) {
-          ref.read(authenticationProvider.notifier).closeRegisterPage();
+          ref.read(navigationProvider.notifier).closeRegisterPage();
         }
       },
       child: Scaffold(
@@ -157,6 +156,6 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
       password.value == confirmedPassword.value;
 
   void _register() => ref
-      .read(authenticationProvider.notifier)
+      .read(navigationProvider.notifier)
       .register(email: email.value, password: password.value);
 }

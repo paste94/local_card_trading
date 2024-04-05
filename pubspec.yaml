@@ -32,8 +32,6 @@ dependencies:
     path: packages/authentication_repository
   storage_repository:
     path: packages/storage_repository
-  cards_repository:
-    path: packages/cards_repository
   flutter:
     sdk: flutter
   firebase_core: ^2.13.0
@@ -68,6 +66,7 @@ dependencies:
   riverpod_annotation: ^2.3.4
   freezed_annotation: ^2.4.1
   json_annotation: ^4.8.1
+  http: ^1.2.0
 
 dev_dependencies:
   flutter_test:

@@ -5,8 +5,8 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/state/authentication_state.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
@@ -39,7 +39,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<AuthenticationState>(authenticationProvider, (previous, next) {
+    ref.listen<NavigationState>(navigationProvider, (previous, next) {
       if (next.error != null) {
         ScaffoldMessenger.of(context)
           ..hideCurrentSnackBar()
@@ -49,8 +49,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
               showCloseIcon: true,
             ),
           ).closed.then(
-                (value) =>
-                    ref.read(authenticationProvider.notifier).dismissError(),
+                (value) => ref.read(navigationProvider.notifier).dismissError(),
               );
       }
     });
@@ -87,7 +86,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         key: const Key('LoginView_emailInput_textField'),
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
-        enabled: !ref.watch(authenticationProvider).loading,
+        enabled: !ref.watch(navigationProvider).loading,
         decoration: InputDecoration(
             labelText: AppLocalizations.of(context)?.enter_email,
             helperText: '',
@@ -100,7 +99,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         key: const Key('LoginView_passwordInput_textField'),
         controller: passwordController,
         obscureText: true,
-        enabled: !ref.watch(authenticationProvider).loading,
+        enabled: !ref.watch(navigationProvider).loading,
         decoration: InputDecoration(
           labelText: AppLocalizations.of(context)?.password,
           helperText: '',
@@ -110,7 +109,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         ),
       );
 
-  Widget _loginButton() => ref.watch(authenticationProvider).loading
+  Widget _loginButton() => ref.watch(navigationProvider).loading
       ? const CircularProgressIndicator()
       : ElevatedButton(
           key: const Key('LoginView_continue_raisedButton'),
@@ -138,13 +137,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
         ),
         icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
         onPressed:
-            ref.watch(authenticationProvider).loading ? null : _loginWithGoogle,
+            ref.watch(navigationProvider).loading ? null : _loginWithGoogle,
       );
 
   Widget _signUpButton() => TextButton(
         key: const Key('LoginView_createAccount_flatButton'),
         onPressed: () => {
-          ref.read(authenticationProvider.notifier).openRegisterPage(),
+          ref.read(navigationProvider.notifier).openRegisterPage(),
         },
         child: Text(
           AppLocalizations.of(context)?.click_to_register ?? '',
@@ -165,10 +164,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
   bool _checkValidity() => Formz.validate([email, password]);
 
   void _logInWithUsernamePassword() =>
-      ref.read(authenticationProvider.notifier).login(
+      ref.read(navigationProvider.notifier).login(
             email: email.value,
             password: password.value,
           );
   void _loginWithGoogle() =>
-      ref.read(authenticationProvider.notifier).loginWithGoogle();
+      ref.read(navigationProvider.notifier).loginWithGoogle();
 }

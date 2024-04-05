@@ -5,7 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/inputs.dart';
-import 'package:local_card_trading/src/feature/auth/providers/authentication/authentication_provider.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
 
 class SettingsPassword extends ConsumerStatefulWidget {
   const SettingsPassword({super.key});
@@ -96,9 +96,7 @@ class _SettingsPasswordState extends ConsumerState<SettingsPassword> {
                     ),
                     TextButton(
                       onPressed: () => {
-                        ref
-                            .read(authenticationProvider.notifier)
-                            .updatePassword(
+                        ref.read(navigationProvider.notifier).updatePassword(
                               _currentPassword.value,
                               _newPassword.value,
                             )
@@ -133,7 +131,7 @@ class _SettingsPasswordState extends ConsumerState<SettingsPassword> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = ref.watch(authenticationProvider).user;
+    final User? user = ref.watch(navigationProvider).user;
 
     return ListTile(
       leading: const Icon(Icons.lock),

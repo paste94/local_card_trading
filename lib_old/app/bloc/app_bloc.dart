@@ -8,7 +8,7 @@ part 'app_state.dart';
 
 class AppBloc extends Bloc<AppEvent, AppState> {
   AppBloc({
-    required AuthenticationRepository authenticationRepository,
+    required NavigationRepository authenticationRepository,
   })  : _authenticationRepository = authenticationRepository,
         super(
           authenticationRepository.currentUser.isNotEmpty
@@ -32,7 +32,7 @@ class AppBloc extends Bloc<AppEvent, AppState> {
     );
   }
 
-  final AuthenticationRepository _authenticationRepository;
+  final NavigationRepository _authenticationRepository;
   late final StreamSubscription<User> _userSubscription;
 
   void _onUserChanged(_UserChanged event, Emitter<AppState> emit) {
