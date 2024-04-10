@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:formz/formz.dart';
+import 'package:local_card_trading/src/app/handlers/error_handler.dart';
+import 'package:local_card_trading/src/app/handlers/loading_handler.dart';
+import 'package:local_card_trading/src/core/errors/error_provider.dart';
+import 'package:local_card_trading/src/core/errors/state/error_state.dart';
+import 'package:local_card_trading/src/core/loading/loading_provider.dart';
+import 'package:local_card_trading/src/core/loading/state/loading_state.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/confirmed_password.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
@@ -37,20 +43,17 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    ref.listen<NavigationState>(navigationProvider, (previous, next) {
-      if (next.error != null) {
-        ScaffoldMessenger.of(context)
-          ..hideCurrentSnackBar()
-          ..showSnackBar(
-            SnackBar(
-              content: Text(next.error!),
-              showCloseIcon: true,
-            ),
-          ).closed.then(
-                (value) => ref.read(navigationProvider.notifier).dismissError(),
-              );
-      }
-    });
+    LoadingHandler loadingHandler = LoadingHandler();
+
+    ref.listen<ErrorState>(
+      errorProvider,
+      (previous, next) => errorHandler(context, ref, previous, next),
+    );
+
+    ref.listen<LoadingState>(
+      loadingProvider,
+      (previous, next) => loadingHandler.handle(context, previous, next),
+    );
 
     return PopScope(
       canPop: false,

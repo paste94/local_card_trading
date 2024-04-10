@@ -1,6 +1,8 @@
 import 'dart:io';
 
 import 'package:authentication_repository/authentication_repository.dart';
+import 'package:local_card_trading/src/core/errors/error_provider.dart';
+import 'package:local_card_trading/src/core/loading/loading_provider.dart';
 import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -23,18 +25,15 @@ class Navigation extends _$Navigation {
     required String password,
   }) async {
     try {
-      state = state.copyWith(loading: true);
+      _setLoading(true);
       await _authRepo.logInWithEmailAndPassword(
         email: email,
         password: password,
       );
-      state = state.copyWith(loading: false);
+      _setLoading(false);
     } on LogInWithEmailAndPasswordFailure catch (e) {
-      state = state.copyWith(
-        loading: false,
-        error: e.message,
-      );
-      // rethrow;
+      _setLoading(false);
+      _setError(e.message);
     }
   }
 
@@ -43,46 +42,37 @@ class Navigation extends _$Navigation {
     required String password,
   }) async {
     try {
-      state = state.copyWith(loading: true);
+      _setLoading(true);
       await _authRepo.signUp(
         email: email,
         password: password,
       );
-      state = state.copyWith(loading: false);
+      _setLoading(false);
     } on SignUpWithEmailAndPasswordFailure catch (e) {
-      state = state.copyWith(
-        loading: false,
-        error: e.message,
-      );
-      // rethrow;
+      _setLoading(false);
+      _setError(e.message);
     }
   }
 
   Future<void> loginWithGoogle() async {
     try {
-      state = state.copyWith(loading: true);
+      _setLoading(true);
       await _authRepo.logInWithGoogle();
-      state = state.copyWith(loading: false);
+      _setLoading(false);
     } on LogInWithGoogleFailure catch (e) {
-      state = state.copyWith(
-        loading: false,
-        error: e.message,
-      );
-      // rethrow;
+      _setLoading(false);
+      _setError(e.message);
     }
   }
 
   Future<void> logout() async {
     try {
-      state = state.copyWith(loading: true);
+      _setLoading(true);
       await _authRepo.logOut();
-      state = state.copyWith(loading: false);
+      _setLoading(false);
     } on LogOutFailure catch (e) {
-      state = state.copyWith(
-        loading: false,
-        error: e.message,
-      );
-      // rethrow;
+      _setLoading(false);
+      _setError(e.message);
     }
   }
 
@@ -98,35 +88,25 @@ class Navigation extends _$Navigation {
     state = state.copyWith(wannaRegister: false);
   }
 
-  void openDialog() {
-    state = state.copyWith(loading: true);
-  }
-
   Future<void> userUpdatePhoto(File imgFile) async {
     try {
-      state = state.copyWith(loading: true);
+      _setLoading(true);
       await _authRepo.updateImage(imgFile);
-      state = state.copyWith(loading: false);
+      _setLoading(false);
     } on UpdatePhotoFailure catch (e) {
-      state = state.copyWith(
-        loading: false,
-        error: e.message,
-      );
-      // rethrow;
+      _setLoading(false);
+      _setError(e.message);
     }
   }
 
   Future<void> updateName(String newName) async {
     try {
-      state = state.copyWith(loading: true);
+      _setLoading(true);
       await _authRepo.updateUserName(newName);
-      state = state.copyWith(loading: false);
+      _setLoading(false);
     } on UpdateNameFailure catch (e) {
-      state = state.copyWith(
-        loading: false,
-        error: e.message,
-      );
-      // rethrow;
+      _setLoading(false);
+      _setError(e.message);
     }
   }
 
@@ -135,25 +115,24 @@ class Navigation extends _$Navigation {
     String newPassword,
   ) async {
     try {
-      state = state.copyWith(loading: true);
+      _setLoading(true);
       await _authRepo.updatePassword(
         currentPassword,
         newPassword,
       );
-      state = state.copyWith(loading: false);
+      _setLoading(false);
     } on UpdatePasswordFailure catch (e) {
-      state = state.copyWith(
-        loading: false,
-        error: e.message,
-      );
-      // rethrow;
+      _setLoading(false);
+      _setError(e.message);
     }
   }
 
-  void dismissError() {
-    state = state.copyWith(
-      error: null,
-    );
+  void _setError(String errorStr) {
+    ref.read(errorProvider.notifier).setError(error: errorStr);
+  }
+
+  void _setLoading(bool val) {
+    ref.read(loadingProvider.notifier).setLoading(val);
   }
 
   void openAddCardPage() {

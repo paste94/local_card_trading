@@ -1,25 +1,24 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'navigation_provider.dart';
+part of 'error_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$navigationHash() => r'2fde50e5c114333280bbdf5d90438cdd47aae687';
+String _$errorHash() => r'a81ff7528861d3367db9417d017d73e34925adc5';
 
-/// See also [Navigation].
-@ProviderFor(Navigation)
-final navigationProvider =
-    AutoDisposeNotifierProvider<Navigation, NavigationState>.internal(
-  Navigation.new,
-  name: r'navigationProvider',
+/// See also [Error].
+@ProviderFor(Error)
+final errorProvider = AutoDisposeNotifierProvider<Error, ErrorState>.internal(
+  Error.new,
+  name: r'errorProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$navigationHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$errorHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$Navigation = AutoDisposeNotifier<NavigationState>;
+typedef _$Error = AutoDisposeNotifier<ErrorState>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
