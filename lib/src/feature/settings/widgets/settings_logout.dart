@@ -23,10 +23,10 @@ class SettingsLogout extends ConsumerWidget {
                 child: Text(AppLocalizations.of(context)!.cancel),
               ),
               TextButton(
-                onPressed: () => ref
-                    .read(navigationProvider.notifier)
-                    .logout()
-                    .then(Navigator.of(context).pop),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                  ref.read(navigationProvider.notifier).logout();
+                },
                 child: Text(AppLocalizations.of(context)!.logout),
               ),
             ],

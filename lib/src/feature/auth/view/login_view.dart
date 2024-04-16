@@ -9,7 +9,6 @@ import 'package:local_card_trading/src/core/errors/error_provider.dart';
 import 'package:local_card_trading/src/core/errors/state/error_state.dart';
 import 'package:local_card_trading/src/core/loading/loading_provider.dart';
 import 'package:local_card_trading/src/core/loading/state/loading_state.dart';
-import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
 import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
@@ -89,7 +88,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         key: const Key('LoginView_emailInput_textField'),
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
-        enabled: !ref.watch(navigationProvider).loading,
+        enabled: !ref.watch(loadingProvider).loading,
         decoration: InputDecoration(
             labelText: AppLocalizations.of(context)?.enter_email,
             helperText: '',
@@ -102,7 +101,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         key: const Key('LoginView_passwordInput_textField'),
         controller: passwordController,
         obscureText: true,
-        enabled: !ref.watch(navigationProvider).loading,
+        enabled: !ref.watch(loadingProvider).loading,
         decoration: InputDecoration(
           labelText: AppLocalizations.of(context)?.password,
           helperText: '',
@@ -112,7 +111,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         ),
       );
 
-  Widget _loginButton() => ref.watch(navigationProvider).loading
+  Widget _loginButton() => ref.watch(loadingProvider).loading
       ? const CircularProgressIndicator()
       : ElevatedButton(
           key: const Key('LoginView_continue_raisedButton'),
@@ -139,8 +138,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
           backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
         icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
-        onPressed:
-            ref.watch(navigationProvider).loading ? null : _loginWithGoogle,
+        onPressed: ref.watch(loadingProvider).loading ? null : _loginWithGoogle,
       );
 
   Widget _signUpButton() => TextButton(

@@ -9,6 +9,7 @@ import 'package:local_card_trading/src/core/flow_builder/on_generate_pages.dart'
 import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
 import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:local_card_trading/src/feature/add_card_to_collection/provider/search_card_provider.dart';
 
 class AppView extends ConsumerWidget {
   AppView({super.key});
@@ -16,14 +17,12 @@ class AppView extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    NavigationState authState = ref.watch(navigationProvider);
-
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       scaffoldMessengerKey: _scaffoldKey,
-      home: FlowBuilder<NavigationState>(
-        state: authState,
+      home: FlowBuilder(
+        state: ref,
         onGeneratePages: onGenerateAppViewPages,
       ),
     );

@@ -56,22 +56,16 @@ class Navigation extends _$Navigation {
 
   Future<void> loginWithGoogle() async {
     try {
-      _setLoading(true);
       await _authRepo.logInWithGoogle();
-      _setLoading(false);
     } on LogInWithGoogleFailure catch (e) {
-      _setLoading(false);
       _setError(e.message);
     }
   }
 
   Future<void> logout() async {
     try {
-      _setLoading(true);
       await _authRepo.logOut();
-      _setLoading(false);
     } on LogOutFailure catch (e) {
-      _setLoading(false);
       _setError(e.message);
     }
   }

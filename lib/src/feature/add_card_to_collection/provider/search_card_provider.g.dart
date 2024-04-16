@@ -6,20 +6,20 @@ part of 'search_card_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$searchCardHash() => r'3b3e7df8aa51ac7781fa07fff164ce553c13be1a';
+String _$selectedCardHash() => r'f584cade490e1596c6c3c985dc489d625370b6f7';
 
-/// See also [SearchCard].
-@ProviderFor(SearchCard)
-final searchCardProvider =
-    AutoDisposeNotifierProvider<SearchCard, SearchCardState>.internal(
-  SearchCard.new,
-  name: r'searchCardProvider',
+/// See also [SelectedCard].
+@ProviderFor(SelectedCard)
+final selectedCardProvider =
+    AutoDisposeNotifierProvider<SelectedCard, String?>.internal(
+  SelectedCard.new,
+  name: r'selectedCardProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$searchCardHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$selectedCardHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$SearchCard = AutoDisposeNotifier<SearchCardState>;
+typedef _$SelectedCard = AutoDisposeNotifier<String?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

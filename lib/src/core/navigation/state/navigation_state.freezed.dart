@@ -18,7 +18,6 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$NavigationState {
   bool get wannaRegister => throw _privateConstructorUsedError;
   bool get isAddCardPageOpen => throw _privateConstructorUsedError;
-  bool get loading => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -32,8 +31,7 @@ abstract class $NavigationStateCopyWith<$Res> {
           NavigationState value, $Res Function(NavigationState) then) =
       _$NavigationStateCopyWithImpl<$Res, NavigationState>;
   @useResult
-  $Res call(
-      {bool wannaRegister, bool isAddCardPageOpen, bool loading, User? user});
+  $Res call({bool wannaRegister, bool isAddCardPageOpen, User? user});
 }
 
 /// @nodoc
@@ -51,7 +49,6 @@ class _$NavigationStateCopyWithImpl<$Res, $Val extends NavigationState>
   $Res call({
     Object? wannaRegister = null,
     Object? isAddCardPageOpen = null,
-    Object? loading = null,
     Object? user = freezed,
   }) {
     return _then(_value.copyWith(
@@ -62,10 +59,6 @@ class _$NavigationStateCopyWithImpl<$Res, $Val extends NavigationState>
       isAddCardPageOpen: null == isAddCardPageOpen
           ? _value.isAddCardPageOpen
           : isAddCardPageOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
               as bool,
       user: freezed == user
           ? _value.user
@@ -83,8 +76,7 @@ abstract class _$$NavigationStateImplCopyWith<$Res>
       __$$NavigationStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool wannaRegister, bool isAddCardPageOpen, bool loading, User? user});
+  $Res call({bool wannaRegister, bool isAddCardPageOpen, User? user});
 }
 
 /// @nodoc
@@ -100,7 +92,6 @@ class __$$NavigationStateImplCopyWithImpl<$Res>
   $Res call({
     Object? wannaRegister = null,
     Object? isAddCardPageOpen = null,
-    Object? loading = null,
     Object? user = freezed,
   }) {
     return _then(_$NavigationStateImpl(
@@ -111,10 +102,6 @@ class __$$NavigationStateImplCopyWithImpl<$Res>
       isAddCardPageOpen: null == isAddCardPageOpen
           ? _value.isAddCardPageOpen
           : isAddCardPageOpen // ignore: cast_nullable_to_non_nullable
-              as bool,
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
               as bool,
       user: freezed == user
           ? _value.user
@@ -128,10 +115,7 @@ class __$$NavigationStateImplCopyWithImpl<$Res>
 
 class _$NavigationStateImpl implements _NavigationState {
   const _$NavigationStateImpl(
-      {this.wannaRegister = false,
-      this.isAddCardPageOpen = false,
-      this.loading = false,
-      this.user});
+      {this.wannaRegister = false, this.isAddCardPageOpen = false, this.user});
 
   @override
   @JsonKey()
@@ -140,14 +124,11 @@ class _$NavigationStateImpl implements _NavigationState {
   @JsonKey()
   final bool isAddCardPageOpen;
   @override
-  @JsonKey()
-  final bool loading;
-  @override
   final User? user;
 
   @override
   String toString() {
-    return 'NavigationState(wannaRegister: $wannaRegister, isAddCardPageOpen: $isAddCardPageOpen, loading: $loading, user: $user)';
+    return 'NavigationState(wannaRegister: $wannaRegister, isAddCardPageOpen: $isAddCardPageOpen, user: $user)';
   }
 
   @override
@@ -159,13 +140,12 @@ class _$NavigationStateImpl implements _NavigationState {
                 other.wannaRegister == wannaRegister) &&
             (identical(other.isAddCardPageOpen, isAddCardPageOpen) ||
                 other.isAddCardPageOpen == isAddCardPageOpen) &&
-            (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.user, user) || other.user == user));
   }
 
   @override
   int get hashCode =>
-      Object.hash(runtimeType, wannaRegister, isAddCardPageOpen, loading, user);
+      Object.hash(runtimeType, wannaRegister, isAddCardPageOpen, user);
 
   @JsonKey(ignore: true)
   @override
@@ -179,15 +159,12 @@ abstract class _NavigationState implements NavigationState {
   const factory _NavigationState(
       {final bool wannaRegister,
       final bool isAddCardPageOpen,
-      final bool loading,
       final User? user}) = _$NavigationStateImpl;
 
   @override
   bool get wannaRegister;
   @override
   bool get isAddCardPageOpen;
-  @override
-  bool get loading;
   @override
   User? get user;
   @override

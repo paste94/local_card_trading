@@ -3,6 +3,7 @@ import 'package:scryfall_api/scryfall_api.dart';
 
 class MyMtgCard extends MtgCard {
   Condition? condition;
+  bool wannaAddToMyCollection;
 
   MyMtgCard({
     super.arenaId,
@@ -88,7 +89,12 @@ class MyMtgCard extends MtgCard {
     super.watermark,
     super.preview,
     this.condition,
+    this.wannaAddToMyCollection = false,
   });
+
+  void toggleWannaAddToMyCollection() {
+    wannaAddToMyCollection = !wannaAddToMyCollection;
+  }
 
   factory MyMtgCard.fromMtgCard({
     required MtgCard card,
