@@ -10,7 +10,7 @@ import 'package:local_card_trading/src/core/navigation/flow_builder_states_wrapp
 import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/search_card_provider.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_provider.dart';
 
 class AppView extends ConsumerWidget {
   AppView({super.key});
@@ -20,7 +20,7 @@ class AppView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = FlowBuilderStatesWrapper(
       navigationState: ref.watch(navigationProvider),
-      searchCardState: ref.watch(selectedCardProvider),
+      searchCardNameState: ref.watch(selectedCardNameProvider),
     );
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,

@@ -5,9 +5,9 @@ import 'package:local_card_trading/src/feature/my_collection/add_card_to_collect
 class FlowBuilderStatesWrapper {
   FlowBuilderStatesWrapper({
     required this.navigationState,
-    required this.searchCardState,
+    required this.searchCardNameState,
   });
 
   NavigationState navigationState;
-  MyMtgCard? searchCardState;
+  String? searchCardNameState;
 }

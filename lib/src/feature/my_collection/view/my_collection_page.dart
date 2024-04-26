@@ -2,17 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 
-class MyCollectionPage extends ConsumerStatefulWidget {
+class MyCollectionPage extends ConsumerWidget {
   const MyCollectionPage({super.key});
 
   @override
-  ConsumerState<ConsumerStatefulWidget> createState() =>
-      _MyCollectionPageState();
-}
-
-class _MyCollectionPageState extends ConsumerState<MyCollectionPage> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       body: const Column(children: [
         Text('COLLECTION'),
