@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/const/constants.dart';
-import 'package:local_card_trading/src/feature/add_card_to_collection/provider/search_card_provider.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/search_card_provider.dart';
 
 class SearchCardListItem extends ConsumerStatefulWidget {
   const SearchCardListItem({super.key, required this.myCard});
@@ -24,7 +24,7 @@ class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
   }
 
   void selectCard() {
-    ref.read(selectedCardProvider.notifier).select(widget.myCard.id);
+    ref.read(selectedCardProvider.notifier).select(widget.myCard);
   }
 
   Widget _cardImage(String imageUri) {

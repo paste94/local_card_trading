@@ -11,8 +11,7 @@ import 'package:local_card_trading/src/core/loading/state/loading_state.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/confirmed_password.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
-import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
-import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
+import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 
 class RegisterView extends ConsumerStatefulWidget {
   const RegisterView({super.key});

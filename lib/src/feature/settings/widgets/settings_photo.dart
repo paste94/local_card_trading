@@ -4,7 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/core/widgets/image_picker.dart';
-import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPhoto extends ConsumerStatefulWidget {
@@ -58,28 +58,31 @@ class _SettingsPhotoState extends ConsumerState<SettingsPhoto> {
               try {
                 imgFile = await showImagePickerModal(context: context);
               } catch (error) {
-                scaffold?.showSnackBar(SnackBar(
-                  content: Text(error.toString()),
-                ));
+                scaffold?.showSnackBar(
+                  SnackBar(
+                    content: Text(
+                      error.toString(),
+                    ),
+                  ),
+                );
               }
               if (imgFile != null) {
                 ref
                     .read(navigationProvider.notifier)
                     .userUpdatePhoto(imgFile)
                     .catchError((error) => {
-                          scaffold?.showSnackBar(SnackBar(
-                            content: Text(error is UpdatePhotoFailure
-                                ? error.message
-                                : AppLocalizations.of(context)!.auth_error),
-                          ))
+                          scaffold?.showSnackBar(
+                            SnackBar(
+                              content: Text(
+                                error is UpdatePhotoFailure
+                                    ? error.message
+                                    : AppLocalizations.of(context)!.auth_error,
+                              ),
+                            ),
+                          ),
                         });
               }
             },
-            // onPressed: () => showImagePickerModal(context: context).then(
-            //   (imgFile) => ref
-            //       .read(navigationProvider.notifier)
-            //       .userUpdatePhoto(imgFile),
-            // ),
           ),
         ),
       )

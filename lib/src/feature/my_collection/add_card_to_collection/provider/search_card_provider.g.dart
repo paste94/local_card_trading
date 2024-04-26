@@ -6,12 +6,12 @@ part of 'search_card_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedCardHash() => r'f584cade490e1596c6c3c985dc489d625370b6f7';
+String _$selectedCardHash() => r'42072907309b7a49d987633e50b980fcc5bf6547';
 
 /// See also [SelectedCard].
 @ProviderFor(SelectedCard)
 final selectedCardProvider =
-    AutoDisposeNotifierProvider<SelectedCard, String?>.internal(
+    AutoDisposeNotifierProvider<SelectedCard, MyMtgCard?>.internal(
   SelectedCard.new,
   name: r'selectedCardProvider',
   debugGetCreateSourceHash:
@@ -20,6 +20,6 @@ final selectedCardProvider =
   allTransitiveDependencies: null,
 );
 
-typedef _$SelectedCard = AutoDisposeNotifier<String?>;
+typedef _$SelectedCard = AutoDisposeNotifier<MyMtgCard?>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

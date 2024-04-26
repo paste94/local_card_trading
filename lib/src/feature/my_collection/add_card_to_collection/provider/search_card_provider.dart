@@ -1,6 +1,4 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
-import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
@@ -22,11 +20,11 @@ final fetchCards = FutureProvider.autoDispose
 @riverpod
 class SelectedCard extends _$SelectedCard {
   @override
-  String? build() {
+  MyMtgCard? build() {
     return null;
   }
 
-  void select(String selected) {
+  void select(MyMtgCard selected) {
     state = selected;
   }
 

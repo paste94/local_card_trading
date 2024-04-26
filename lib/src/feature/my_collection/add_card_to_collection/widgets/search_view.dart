@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
-import 'package:local_card_trading/src/feature/add_card_to_collection/provider/search_card_provider.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/search_card_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:local_card_trading/src/feature/add_card_to_collection/widgets/search_card_list_item.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/widgets/search_card_list_item.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
 class SearchView extends ConsumerStatefulWidget {
@@ -62,9 +62,18 @@ class _SearchViewState extends ConsumerState<SearchView> {
     _updateCardList();
     return Column(children: [
       searchBar(),
+      const Divider(color: Colors.transparent),
       cardList.when(
         data: (data) => searchResult(data),
-        error: (err, s) => Text(err.toString()),
+        error: (err, s) {
+          if (cardNameController.text.isEmpty) {
+            return const Text('Nothing to show here :(');
+          } else if (err is ScryfallException) {
+            return Text(err.details);
+          } else {
+            return Text(err.toString());
+          }
+        },
         loading: () => const Center(child: CircularProgressIndicator()),
       )
     ]);

@@ -6,7 +6,7 @@ import 'package:local_card_trading/src/core/errors/error_provider.dart';
 import 'package:local_card_trading/src/core/errors/state/error_state.dart';
 import 'package:local_card_trading/src/core/loading/loading_provider.dart';
 import 'package:local_card_trading/src/core/loading/state/loading_state.dart';
-import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:local_card_trading/src/feature/home/view/home_bottom_nav_items.dart';
 

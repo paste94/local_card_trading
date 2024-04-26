@@ -11,7 +11,7 @@ import 'package:local_card_trading/src/core/loading/loading_provider.dart';
 import 'package:local_card_trading/src/core/loading/state/loading_state.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
-import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});

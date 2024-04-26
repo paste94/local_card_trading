@@ -8,18 +8,16 @@ import 'package:local_card_trading/src/core/observers/my_observer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
   await FirebaseAppCheck.instance.activate(
     androidProvider: AndroidProvider.debug,
     appleProvider: AppleProvider.appAttest,
   );
 
-  runApp(ProviderScope(
-    observers: [
-      LogObserver(),
-    ],
-    child: AppView(),
-  ));
+  runApp(
+    ProviderScope(
+      observers: [LogObserver()],
+      child: AppView(),
+    ),
+  );
 }
