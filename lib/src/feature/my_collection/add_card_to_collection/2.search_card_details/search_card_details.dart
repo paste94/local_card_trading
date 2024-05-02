@@ -39,15 +39,6 @@ class SearchCardDetails extends ConsumerWidget {
             Text(selectedCard?.name ?? ''),
             Row(
               children: [
-                FractionallySizedBox(
-                  widthFactor: 70,
-                  child: MtgCardImageViewer(
-                    myCard: selectedCard,
-                    borderRadius: const BorderRadius.all(
-                      Radius.circular(CARD_BORDER_RADIUS_S),
-                    ),
-                  ),
-                ),
                 Container(
                   padding: const EdgeInsets.all(PADDING),
                   width: CARD_WIDTH_S,

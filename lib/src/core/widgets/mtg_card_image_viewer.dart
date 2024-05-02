@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/const/constants.dart';
@@ -43,12 +44,9 @@ class _MtgCardImageViewerState extends ConsumerState<MtgCardImageViewer> {
               borderRadius: widget.borderRadius,
               child: CachedNetworkImage(
                 imageUrl: imageUri,
-                progressIndicatorBuilder: (_, __, ___) => const SizedBox(
-                  height: 206,
-                  child: Center(child: CircularProgressIndicator()),
-                ),
+                progressIndicatorBuilder: (_, __, ___) =>
+                    const Image(image: AssetImage('assets/mtg_rear.jpg')),
                 errorWidget: (_, __, ___) => const SizedBox(
-                  height: 204,
                   child: Icon(Icons.image_not_supported),
                 ),
               ),
