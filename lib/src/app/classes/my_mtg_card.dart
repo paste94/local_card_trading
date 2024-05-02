@@ -1,6 +1,8 @@
 import 'package:local_card_trading/src/app/enums/condition.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
+// TODO: Considera l'idea di creare una classe che contiene l'ID della carta e le info addizionali a parte
+
 class MyMtgCard extends MtgCard {
   Condition? condition;
   bool wannaAddToMyCollection;

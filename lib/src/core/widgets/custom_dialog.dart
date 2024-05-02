@@ -8,7 +8,7 @@ class ProgressDialog extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Colors.transparent,
     );
   }

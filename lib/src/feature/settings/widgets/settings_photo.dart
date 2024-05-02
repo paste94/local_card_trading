@@ -3,6 +3,7 @@ import 'package:authentication_repository/authentication_repository.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:local_card_trading/src/app/const/constants.dart';
 import 'package:local_card_trading/src/core/widgets/image_picker.dart';
 import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -45,13 +46,12 @@ class _SettingsPhotoState extends ConsumerState<SettingsPhoto> {
         right: 0,
         top: 60,
         child: CircleAvatar(
-          radius: _buttonSize,
-          backgroundColor: const Color(0xff94d500),
+          radius: CIRCLE_AVATAR_BUTTON_SIZE,
+          backgroundColor: Theme.of(context).primaryColor,
           child: IconButton(
-            icon: Icon(
+            icon: const Icon(
               Icons.camera_alt,
-              size: _buttonSize - 2,
-              color: Colors.black,
+              size: CIRCLE_AVATAR_BUTTON_SIZE - 2,
             ),
             onPressed: () async {
               File? imgFile;

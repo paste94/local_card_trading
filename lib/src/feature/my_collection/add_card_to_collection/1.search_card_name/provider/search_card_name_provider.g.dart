@@ -6,7 +6,7 @@ part of 'search_card_name_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$fetchCardsHash() => r'bef97f3407237cf88c9c2372a6335fa05b074e1a';
+String _$fetchCardsHash() => r'd702b91ae3d4c2b188a7cd50aff86925d9f517e6';
 
 /// See also [fetchCards].
 @ProviderFor(fetchCards)
@@ -21,7 +21,7 @@ final fetchCardsProvider =
 );
 
 typedef FetchCardsRef = AutoDisposeFutureProviderRef<PaginableList<MyMtgCard>>;
-String _$searchCardNameHash() => r'ec1ff3b4511632a3f3f1bf0783985e3d5dcd34c8';
+String _$searchCardNameHash() => r'2f820d049be10ad2a54a7ab5f2b2c688b7df18d3';
 
 /// See also [SearchCardName].
 @ProviderFor(SearchCardName)

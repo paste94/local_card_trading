@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/const/constants.dart';
+import 'package:local_card_trading/src/core/widgets/mtg_card_image_viewer.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_provider.dart';
 
 class SearchCardListItem extends ConsumerStatefulWidget {
@@ -16,33 +17,23 @@ class SearchCardListItem extends ConsumerStatefulWidget {
 }
 
 class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
-  int face = 0;
-  bool isSingleSided = true;
+  // int face = 0;
+  // bool isSingleSided = true;
 
-  void flipCardImage() {
-    setState(() => face = (face + 1) % 2);
-  }
+  // void flipCardImage() {
+  //   setState(() => face = (face + 1) % 2);
+  // }
 
   void selectCard() {
     ref.read(selectedCardNameProvider.notifier).selectName(widget.myCard.name);
   }
 
-  Widget _cardImage(String imageUri) {
-    return ClipRRect(
+  Widget _cardImage() {
+    return MtgCardImageViewer(
+      myCard: widget.myCard,
       borderRadius: const BorderRadius.only(
         topLeft: Radius.circular(CARD_BORDER_RADIUS),
         topRight: Radius.circular(CARD_BORDER_RADIUS),
-      ),
-      child: CachedNetworkImage(
-        imageUrl: imageUri,
-        progressIndicatorBuilder: (_, __, ___) => const SizedBox(
-          height: 204,
-          child: Center(child: CircularProgressIndicator()),
-        ),
-        errorWidget: (_, __, ___) => const SizedBox(
-          height: 204,
-          child: Icon(Icons.image_not_supported),
-        ),
       ),
     );
   }
@@ -59,12 +50,12 @@ class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
 
   @override
   Widget build(BuildContext context) {
-    isSingleSided = widget.myCard.cardFaces?[face].imageUris == null;
+    // isSingleSided = widget.myCard.cardFaces?[face].imageUris == null;
 
-    String imageUri =
-        widget.myCard.cardFaces?[face].imageUris?.normal.toString() ??
-            widget.myCard.imageUris?.normal.toString() ??
-            '';
+    // String imageUri =
+    //     widget.myCard.cardFaces?[face].imageUris?.normal.toString() ??
+    //         widget.myCard.imageUris?.normal.toString() ??
+    //         '';
 
     return Card(
       elevation: 0,
@@ -78,22 +69,22 @@ class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
       ),
       child: Column(
         children: [
-          _cardImage(imageUri),
+          _cardImage(),
           const Divider(color: Colors.transparent),
           _cardName(),
           Row(
             children: <Widget>[
               TextButton(
                 onPressed: selectCard,
-                child: Text('Select'),
+                child: const Text('Select'),
               ),
-              Visibility(
-                visible: !isSingleSided,
-                child: IconButton(
-                  onPressed: flipCardImage,
-                  icon: const Icon(Icons.flip_camera_android),
-                ),
-              ),
+              // Visibility(
+              //   visible: !isSingleSided,
+              //   child: IconButton(
+              //     onPressed: flipCardImage,
+              //     icon: const Icon(Icons.flip_camera_android),
+              //   ),
+              // ),
             ],
           ),
         ],
