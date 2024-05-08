@@ -44,16 +44,18 @@ class _MtgCardImageViewerState extends ConsumerState<MtgCardImageViewer> {
               borderRadius: widget.borderRadius,
               child: CachedNetworkImage(
                 imageUrl: imageUri,
-                progressIndicatorBuilder: (_, __, ___) =>
-                    const Image(image: AssetImage('assets/mtg_rear.jpg')),
+                progressIndicatorBuilder: (_, __, ___) => const Image(
+                  image: AssetImage('assets/mtg_rear.jpg'),
+                ),
                 errorWidget: (_, __, ___) => const SizedBox(
                   child: Icon(Icons.image_not_supported),
                 ),
               ),
             ),
             const Padding(
-                padding: EdgeInsets.only(top: 6),
-                child: Divider(color: Colors.transparent)),
+              padding: EdgeInsets.only(top: 6),
+              child: Divider(color: Colors.transparent),
+            ),
           ],
         ),
         Positioned(
