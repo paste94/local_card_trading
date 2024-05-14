@@ -1,9 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/const/constants.dart';
+import 'package:photo_view/photo_view.dart';
 
 class MtgCardImageViewer extends ConsumerStatefulWidget {
   const MtgCardImageViewer({
@@ -40,10 +40,14 @@ class _MtgCardImageViewerState extends ConsumerState<MtgCardImageViewer> {
       children: [
         Column(
           children: [
+            // PhotoView(imageProvider: CachedNetworkImageProvider(imageUri))
             ClipRRect(
               borderRadius: widget.borderRadius,
               child: CachedNetworkImage(
                 imageUrl: imageUri,
+                imageBuilder: (context, imageProvider) => PhotoView(
+                  imageProvider: imageProvider,
+                ),
                 progressIndicatorBuilder: (_, __, ___) => const Image(
                   image: AssetImage('assets/mtg_rear.jpg'),
                 ),
