@@ -1,7 +1,7 @@
-enum Condition {
+enum ConditionsEnum {
   mint,
   nearMint,
-  slightliPlayed,
+  slightlyPlayed,
   moderatelyPlayed,
   played,
   poor,

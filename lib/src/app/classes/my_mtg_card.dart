@@ -1,10 +1,10 @@
-import 'package:local_card_trading/src/app/enums/condition.dart';
+import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
 // TODO: Considera l'idea di creare una classe che contiene l'ID della carta e le info addizionali a parte
 
 class MyMtgCard extends MtgCard {
-  Condition? condition;
+  ConditionsEnum condition;
   bool wannaAddToMyCollection;
 
   MyMtgCard({
@@ -90,7 +90,7 @@ class MyMtgCard extends MtgCard {
     super.securityStamp,
     super.watermark,
     super.preview,
-    this.condition,
+    this.condition = ConditionsEnum.mint,
     this.wannaAddToMyCollection = false,
   });
 
@@ -100,7 +100,6 @@ class MyMtgCard extends MtgCard {
 
   factory MyMtgCard.fromMtgCard({
     required MtgCard card,
-    Condition? condition,
   }) =>
       MyMtgCard(
         arenaId: card.arenaId,
@@ -185,6 +184,6 @@ class MyMtgCard extends MtgCard {
         securityStamp: card.securityStamp,
         watermark: card.watermark,
         preview: card.preview,
-        condition: condition,
+        condition: ConditionsEnum.mint,
       );
 }

@@ -1,5 +1,6 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
+import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
@@ -28,6 +29,10 @@ class SelectedCard extends _$SelectedCard {
 
   void set(MyMtgCard? card) {
     state = card;
+  }
+
+  void setCondition(ConditionsEnum condition) {
+    state?.condition = condition;
   }
 }
 

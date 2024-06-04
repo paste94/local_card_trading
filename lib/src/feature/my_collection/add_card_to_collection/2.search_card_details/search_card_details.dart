@@ -27,12 +27,16 @@ class SearchCardDetails extends ConsumerWidget {
             const Row(
               children: [
                 Expanded(
-                  flex: 1,
-                  child: CardPreview(),
+                  flex: 2,
+                  child: Column(
+                    children: [
+                      SetDropdown(),
+                    ],
+                  ),
                 ),
                 Expanded(
-                  flex: 2,
-                  child: SetDropdown(),
+                  flex: 1,
+                  child: CardPreview(),
                 ),
               ],
             ),
