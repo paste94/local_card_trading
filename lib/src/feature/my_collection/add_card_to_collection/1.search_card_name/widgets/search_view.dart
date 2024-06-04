@@ -10,16 +10,14 @@ class SearchView extends ConsumerWidget {
 
   Widget _onData(PaginableList cardList) {
     return cardList.length > 0
-        ? Expanded(
-            child: GridView.count(
-              crossAxisCount: 2,
-              childAspectRatio: (0.45),
-              children: cardList.data
-                  .map((card) => SearchCardListItem(myCard: card))
-                  .toList(),
-            ),
+        ? GridView.count(
+            crossAxisCount: 2,
+            childAspectRatio: (0.45),
+            children: cardList.data
+                .map((card) => SearchCardListItem(myCard: card))
+                .toList(),
           )
-        : Text('Nothing to show here :(');
+        : const Text('Nothing to show here :(');
   }
 
   Widget _onLoading() {
@@ -39,21 +37,26 @@ class SearchView extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final cardList = ref.watch(fetchCardsProvider);
-    return Column(children: [
-      TextFormField(
-        decoration: InputDecoration(
-          labelText: AppLocalizations.of(context)?.search_card,
+    return Column(
+      children: [
+        IntrinsicHeight(
+          child: TextFormField(
+            decoration: InputDecoration(
+              labelText: AppLocalizations.of(context)?.search_card,
+            ),
+            autofocus: true,
+            onChanged: (value) =>
+                ref.read(searchCardNameProvider.notifier).setState(value),
+          ),
         ),
-        autofocus: true,
-        onChanged: (value) =>
-            ref.read(searchCardNameProvider.notifier).setState(value),
-      ),
-      const Divider(color: Colors.transparent),
-      cardList.when(
-        data: _onData,
-        error: _onError,
-        loading: _onLoading,
-      )
-    ]);
+        Expanded(
+          child: cardList.when(
+            data: _onData,
+            error: _onError,
+            loading: _onLoading,
+          ),
+        ),
+      ],
+    );
   }
 }

@@ -35,6 +35,11 @@ class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
         ),
       );
 
+  Widget _selectButton() => TextButton(
+        onPressed: selectCard,
+        child: const Text('Select'),
+      );
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -49,16 +54,14 @@ class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
       ),
       child: Column(
         children: [
-          _cardImage(),
-          const Divider(color: Colors.transparent),
-          _cardName(),
-          Row(
-            children: <Widget>[
-              TextButton(
-                onPressed: selectCard,
-                child: const Text('Select'),
-              ),
-            ],
+          IntrinsicHeight(
+            child: _cardImage(),
+          ),
+          IntrinsicHeight(
+            child: _cardName(),
+          ),
+          IntrinsicHeight(
+            child: _selectButton(),
           ),
         ],
       ),

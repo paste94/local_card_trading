@@ -41,18 +41,17 @@ class _MtgCardImageViewerState extends ConsumerState<MtgCardImageViewer> {
         Column(
           children: [
             // PhotoView(imageProvider: CachedNetworkImageProvider(imageUri))
-            ClipRRect(
-              borderRadius: widget.borderRadius,
-              child: CachedNetworkImage(
-                imageUrl: imageUri,
-                imageBuilder: (context, imageProvider) => PhotoView(
-                  imageProvider: imageProvider,
-                ),
-                progressIndicatorBuilder: (_, __, ___) => const Image(
-                  image: AssetImage('assets/mtg_rear.jpg'),
-                ),
-                errorWidget: (_, __, ___) => const SizedBox(
-                  child: Icon(Icons.image_not_supported),
+            IntrinsicHeight(
+              child: ClipRRect(
+                borderRadius: widget.borderRadius,
+                child: CachedNetworkImage(
+                  imageUrl: imageUri,
+                  progressIndicatorBuilder: (_, __, ___) => const Image(
+                    image: AssetImage('assets/mtg_rear.jpg'),
+                  ),
+                  errorWidget: (_, __, ___) => const SizedBox(
+                    child: Icon(Icons.image_not_supported),
+                  ),
                 ),
               ),
             ),
