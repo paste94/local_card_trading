@@ -27,12 +27,21 @@ class SelectedCard extends _$SelectedCard {
     return ref.watch(selectedCardNameProvider)?[0];
   }
 
-  void set(MyMtgCard? card) {
-    state = card;
+  void setCard(MtgCard mtgCard) {
+    state = state?.copyWith(
+        mtgCard: mtgCard,
+        isFoil: mtgCard.finishes.length == 1 &&
+            (mtgCard.finishes[0] == Finish.foil ||
+                mtgCard.finishes[0] == Finish.etched ||
+                mtgCard.finishes[0] == Finish.glossy));
   }
 
-  void setCondition(ConditionsEnum condition) {
-    state?.condition = condition;
+  void setConditions(Conditions conditions) {
+    state = state?.copyWith(conditions: conditions);
+  }
+
+  void setFoil(bool val) {
+    state = state?.copyWith(isFoil: val);
   }
 }
 
@@ -50,7 +59,7 @@ class SelectedCardName extends _$SelectedCardName {
     );
     final myCardList = PaginableList(
       data: cardList.data
-          .map((card) => MyMtgCard.fromMtgCard(card: card))
+          .map((mtgCard) => MyMtgCard.fromMtgCard(mtgCard))
           .toList(),
       hasMore: true,
     );

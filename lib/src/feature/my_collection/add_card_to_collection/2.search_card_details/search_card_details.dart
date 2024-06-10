@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/card_preview.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/conditions_dropdown.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/foil_check.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/set_dropdown.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_provider.dart';
 
@@ -24,21 +26,26 @@ class SearchCardDetails extends ConsumerWidget {
         body: Card(
           child: Column(children: [
             Text(selectedCard?.name ?? ''),
-            const Row(
-              children: [
-                Expanded(
-                  flex: 2,
-                  child: Column(
-                    children: [
-                      SetDropdown(),
-                    ],
+            Expanded(
+              child: Row(
+                children: [
+                  Expanded(
+                    flex: 2,
+                    child: Column(
+                      children: [
+                        IntrinsicHeight(child: SetDropdown()),
+                        IntrinsicHeight(child: ConditionsDropdown()),
+                        FoilCheck(),
+                        Text('${selectedCard?.isFoil}')
+                      ],
+                    ),
                   ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: CardPreview(),
-                ),
-              ],
+                  Expanded(
+                    flex: 1,
+                    child: CardPreview(),
+                  ),
+                ],
+              ),
             ),
           ]),
         ),

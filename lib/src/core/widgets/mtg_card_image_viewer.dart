@@ -40,7 +40,6 @@ class _MtgCardImageViewerState extends ConsumerState<MtgCardImageViewer> {
       children: [
         Column(
           children: [
-            // PhotoView(imageProvider: CachedNetworkImageProvider(imageUri))
             IntrinsicHeight(
               child: ClipRRect(
                 borderRadius: widget.borderRadius,

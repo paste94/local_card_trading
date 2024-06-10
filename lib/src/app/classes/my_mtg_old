@@ -1,0 +1,30 @@
+import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
+import 'package:scryfall_api/scryfall_api.dart';
+
+class MyMtgCard {
+  MtgCard mtgCard;
+  Conditions conditions;
+  int quantity;
+  bool isFoil;
+  Language language;
+  String note;
+
+  MyMtgCard({
+    required this.mtgCard,
+    this.conditions = Conditions.mint,
+    this.quantity = 1,
+    this.isFoil = false,
+    this.language = Language.english,
+    this.note = '',
+  });
+
+  factory MyMtgCard.fromMtgCard({required MtgCard mtgCard}) =>
+      MyMtgCard(mtgCard: mtgCard);
+
+  String get name => mtgCard.name;
+  String get setName => mtgCard.setName;
+  String get collectorNumber => mtgCard.collectorNumber;
+  List<CardFace>? get cardFaces => mtgCard.cardFaces;
+  ImageUris? get imageUris => mtgCard.imageUris;
+  Language get lang => mtgCard.lang;
+}

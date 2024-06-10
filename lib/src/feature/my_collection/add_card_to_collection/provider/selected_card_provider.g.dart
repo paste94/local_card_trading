@@ -170,7 +170,7 @@ final selectedCardIndexProvider =
 );
 
 typedef _$SelectedCardIndex = AutoDisposeNotifier<int>;
-String _$selectedCardHash() => r'2008c53498aac9b03d48328cd0239eb9e4ef21b0';
+String _$selectedCardHash() => r'6a6a06446b96c9bcb7b858cea5515b942e74b7cf';
 
 /// See also [SelectedCard].
 @ProviderFor(SelectedCard)
@@ -185,7 +185,7 @@ final selectedCardProvider =
 );
 
 typedef _$SelectedCard = AutoDisposeNotifier<MyMtgCard?>;
-String _$selectedCardNameHash() => r'18a05497d73d46ebddc3e94044aa6400dc4f8ac2';
+String _$selectedCardNameHash() => r'7a52c2e5c14fb0750bf74c5e733214d2ecbc9bd8';
 
 /// See also [SelectedCardName].
 @ProviderFor(SelectedCardName)

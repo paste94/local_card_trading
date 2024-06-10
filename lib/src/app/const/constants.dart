@@ -1,8 +1,5 @@
 // ignore_for_file: constant_identifier_names
 
-import 'package:local_card_trading/src/app/classes/conditions_values.dart';
-import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
-
 const ERROR_DISPLAY_SECS = 10;
 const CARD_BORDER_RADIUS = 12.0;
 
@@ -39,30 +36,3 @@ const SP_ICON_PATH = 'assets/conditions/slightly_played.svg';
 const MP_ICON_PATH = 'assets/conditions/moderately_played.svg';
 const PL_ICON_PATH = 'assets/conditions/played.svg';
 const PO_ICON_PATH = 'assets/conditions/poor.svg';
-
-final conditions = {
-  ConditionsEnum.mint: ConditionsValue(
-    name: M_NAME,
-    iconUri: M_ICON_PATH,
-  ),
-  ConditionsEnum.nearMint: ConditionsValue(
-    name: NM_NAME,
-    iconUri: NM_ICON_PATH,
-  ),
-  ConditionsEnum.slightlyPlayed: ConditionsValue(
-    name: SP_NAME,
-    iconUri: SP_ICON_PATH,
-  ),
-  ConditionsEnum.moderatelyPlayed: ConditionsValue(
-    name: MP_NAME,
-    iconUri: MP_ICON_PATH,
-  ),
-  ConditionsEnum.played: ConditionsValue(
-    name: PL_NAME,
-    iconUri: PL_ICON_PATH,
-  ),
-  ConditionsEnum.poor: ConditionsValue(
-    name: PO_NAME,
-    iconUri: PO_ICON_PATH,
-  ),
-};
