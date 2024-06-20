@@ -19,7 +19,7 @@ mixin _$MyMtgCard {
   MtgCard get mtgCard => throw _privateConstructorUsedError;
   Conditions get conditions => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
-  bool get isFoil => throw _privateConstructorUsedError;
+  Finish get finish => throw _privateConstructorUsedError;
   Language get language => throw _privateConstructorUsedError;
   String get note => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $MyMtgCardCopyWith<$Res> {
       {MtgCard mtgCard,
       Conditions conditions,
       int quantity,
-      bool isFoil,
+      Finish finish,
       Language language,
       String note});
 }
@@ -58,7 +58,7 @@ class _$MyMtgCardCopyWithImpl<$Res, $Val extends MyMtgCard>
     Object? mtgCard = null,
     Object? conditions = null,
     Object? quantity = null,
-    Object? isFoil = null,
+    Object? finish = null,
     Object? language = null,
     Object? note = null,
   }) {
@@ -75,10 +75,10 @@ class _$MyMtgCardCopyWithImpl<$Res, $Val extends MyMtgCard>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
-      isFoil: null == isFoil
-          ? _value.isFoil
-          : isFoil // ignore: cast_nullable_to_non_nullable
-              as bool,
+      finish: null == finish
+          ? _value.finish
+          : finish // ignore: cast_nullable_to_non_nullable
+              as Finish,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -103,7 +103,7 @@ abstract class _$$MyMtgCardImplCopyWith<$Res>
       {MtgCard mtgCard,
       Conditions conditions,
       int quantity,
-      bool isFoil,
+      Finish finish,
       Language language,
       String note});
 }
@@ -122,7 +122,7 @@ class __$$MyMtgCardImplCopyWithImpl<$Res>
     Object? mtgCard = null,
     Object? conditions = null,
     Object? quantity = null,
-    Object? isFoil = null,
+    Object? finish = null,
     Object? language = null,
     Object? note = null,
   }) {
@@ -139,10 +139,10 @@ class __$$MyMtgCardImplCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
-      isFoil: null == isFoil
-          ? _value.isFoil
-          : isFoil // ignore: cast_nullable_to_non_nullable
-              as bool,
+      finish: null == finish
+          ? _value.finish
+          : finish // ignore: cast_nullable_to_non_nullable
+              as Finish,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -162,7 +162,7 @@ class _$MyMtgCardImpl extends _MyMtgCard {
       {required this.mtgCard,
       this.conditions = Conditions.mint,
       this.quantity = 1,
-      this.isFoil = false,
+      this.finish = Finish.nonfoil,
       this.language = Language.english,
       this.note = ''})
       : super._();
@@ -177,7 +177,7 @@ class _$MyMtgCardImpl extends _MyMtgCard {
   final int quantity;
   @override
   @JsonKey()
-  final bool isFoil;
+  final Finish finish;
   @override
   @JsonKey()
   final Language language;
@@ -187,7 +187,7 @@ class _$MyMtgCardImpl extends _MyMtgCard {
 
   @override
   String toString() {
-    return 'MyMtgCard(mtgCard: $mtgCard, conditions: $conditions, quantity: $quantity, isFoil: $isFoil, language: $language, note: $note)';
+    return 'MyMtgCard(mtgCard: $mtgCard, conditions: $conditions, quantity: $quantity, finish: $finish, language: $language, note: $note)';
   }
 
   @override
@@ -200,7 +200,7 @@ class _$MyMtgCardImpl extends _MyMtgCard {
                 other.conditions == conditions) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
-            (identical(other.isFoil, isFoil) || other.isFoil == isFoil) &&
+            (identical(other.finish, finish) || other.finish == finish) &&
             (identical(other.language, language) ||
                 other.language == language) &&
             (identical(other.note, note) || other.note == note));
@@ -208,7 +208,7 @@ class _$MyMtgCardImpl extends _MyMtgCard {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, mtgCard, conditions, quantity, isFoil, language, note);
+      runtimeType, mtgCard, conditions, quantity, finish, language, note);
 
   @JsonKey(ignore: true)
   @override
@@ -222,7 +222,7 @@ abstract class _MyMtgCard extends MyMtgCard {
       {required final MtgCard mtgCard,
       final Conditions conditions,
       final int quantity,
-      final bool isFoil,
+      final Finish finish,
       final Language language,
       final String note}) = _$MyMtgCardImpl;
   const _MyMtgCard._() : super._();
@@ -234,7 +234,7 @@ abstract class _MyMtgCard extends MyMtgCard {
   @override
   int get quantity;
   @override
-  bool get isFoil;
+  Finish get finish;
   @override
   Language get language;
   @override

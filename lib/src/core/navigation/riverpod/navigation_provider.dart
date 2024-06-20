@@ -136,4 +136,12 @@ class Navigation extends _$Navigation {
   void closeAddCardPage() {
     state = state.copyWith(isAddCardPageOpen: false);
   }
+
+  void closeFullScreenImage() {
+    state = state.copyWith(fullScreenImage: null);
+  }
+
+  void openFullScreenImage(String url) {
+    state = state.copyWith(fullScreenImage: url);
+  }
 }

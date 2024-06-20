@@ -4,6 +4,8 @@ import 'package:scryfall_api/scryfall_api.dart';
 
 part "my_mtg_card.freezed.dart";
 
+/// dart run build_runner build
+
 @freezed
 class MyMtgCard with _$MyMtgCard {
   const MyMtgCard._();
@@ -11,7 +13,7 @@ class MyMtgCard with _$MyMtgCard {
     required MtgCard mtgCard,
     @Default(Conditions.mint) Conditions conditions,
     @Default(1) int quantity,
-    @Default(false) bool isFoil,
+    @Default(Finish.nonfoil) Finish finish,
     @Default(Language.english) Language language,
     @Default('') String note,
   }) = _MyMtgCard;
@@ -26,4 +28,5 @@ class MyMtgCard with _$MyMtgCard {
   Language get lang => mtgCard.lang;
   bool get foil => mtgCard.foil;
   List<Finish> get finishes => mtgCard.finishes;
+  BorderColor get borderColor => mtgCard.borderColor;
 }

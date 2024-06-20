@@ -51,7 +51,7 @@ dependencies:
     sdk: flutter
   intl: any
   formz: ^0.6.1
-  flow_builder: ^0.0.10
+  flow_builder: ^0.1.0
   google_fonts: ^6.1.0
   font_awesome_flutter: ^10.6.0
   image_cropper: ^5.0.1
@@ -67,12 +67,13 @@ dependencies:
   http: ^1.2.0
   flutter_hooks: ^0.20.5
   flutter_svg: ^2.0.10+1
+  build_runner: ^2.4.9
+  insta_image_viewer: ^1.0.4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
   mockito: ^5.4.4
-  build_runner: ^2.4.9
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your

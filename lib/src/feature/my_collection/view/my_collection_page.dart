@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:local_card_trading/src/app/const/constants.dart';
 import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 
 class MyCollectionPage extends ConsumerWidget {
@@ -8,12 +9,48 @@ class MyCollectionPage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      body: const Column(children: [
-        Text('COLLECTION'),
-      ]),
+      body: GestureDetector(
+        onTap: () {
+          ref
+              .read(navigationProvider.notifier)
+              .openFullScreenImage('https://picsum.photos/250?image=9');
+        },
+        child: Hero(
+          tag: FULL_SCREEN_IMAGE_HERO_TAG,
+          child: Image.network(
+            'https://picsum.photos/250?image=9',
+          ),
+        ),
+      ),
+      // const Column(children: [
+      //   Text('COLLECTION'),
+      // ]),
       floatingActionButton: FloatingActionButton(
         onPressed: ref.read(navigationProvider.notifier).openAddCardPage,
         child: const Icon(Icons.add),
+      ),
+    );
+  }
+}
+
+class DetailScreen extends StatelessWidget {
+  const DetailScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: GestureDetector(
+        onTap: () {
+          Navigator.pop(context);
+        },
+        child: Center(
+          child: Hero(
+            tag: 'imageHero',
+            child: Image.network(
+              'https://picsum.photos/250?image=9',
+            ),
+          ),
+        ),
       ),
     );
   }

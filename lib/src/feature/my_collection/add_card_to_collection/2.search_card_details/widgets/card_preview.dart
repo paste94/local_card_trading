@@ -13,7 +13,6 @@ class CardPreview extends ConsumerWidget {
 
     return Container(
       padding: const EdgeInsets.all(PADDING),
-      // width: CARD_WIDTH_S,
       child: MtgCardImageViewer(
         myCard: selectedCard,
         borderRadius: const BorderRadius.all(

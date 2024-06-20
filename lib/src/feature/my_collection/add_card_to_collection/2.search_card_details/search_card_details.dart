@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/card_preview.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/conditions_dropdown.dart';
-import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/foil_check.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/foil_dropdown.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/set_dropdown.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_provider.dart';
 
@@ -25,8 +25,8 @@ class SearchCardDetails extends ConsumerWidget {
         appBar: AppBar(title: const Text('Add to list')),
         body: Card(
           child: Column(children: [
-            Text(selectedCard?.name ?? ''),
-            Expanded(
+            Text(selectedCard?.borderColor.name ?? ''),
+            const Expanded(
               child: Row(
                 children: [
                   Expanded(
@@ -35,8 +35,7 @@ class SearchCardDetails extends ConsumerWidget {
                       children: [
                         IntrinsicHeight(child: SetDropdown()),
                         IntrinsicHeight(child: ConditionsDropdown()),
-                        FoilCheck(),
-                        Text('${selectedCard?.isFoil}')
+                        FoilDropdown(),
                       ],
                     ),
                   ),

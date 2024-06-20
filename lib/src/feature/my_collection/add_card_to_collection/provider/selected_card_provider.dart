@@ -29,19 +29,17 @@ class SelectedCard extends _$SelectedCard {
 
   void setCard(MtgCard mtgCard) {
     state = state?.copyWith(
-        mtgCard: mtgCard,
-        isFoil: mtgCard.finishes.length == 1 &&
-            (mtgCard.finishes[0] == Finish.foil ||
-                mtgCard.finishes[0] == Finish.etched ||
-                mtgCard.finishes[0] == Finish.glossy));
+      mtgCard: mtgCard,
+      finish: mtgCard.finishes[0],
+    );
   }
 
   void setConditions(Conditions conditions) {
     state = state?.copyWith(conditions: conditions);
   }
 
-  void setFoil(bool val) {
-    state = state?.copyWith(isFoil: val);
+  void setFinish(Finish val) {
+    state = state?.copyWith(finish: val);
   }
 }
 

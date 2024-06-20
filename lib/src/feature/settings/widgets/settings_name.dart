@@ -38,7 +38,6 @@ class _SettingsNameState extends ConsumerState<SettingsName> {
             isScrollControlled: true,
             showDragHandle: true,
             builder: (context) {
-              print('BUILD');
               return FractionallySizedBox(
                 heightFactor: 0.6,
                 child: Column(

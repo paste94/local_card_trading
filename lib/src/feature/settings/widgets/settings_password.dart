@@ -1,9 +1,6 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:authentication_repository/authentication_repository.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/inputs.dart';
 import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
 
@@ -131,8 +128,6 @@ class _SettingsPasswordState extends ConsumerState<SettingsPassword> {
 
   @override
   Widget build(BuildContext context) {
-    final User? user = ref.watch(navigationProvider).user;
-
     return ListTile(
       leading: const Icon(Icons.lock),
       title: Text(AppLocalizations.of(context)!.password),

@@ -28,15 +28,22 @@ class _SettingsPhotoState extends ConsumerState<SettingsPhoto> {
       SizedBox(
         height: 100,
         width: 100,
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(_avatarSize),
-          child: CachedNetworkImage(
-            imageUrl: ref.watch(navigationProvider).user!.photo ?? '',
-            placeholder: (_, __) => const CircularProgressIndicator(),
-            errorWidget: (_, __, ___) => const ColoredBox(
-              color: Colors.amber,
-              child: Icon(
-                Icons.person,
+        child: GestureDetector(
+          onTap: () =>
+              ref.read(navigationProvider.notifier).openFullScreenImage(
+                    ref.watch(navigationProvider).user!.photo ?? '',
+                  ),
+          child: Hero(
+            tag: FULL_SCREEN_IMAGE_HERO_TAG,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(_avatarSize),
+              child: CachedNetworkImage(
+                imageUrl: ref.watch(navigationProvider).user!.photo ?? '',
+                placeholder: (_, __) => const CircularProgressIndicator(),
+                errorWidget: (_, __, ___) => const ColoredBox(
+                  color: Colors.amber,
+                  child: Icon(Icons.person),
+                ),
               ),
             ),
           ),

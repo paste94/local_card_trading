@@ -33,11 +33,9 @@ class ConditionsDropdown extends ConsumerWidget {
       child: DropdownButton<Conditions>(
         value: selectedCard!.conditions,
         items: dropdownConditionsList,
-        onChanged: (cond) {
-          ref
-              .read(selectedCardProvider.notifier)
-              .setConditions(cond ?? Conditions.mint);
-        },
+        onChanged: (cond) => ref
+            .read(selectedCardProvider.notifier)
+            .setConditions(cond ?? Conditions.mint),
         isExpanded: true,
       ),
     );

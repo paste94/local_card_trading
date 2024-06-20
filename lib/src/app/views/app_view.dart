@@ -23,6 +23,7 @@ class AppView extends ConsumerWidget {
       scaffoldMessengerKey: _scaffoldKey,
       home: FlowBuilder<FlowBuilderStatesWrapper>(
         state: state,
+        observers: [HeroController()],
         onGeneratePages: onGenerateAppViewPages,
       ),
     );
