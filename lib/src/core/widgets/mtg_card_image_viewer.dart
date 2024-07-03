@@ -41,7 +41,7 @@ class _MtgCardImageViewerState extends ConsumerState<MtgCardImageViewer> {
           children: [
             IntrinsicHeight(
               child: Hero(
-                tag: 'tag_${widget.myCard.id}',
+                tag: 'card_tag_${widget.myCard.id}',
                 child: ClipRRect(
                   borderRadius: widget.borderRadius,
                   child: CachedNetworkImage(
