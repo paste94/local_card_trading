@@ -30,6 +30,7 @@ const PADDING = 8.0;
 
 /// NAVIGATION
 const FULL_SCREEN_IMAGE_HERO_TAG = 'full_screen_img_hero_tag';
+const CARD_IMAGE_TAG = 'card_img_tag';
 
 /// CONDITIONS
 const M_NAME = 'Mint';

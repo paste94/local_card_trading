@@ -10,7 +10,7 @@ class FoilDropdown extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    MyMtgCard? selectedCard = ref.watch(selectedCardProvider);
+    MyMtgCard? selectedCard = ref.read(selectedCardProvider);
 
     var dropdownFinishesList = selectedCard?.finishes
         .map((Finish finish) => DropdownMenuItem(

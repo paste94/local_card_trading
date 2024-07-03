@@ -20,6 +20,7 @@ class MyMtgCard with _$MyMtgCard {
 
   factory MyMtgCard.fromMtgCard(MtgCard mtgCard) => MyMtgCard(mtgCard: mtgCard);
 
+  String get id => mtgCard.id;
   String get name => mtgCard.name;
   String get setName => mtgCard.setName;
   String get collectorNumber => mtgCard.collectorNumber;

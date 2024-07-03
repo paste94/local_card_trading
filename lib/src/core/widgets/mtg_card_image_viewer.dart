@@ -7,10 +7,10 @@ import 'package:local_card_trading/src/app/const/constants.dart';
 class MtgCardImageViewer extends ConsumerStatefulWidget {
   const MtgCardImageViewer({
     super.key,
-    this.myCard,
+    required this.myCard,
     this.borderRadius = BorderRadius.zero,
   });
-  final MyMtgCard? myCard;
+  final MyMtgCard myCard;
   final BorderRadiusGeometry borderRadius;
 
   @override
@@ -28,10 +28,10 @@ class _MtgCardImageViewerState extends ConsumerState<MtgCardImageViewer> {
 
   @override
   Widget build(BuildContext context) {
-    isSingleSided = widget.myCard?.cardFaces?[face].imageUris == null;
+    isSingleSided = widget.myCard.cardFaces?[face].imageUris == null;
     String imageUri =
-        widget.myCard?.cardFaces?[face].imageUris?.normal.toString() ??
-            widget.myCard?.imageUris?.normal.toString() ??
+        widget.myCard.cardFaces?[face].imageUris?.normal.toString() ??
+            widget.myCard.imageUris?.normal.toString() ??
             '';
 
     return Stack(
@@ -40,15 +40,18 @@ class _MtgCardImageViewerState extends ConsumerState<MtgCardImageViewer> {
         Column(
           children: [
             IntrinsicHeight(
-              child: ClipRRect(
-                borderRadius: widget.borderRadius,
-                child: CachedNetworkImage(
-                  imageUrl: imageUri,
-                  progressIndicatorBuilder: (_, __, ___) => const Image(
-                    image: AssetImage('assets/mtg_rear.jpg'),
-                  ),
-                  errorWidget: (_, __, ___) => const SizedBox(
-                    child: Icon(Icons.image_not_supported),
+              child: Hero(
+                tag: 'tag_${widget.myCard.id}',
+                child: ClipRRect(
+                  borderRadius: widget.borderRadius,
+                  child: CachedNetworkImage(
+                    imageUrl: imageUri,
+                    progressIndicatorBuilder: (_, __, ___) => const Image(
+                      image: AssetImage('assets/mtg_rear.jpg'),
+                    ),
+                    errorWidget: (_, __, ___) => const SizedBox(
+                      child: Icon(Icons.image_not_supported),
+                    ),
                   ),
                 ),
               ),

@@ -9,8 +9,8 @@ class SetDropdown extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final cardsList = ref.watch(selectedCardNameProvider);
-    final selectedCard = ref.watch(selectedCardProvider);
+    final cardsList = ref.read(selectedCardNameProvider);
+    final selectedCard = ref.read(selectedCardProvider);
 
     var dropdownCardsList = cardsList?.data.map((myMtgCard) {
       String additionalInfo =

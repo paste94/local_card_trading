@@ -11,7 +11,7 @@ class ConditionsDropdown extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    MyMtgCard? selectedCard = ref.watch(selectedCardProvider);
+    MyMtgCard? selectedCard = ref.read(selectedCardProvider);
 
     var dropdownConditionsList = Conditions.values
         .map((conditions) => DropdownMenuItem(

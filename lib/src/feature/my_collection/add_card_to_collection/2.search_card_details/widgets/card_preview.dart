@@ -9,12 +9,13 @@ class CardPreview extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final selectedCard = ref.watch(selectedCardProvider);
+    final selectedCard = ref.read(selectedCardProvider);
 
     return Container(
       padding: const EdgeInsets.all(PADDING),
       child: MtgCardImageViewer(
-        myCard: selectedCard,
+        // TODO: Create empty card placeholder
+        myCard: selectedCard!,
         borderRadius: const BorderRadius.all(
           Radius.circular(CARD_BORDER_RADIUS_S),
         ),
