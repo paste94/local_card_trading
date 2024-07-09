@@ -1,4 +1,5 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:local_card_trading/src/app/classes/selected_card_set.dart';
 import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
@@ -9,16 +10,27 @@ part "my_mtg_card.freezed.dart";
 @freezed
 class MyMtgCard with _$MyMtgCard {
   const MyMtgCard._();
-  const factory MyMtgCard({
+  factory MyMtgCard({
     required MtgCard mtgCard,
+    required Finish finish,
+    @Default([]) List<SelectedCardSet> setList,
+    // @Default([]) List<Language> languageList,
     @Default(Conditions.mint) Conditions conditions,
     @Default(1) int quantity,
-    @Default(Finish.nonfoil) Finish finish,
     @Default(Language.english) Language language,
     @Default('') String note,
   }) = _MyMtgCard;
 
-  factory MyMtgCard.fromMtgCard(MtgCard mtgCard) => MyMtgCard(mtgCard: mtgCard);
+  factory MyMtgCard.fromMtgCard({
+    required MtgCard mtgCard,
+    List<SelectedCardSet> setList = const [],
+    List<Language> languageList = const [],
+  }) =>
+      MyMtgCard(
+        mtgCard: mtgCard,
+        setList: setList,
+        finish: mtgCard.finishes[0],
+      );
 
   String get id => mtgCard.id;
   String get name => mtgCard.name;
@@ -30,4 +42,9 @@ class MyMtgCard with _$MyMtgCard {
   bool get foil => mtgCard.foil;
   List<Finish> get finishes => mtgCard.finishes;
   BorderColor get borderColor => mtgCard.borderColor;
+  String get set => mtgCard.set;
+  SelectedCardSet? get selectedSet => setList
+      .where((set) =>
+          set.name == setName && set.collectorNumber == collectorNumber)
+      .toList()[0];
 }

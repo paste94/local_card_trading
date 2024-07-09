@@ -17,9 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$MyMtgCard {
   MtgCard get mtgCard => throw _privateConstructorUsedError;
+  Finish get finish => throw _privateConstructorUsedError;
+  List<SelectedCardSet> get setList =>
+      throw _privateConstructorUsedError; // @Default([]) List<Language> languageList,
   Conditions get conditions => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
-  Finish get finish => throw _privateConstructorUsedError;
   Language get language => throw _privateConstructorUsedError;
   String get note => throw _privateConstructorUsedError;
 
@@ -35,9 +37,10 @@ abstract class $MyMtgCardCopyWith<$Res> {
   @useResult
   $Res call(
       {MtgCard mtgCard,
+      Finish finish,
+      List<SelectedCardSet> setList,
       Conditions conditions,
       int quantity,
-      Finish finish,
       Language language,
       String note});
 }
@@ -56,9 +59,10 @@ class _$MyMtgCardCopyWithImpl<$Res, $Val extends MyMtgCard>
   @override
   $Res call({
     Object? mtgCard = null,
+    Object? finish = null,
+    Object? setList = null,
     Object? conditions = null,
     Object? quantity = null,
-    Object? finish = null,
     Object? language = null,
     Object? note = null,
   }) {
@@ -67,6 +71,14 @@ class _$MyMtgCardCopyWithImpl<$Res, $Val extends MyMtgCard>
           ? _value.mtgCard
           : mtgCard // ignore: cast_nullable_to_non_nullable
               as MtgCard,
+      finish: null == finish
+          ? _value.finish
+          : finish // ignore: cast_nullable_to_non_nullable
+              as Finish,
+      setList: null == setList
+          ? _value.setList
+          : setList // ignore: cast_nullable_to_non_nullable
+              as List<SelectedCardSet>,
       conditions: null == conditions
           ? _value.conditions
           : conditions // ignore: cast_nullable_to_non_nullable
@@ -75,10 +87,6 @@ class _$MyMtgCardCopyWithImpl<$Res, $Val extends MyMtgCard>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
-      finish: null == finish
-          ? _value.finish
-          : finish // ignore: cast_nullable_to_non_nullable
-              as Finish,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -101,9 +109,10 @@ abstract class _$$MyMtgCardImplCopyWith<$Res>
   @useResult
   $Res call(
       {MtgCard mtgCard,
+      Finish finish,
+      List<SelectedCardSet> setList,
       Conditions conditions,
       int quantity,
-      Finish finish,
       Language language,
       String note});
 }
@@ -120,9 +129,10 @@ class __$$MyMtgCardImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? mtgCard = null,
+    Object? finish = null,
+    Object? setList = null,
     Object? conditions = null,
     Object? quantity = null,
-    Object? finish = null,
     Object? language = null,
     Object? note = null,
   }) {
@@ -131,6 +141,14 @@ class __$$MyMtgCardImplCopyWithImpl<$Res>
           ? _value.mtgCard
           : mtgCard // ignore: cast_nullable_to_non_nullable
               as MtgCard,
+      finish: null == finish
+          ? _value.finish
+          : finish // ignore: cast_nullable_to_non_nullable
+              as Finish,
+      setList: null == setList
+          ? _value._setList
+          : setList // ignore: cast_nullable_to_non_nullable
+              as List<SelectedCardSet>,
       conditions: null == conditions
           ? _value.conditions
           : conditions // ignore: cast_nullable_to_non_nullable
@@ -139,10 +157,6 @@ class __$$MyMtgCardImplCopyWithImpl<$Res>
           ? _value.quantity
           : quantity // ignore: cast_nullable_to_non_nullable
               as int,
-      finish: null == finish
-          ? _value.finish
-          : finish // ignore: cast_nullable_to_non_nullable
-              as Finish,
       language: null == language
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
@@ -158,26 +172,37 @@ class __$$MyMtgCardImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$MyMtgCardImpl extends _MyMtgCard {
-  const _$MyMtgCardImpl(
+  _$MyMtgCardImpl(
       {required this.mtgCard,
+      required this.finish,
+      final List<SelectedCardSet> setList = const [],
       this.conditions = Conditions.mint,
       this.quantity = 1,
-      this.finish = Finish.nonfoil,
       this.language = Language.english,
       this.note = ''})
-      : super._();
+      : _setList = setList,
+        super._();
 
   @override
   final MtgCard mtgCard;
+  @override
+  final Finish finish;
+  final List<SelectedCardSet> _setList;
+  @override
+  @JsonKey()
+  List<SelectedCardSet> get setList {
+    if (_setList is EqualUnmodifiableListView) return _setList;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_setList);
+  }
+
+// @Default([]) List<Language> languageList,
   @override
   @JsonKey()
   final Conditions conditions;
   @override
   @JsonKey()
   final int quantity;
-  @override
-  @JsonKey()
-  final Finish finish;
   @override
   @JsonKey()
   final Language language;
@@ -187,7 +212,7 @@ class _$MyMtgCardImpl extends _MyMtgCard {
 
   @override
   String toString() {
-    return 'MyMtgCard(mtgCard: $mtgCard, conditions: $conditions, quantity: $quantity, finish: $finish, language: $language, note: $note)';
+    return 'MyMtgCard(mtgCard: $mtgCard, finish: $finish, setList: $setList, conditions: $conditions, quantity: $quantity, language: $language, note: $note)';
   }
 
   @override
@@ -196,11 +221,12 @@ class _$MyMtgCardImpl extends _MyMtgCard {
         (other.runtimeType == runtimeType &&
             other is _$MyMtgCardImpl &&
             (identical(other.mtgCard, mtgCard) || other.mtgCard == mtgCard) &&
+            (identical(other.finish, finish) || other.finish == finish) &&
+            const DeepCollectionEquality().equals(other._setList, _setList) &&
             (identical(other.conditions, conditions) ||
                 other.conditions == conditions) &&
             (identical(other.quantity, quantity) ||
                 other.quantity == quantity) &&
-            (identical(other.finish, finish) || other.finish == finish) &&
             (identical(other.language, language) ||
                 other.language == language) &&
             (identical(other.note, note) || other.note == note));
@@ -208,7 +234,14 @@ class _$MyMtgCardImpl extends _MyMtgCard {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType, mtgCard, conditions, quantity, finish, language, note);
+      runtimeType,
+      mtgCard,
+      finish,
+      const DeepCollectionEquality().hash(_setList),
+      conditions,
+      quantity,
+      language,
+      note);
 
   @JsonKey(ignore: true)
   @override
@@ -218,23 +251,26 @@ class _$MyMtgCardImpl extends _MyMtgCard {
 }
 
 abstract class _MyMtgCard extends MyMtgCard {
-  const factory _MyMtgCard(
+  factory _MyMtgCard(
       {required final MtgCard mtgCard,
+      required final Finish finish,
+      final List<SelectedCardSet> setList,
       final Conditions conditions,
       final int quantity,
-      final Finish finish,
       final Language language,
       final String note}) = _$MyMtgCardImpl;
-  const _MyMtgCard._() : super._();
+  _MyMtgCard._() : super._();
 
   @override
   MtgCard get mtgCard;
   @override
+  Finish get finish;
+  @override
+  List<SelectedCardSet> get setList;
+  @override // @Default([]) List<Language> languageList,
   Conditions get conditions;
   @override
   int get quantity;
-  @override
-  Finish get finish;
   @override
   Language get language;
   @override

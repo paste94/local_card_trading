@@ -15,7 +15,7 @@ class AppView extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final state = FlowBuilderStatesWrapper(
       navigationState: ref.watch(navigationProvider),
-      searchCardNameState: ref.watch(selectedCardNameProvider),
+      selectedCard: ref.watch(selectedCardProvider),
     );
     return MaterialApp(
       localizationsDelegates: AppLocalizations.localizationsDelegates,

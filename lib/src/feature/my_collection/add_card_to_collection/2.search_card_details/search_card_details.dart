@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/card_preview.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/conditions_dropdown.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/foil_dropdown.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/language_dropdown.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/2.search_card_details/widgets/set_dropdown.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_provider.dart';
 
@@ -14,28 +15,28 @@ class SearchCardDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    var selectedCard = ref.watch(selectedCardProvider);
-
     return PopScope(
       canPop: false,
       onPopInvoked: (canPop) {
-        if (!canPop) ref.read(selectedCardNameProvider.notifier).unselect();
+        if (!canPop) {
+          ref.read(selectedCardProvider.notifier).unselect();
+        }
       },
       child: Scaffold(
         appBar: AppBar(title: const Text('Add to list')),
-        body: Card(
+        body: const Card(
           child: Column(children: [
-            Text(selectedCard?.borderColor.name ?? ''),
-            const Expanded(
+            IntrinsicHeight(child: SetDropdown()),
+            Expanded(
               child: Row(
                 children: [
                   Expanded(
                     flex: 2,
                     child: Column(
                       children: [
-                        IntrinsicHeight(child: SetDropdown()),
                         IntrinsicHeight(child: ConditionsDropdown()),
                         FoilDropdown(),
+                        LanguageDropdown(),
                       ],
                     ),
                   ),

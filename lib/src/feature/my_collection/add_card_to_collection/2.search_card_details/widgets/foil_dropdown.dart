@@ -10,7 +10,7 @@ class FoilDropdown extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    MyMtgCard? selectedCard = ref.read(selectedCardProvider);
+    MyMtgCard? selectedCard = ref.watch(selectedCardProvider);
 
     var dropdownFinishesList = selectedCard?.finishes
         .map((Finish finish) => DropdownMenuItem(
@@ -21,17 +21,23 @@ class FoilDropdown extends ConsumerWidget {
                 ],
               ),
             ))
+        .toSet()
         .toList();
+
+    print(selectedCard?.finishes.toSet().toList());
+    print(selectedCard?.finish);
 
     return Container(
       padding: const EdgeInsets.all(PADDING),
       child: DropdownButton<Finish>(
+        value: selectedCard?.finish,
         items: dropdownFinishesList,
-        value: selectedCard!.finish,
-        onChanged: selectedCard.finishes.length > 1
-            ? (value) => ref
-                .read(selectedCardProvider.notifier)
-                .setFinish(value ?? Finish.unknown)
+        onChanged: selectedCard != null && selectedCard.finishes.length > 1
+            ? (value) {
+                return ref
+                    .read(selectedCardProvider.notifier)
+                    .setFinish(value ?? Finish.unknown);
+              }
             : null,
         isExpanded: true,
       ),

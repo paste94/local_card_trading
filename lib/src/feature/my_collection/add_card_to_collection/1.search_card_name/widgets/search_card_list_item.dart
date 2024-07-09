@@ -16,10 +16,6 @@ class SearchCardListItem extends ConsumerStatefulWidget {
 }
 
 class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
-  void selectCard() => ref
-      .read(selectedCardNameProvider.notifier)
-      .selectName(widget.myCard.name);
-
   Widget _cardImage() => MtgCardImageViewer(
         myCard: widget.myCard,
         borderRadius: const BorderRadius.all(
@@ -36,7 +32,9 @@ class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
       );
 
   Widget _selectButton() => TextButton(
-        onPressed: selectCard,
+        onPressed: () => ref
+            .read(selectedCardProvider.notifier)
+            .setFullName(widget.myCard.name),
         child: const Text('Select'),
       );
 

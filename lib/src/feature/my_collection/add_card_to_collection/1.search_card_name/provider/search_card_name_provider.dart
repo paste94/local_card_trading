@@ -26,8 +26,9 @@ Future<PaginableList<MyMtgCard>> fetchCards(ref) async {
   }
   final cardList = await apiClient.searchCards(cardName);
   final myCardList = PaginableList(
-    data:
-        cardList.data.map((mtgCard) => MyMtgCard.fromMtgCard(mtgCard)).toList(),
+    data: cardList.data
+        .map((mtgCard) => MyMtgCard.fromMtgCard(mtgCard: mtgCard))
+        .toList(),
     hasMore: true,
   );
   return myCardList;
