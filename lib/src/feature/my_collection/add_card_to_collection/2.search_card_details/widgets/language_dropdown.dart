@@ -14,7 +14,10 @@ class LanguageDropdown extends ConsumerWidget {
     var langList = selectedCard?.selectedSet?.langList
         .map((lang) => DropdownMenuItem<Language>(
               value: lang,
-              child: Text(lang.toString()),
+              child: Text(
+                lang.name[0].toUpperCase() + lang.name.substring(1),
+                overflow: TextOverflow.ellipsis,
+              ),
             ))
         .toList();
 

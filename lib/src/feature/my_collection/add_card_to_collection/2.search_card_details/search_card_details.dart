@@ -26,22 +26,22 @@ class SearchCardDetails extends ConsumerWidget {
         appBar: AppBar(title: const Text('Add to list')),
         body: const Card(
           child: Column(children: [
-            IntrinsicHeight(child: SetDropdown()),
             Expanded(
               child: Row(
                 children: [
                   Expanded(
-                    flex: 2,
+                    flex: 3,
                     child: Column(
                       children: [
+                        IntrinsicHeight(child: SetDropdown()),
                         IntrinsicHeight(child: ConditionsDropdown()),
-                        FoilDropdown(),
-                        LanguageDropdown(),
+                        IntrinsicHeight(child: FoilDropdown()),
+                        IntrinsicHeight(child: LanguageDropdown()),
                       ],
                     ),
                   ),
                   Expanded(
-                    flex: 1,
+                    flex: 2,
                     child: CardPreview(),
                   ),
                 ],

@@ -22,7 +22,12 @@ class ConditionsDropdown extends ConsumerWidget {
                     conditions.iconUri,
                     height: 30,
                   ),
-                  Text('  ${conditions.name}'),
+                  Expanded(
+                      flex: 2,
+                      child: Text(
+                        '  ${conditions.name}',
+                        overflow: TextOverflow.ellipsis,
+                      )),
                 ],
               ),
             ))

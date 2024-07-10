@@ -17,7 +17,10 @@ class FoilDropdown extends ConsumerWidget {
               value: finish,
               child: Row(
                 children: [
-                  Text('${finishMap[finish]}'),
+                  Text(
+                    '${finishMap[finish]}',
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ],
               ),
             ))
