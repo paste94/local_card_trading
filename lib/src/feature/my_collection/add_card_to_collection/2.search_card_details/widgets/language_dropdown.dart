@@ -44,8 +44,10 @@ class LanguageDropdown extends ConsumerWidget {
       child: DropdownButton<Language>(
         value: selectedCard?.lang,
         items: langList,
-        onChanged: (lang) =>
-            ref.read(selectedCardProvider.notifier).setLanguage(lang!),
+        onChanged: langList!.length > 1
+            ? (lang) =>
+                ref.read(selectedCardProvider.notifier).setLanguage(lang!)
+            : null,
         isExpanded: true,
       ),
     );

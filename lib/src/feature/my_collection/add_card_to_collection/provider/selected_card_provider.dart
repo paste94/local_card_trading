@@ -1,4 +1,3 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/classes/selected_card_set.dart';
 import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
@@ -11,8 +10,6 @@ part 'selected_card_provider.g.dart';
 final apiClient = ScryfallApiClient();
 
 /// This class contains elements of MyMtgCard selected in [SearchCardDetails] page.
-///
-///
 @riverpod
 class SelectedCard extends _$SelectedCard {
   @override
@@ -61,6 +58,7 @@ class SelectedCard extends _$SelectedCard {
       if (e is ScryfallException) {
         throw SelectedCardException(e.details);
       }
+      rethrow;
     }
   }
 
@@ -87,10 +85,14 @@ class SelectedCard extends _$SelectedCard {
         query, // ! used to exact name search
         rollupMode: RollupMode.prints,
       );
-      var selectedCard = cardsList[0];
+      var newCard = cardsList[0];
       state = state!.copyWith(
-        mtgCard: selectedCard,
-        finish: selectedCard.finishes[0],
+        mtgCard: newCard,
+
+        /// If new set haven't the same selected foliage, change it
+        finish: newCard.finishes.contains(state!.finish)
+            ? state!.finish
+            : newCard.finishes[0],
       );
     } catch (e) {
       if (e is ScryfallException) {
@@ -107,15 +109,20 @@ class SelectedCard extends _$SelectedCard {
         query, // ! used to exact name search
         rollupMode: RollupMode.prints,
       );
-      var selectedCard = cardsList[0];
+      var newCard = cardsList[0];
       state = state?.copyWith(
-        mtgCard: selectedCard,
-        finish: selectedCard.finishes[0],
+        mtgCard: newCard,
+
+        /// If new set haven't the same selected foliage, change it
+        finish: newCard.finishes.contains(state!.finish)
+            ? state!.finish
+            : newCard.finishes[0],
       );
     } catch (e) {
       if (e is ScryfallException) {
         throw SelectedCardException(e.details);
       }
+      rethrow;
     }
   }
 
@@ -132,7 +139,7 @@ class SelectedCard extends _$SelectedCard {
     try {
       fullName = '!"${fullName ?? state!.name}"';
       set = 'set:"${set ?? state!.set}"';
-      collectorNumber = 'cn:${collectorNumber ?? state!.collectorNumber}';
+      collectorNumber = 'cn:"${collectorNumber ?? state!.collectorNumber}"';
       language = 'lang:${language ?? state!.lang.json}';
       final query = '$fullName $set $collectorNumber $language';
       print('[createQuery] Query: $query');
