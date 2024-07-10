@@ -3,7 +3,9 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/const/constants.dart';
 import 'package:local_card_trading/src/core/widgets/mtg_card_image_viewer.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_exception.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_provider.dart';
+import 'package:scryfall_api/scryfall_api.dart';
 
 class SearchCardListItem extends ConsumerStatefulWidget {
   const SearchCardListItem({super.key, required this.myCard});
@@ -32,9 +34,16 @@ class _SearchCardListItemState extends ConsumerState<SearchCardListItem> {
       );
 
   Widget _selectButton() => TextButton(
-        onPressed: () => ref
-            .read(selectedCardProvider.notifier)
-            .setFullName(widget.myCard.name),
+        onPressed: () {
+          try {
+            ref
+                .read(selectedCardProvider.notifier)
+                .setFullName(widget.myCard.name);
+          } catch (e) {
+            final snackBar = SnackBar(content: Text(e.toString()));
+            ScaffoldMessenger.of(context).showSnackBar(snackBar);
+          }
+        },
         child: const Text('Select'),
       );
 

@@ -9,6 +9,11 @@ import 'package:scryfall_api/scryfall_api.dart';
 class SetDropdown extends ConsumerWidget {
   const SetDropdown({super.key});
 
+  void _showError(context, e) =>
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+        content: Text(e.toString()),
+      ));
+
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     MyMtgCard? selectedCard = ref.watch(selectedCardProvider);
@@ -55,8 +60,10 @@ class SetDropdown extends ConsumerWidget {
       child: DropdownButton<SelectedCardSet>(
         value: selectedCard?.selectedSet,
         items: dropdownCardsList,
-        onChanged: (set) =>
-            ref.read(selectedCardProvider.notifier).setSet(set!),
+        onChanged: (set) => ref
+            .read(selectedCardProvider.notifier)
+            .setSet(set!)
+            .catchError((e) => _showError(context, e)),
         isExpanded: true,
         // selectedItemBuilder: (context) => dropdownSelectedItemBuilder,
       ),

@@ -21,7 +21,7 @@ class LanguageDropdown extends ConsumerWidget {
               value: lang,
               child: Text(lang.toString()),
             ))
-        .toSet()
+        // .toSet()
         .toList();
 
     // print(langList);
@@ -42,8 +42,10 @@ class LanguageDropdown extends ConsumerWidget {
     return Container(
       padding: const EdgeInsets.all(PADDING),
       child: DropdownButton<Language>(
+        value: selectedCard?.lang,
         items: langList,
-        onChanged: (value) => value,
+        onChanged: (lang) =>
+            ref.read(selectedCardProvider.notifier).setLanguage(lang!),
         isExpanded: true,
       ),
     );

@@ -2,6 +2,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/classes/selected_card_set.dart';
 import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
+import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_exception.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
@@ -28,28 +29,27 @@ class SelectedCard extends _$SelectedCard {
 
   void setFullName(String fullName) async {
     try {
+      /// Gets all cards with [fullName]
       final cardsList = await apiClient.searchCards(
         '!"$fullName"', // ! used to exact name search
         rollupMode: RollupMode.prints,
         includeMultilingual: true,
       );
-      final setList = cardsList.data
-          .map((card) {
-            var langList = cardsList.data
-                .where((c) =>
-                    card.set == c.set &&
-                    card.collectorNumber == c.collectorNumber)
-                .map((c) => c.lang)
-                .toSet()
-                .toList();
 
-            print('${card.setName} ${card.collectorNumber} $langList');
-            return SelectedCardSet(
+      /// Gets all sets of [cardsList] with possible languages for each set
+      final setList = cardsList.data
+          .map((card) => SelectedCardSet(
                 name: card.setName,
                 collectorNumber: card.collectorNumber,
                 code: card.set,
-                langList: langList);
-          })
+                langList: cardsList.data
+                    .where((c) =>
+                        card.set == c.set &&
+                        card.collectorNumber == c.collectorNumber)
+                    .map((c) => c.lang)
+                    .toSet()
+                    .toList(),
+              ))
           .toSet()
           .toList();
 
@@ -59,7 +59,7 @@ class SelectedCard extends _$SelectedCard {
       );
     } catch (e) {
       if (e is ScryfallException) {
-        print('Caught an exception: ${e.details}');
+        throw SelectedCardException(e.details);
       }
     }
   }
@@ -72,16 +72,41 @@ class SelectedCard extends _$SelectedCard {
     state = state?.copyWith(finish: val);
   }
 
-  void setSet(SelectedCardSet set) async {
+  Future<void> setSet(SelectedCardSet set) async {
     try {
-      var query =
-          '!"${state?.name}" set:"${set.code}" cn:"${set.collectorNumber}"';
-      print(query);
+      /// If the new set does NOT contains the current language,
+      /// change it using the head of the list.
+      var query = _createQuery(
+        set: set.code,
+        collectorNumber: set.collectorNumber,
+        language: set.langList.contains(state!.lang)
+            ? state!.lang.json
+            : set.langList[0].json,
+      );
       final cardsList = await apiClient.searchCards(
         query, // ! used to exact name search
         rollupMode: RollupMode.prints,
       );
-      print('****************$cardsList');
+      var selectedCard = cardsList[0];
+      state = state!.copyWith(
+        mtgCard: selectedCard,
+        finish: selectedCard.finishes[0],
+      );
+    } catch (e) {
+      if (e is ScryfallException) {
+        throw SelectedCardException(e.details);
+      }
+      rethrow;
+    }
+  }
+
+  void setLanguage(Language language) async {
+    try {
+      var query = _createQuery(language: language.json);
+      final cardsList = await apiClient.searchCards(
+        query, // ! used to exact name search
+        rollupMode: RollupMode.prints,
+      );
       var selectedCard = cardsList[0];
       state = state?.copyWith(
         mtgCard: selectedCard,
@@ -89,13 +114,32 @@ class SelectedCard extends _$SelectedCard {
       );
     } catch (e) {
       if (e is ScryfallException) {
-        print('Caught an exception: ${e.details}');
+        throw SelectedCardException(e.details);
       }
     }
   }
 
   void unselect() {
     state = null;
+  }
+
+  String _createQuery({
+    String? fullName,
+    String? set,
+    String? collectorNumber,
+    String? language,
+  }) {
+    try {
+      fullName = '!"${fullName ?? state!.name}"';
+      set = 'set:"${set ?? state!.set}"';
+      collectorNumber = 'cn:${collectorNumber ?? state!.collectorNumber}';
+      language = 'lang:${language ?? state!.lang.json}';
+      final query = '$fullName $set $collectorNumber $language';
+      print('[createQuery] Query: $query');
+      return query;
+    } catch (e) {
+      throw SelectedCardException('[createQuery] State not found, ERROR!');
+    }
   }
 }
 
@@ -149,4 +193,3 @@ class SelectedCard extends _$SelectedCard {
 //     state = null;
 //   }
 // }
-
