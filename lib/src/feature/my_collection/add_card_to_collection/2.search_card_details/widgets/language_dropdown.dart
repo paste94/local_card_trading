@@ -11,33 +11,12 @@ class LanguageDropdown extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     MyMtgCard? selectedCard = ref.watch(selectedCardProvider);
-    // PaginableList<MyMtgCard>? cardsList =
-    //     ref.read(selectedCardProvider);
     var langList = selectedCard?.selectedSet?.langList
-        // .where((lang) =>
-        //     lang.setName == selectedCard?.setName &&
-        //     card.collectorNumber == selectedCard?.collectorNumber)
         .map((lang) => DropdownMenuItem<Language>(
               value: lang,
               child: Text(lang.toString()),
             ))
-        // .toSet()
         .toList();
-
-    // print(langList);
-
-    // var dropdownFinishesList = cardLangList
-    //     ?.map((MyMtgCard? card) => DropdownMenuItem(
-    //           value: card,
-    //           child: Row(
-    //             children: [
-    //               Text('${card?.lang}'),
-    //             ],
-    //           ),
-    //         ))
-    //     .toList();
-
-    // print(dropdownFinishesList);
 
     return Container(
       padding: const EdgeInsets.all(PADDING),

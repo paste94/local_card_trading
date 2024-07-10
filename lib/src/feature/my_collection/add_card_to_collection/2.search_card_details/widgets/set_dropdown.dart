@@ -17,22 +17,6 @@ class SetDropdown extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     MyMtgCard? selectedCard = ref.watch(selectedCardProvider);
-    // List<MtgSet>? setList = selectedCard?.setList;
-
-    // var dropdownCardsList = cardsList?.data
-    //     // .where((myMtgCard) => myMtgCard.lang == Language.english)
-    //     .map((myMtgCard) {
-    //   String additionalInfo =
-    //       myMtgCard.borderColor == BorderColor.borderless ? 'Borderless' : '';
-    //   additionalInfo = additionalInfo.isNotEmpty ? ' | $additionalInfo' : '';
-    //   return DropdownMenuItem<MtgCard>(
-    //     value: myMtgCard.mtgCard,
-    //     child: Text(
-    //       '${myMtgCard.setName}$additionalInfo',
-    //       overflow: TextOverflow.ellipsis,
-    //     ),
-    //   );
-    // }).toList();
 
     var dropdownCardsList = selectedCard?.setList
         .map((set) => DropdownMenuItem<SelectedCardSet>(
@@ -44,17 +28,6 @@ class SetDropdown extends ConsumerWidget {
             ))
         .toList();
 
-    // var dropdownSelectedItemBuilder = cardsList
-    //         ?.map((set) => Container(
-    //               alignment: Alignment.centerLeft,
-    //               child: Text(
-    //                 set.name,
-    //                 overflow: TextOverflow.ellipsis,
-    //               ),
-    //             ))
-    //         .toList() ??
-    //     [];
-
     return Container(
       padding: const EdgeInsets.all(PADDING),
       child: DropdownButton<SelectedCardSet>(
@@ -65,7 +38,6 @@ class SetDropdown extends ConsumerWidget {
             .setSet(set!)
             .catchError((e) => _showError(context, e)),
         isExpanded: true,
-        // selectedItemBuilder: (context) => dropdownSelectedItemBuilder,
       ),
     );
   }

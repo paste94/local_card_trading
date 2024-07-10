@@ -24,9 +24,6 @@ class FoilDropdown extends ConsumerWidget {
         .toSet()
         .toList();
 
-    print(selectedCard?.finishes.toSet().toList());
-    print(selectedCard?.finish);
-
     return Container(
       padding: const EdgeInsets.all(PADDING),
       child: DropdownButton<Finish>(
