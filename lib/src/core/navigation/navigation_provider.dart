@@ -2,7 +2,6 @@ import 'dart:io';
 
 import 'package:authentication_repository/authentication_repository.dart';
 import 'package:local_card_trading/src/core/errors/error_provider.dart';
-import 'package:local_card_trading/src/core/loading/loading_provider.dart';
 import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 
@@ -125,8 +124,12 @@ class Navigation extends _$Navigation {
     ref.read(errorProvider.notifier).setError(error: errorStr);
   }
 
-  void _setLoading(bool val) {
-    ref.read(loadingProvider.notifier).setLoading(val);
+  Future<void> _setLoading(bool val) async {
+    state = state.copyWith(isLoading: val);
+  }
+
+  Future<void> setLoading(bool val) async {
+    state = state.copyWith(isLoading: val);
   }
 
   void openAddCardPage() {

@@ -6,11 +6,9 @@ part of 'selected_card_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$selectedCardHash() => r'd71a310412ac749d065f76f1b0c9bd91925ec865';
+String _$selectedCardHash() => r'0d4882930053709bb6709c10d24896572f020b80';
 
 /// This class contains elements of MyMtgCard selected in [SearchCardDetails] page.
-///
-///
 ///
 /// Copied from [SelectedCard].
 @ProviderFor(SelectedCard)

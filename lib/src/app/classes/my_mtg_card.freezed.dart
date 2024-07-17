@@ -23,7 +23,7 @@ mixin _$MyMtgCard {
   Conditions get conditions => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
   Language get language => throw _privateConstructorUsedError;
-  String get note => throw _privateConstructorUsedError;
+  String? get note => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $MyMtgCardCopyWith<MyMtgCard> get copyWith =>
@@ -42,7 +42,7 @@ abstract class $MyMtgCardCopyWith<$Res> {
       Conditions conditions,
       int quantity,
       Language language,
-      String note});
+      String? note});
 }
 
 /// @nodoc
@@ -64,7 +64,7 @@ class _$MyMtgCardCopyWithImpl<$Res, $Val extends MyMtgCard>
     Object? conditions = null,
     Object? quantity = null,
     Object? language = null,
-    Object? note = null,
+    Object? note = freezed,
   }) {
     return _then(_value.copyWith(
       mtgCard: null == mtgCard
@@ -91,10 +91,10 @@ class _$MyMtgCardCopyWithImpl<$Res, $Val extends MyMtgCard>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as Language,
-      note: null == note
+      note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ) as $Val);
   }
 }
@@ -114,7 +114,7 @@ abstract class _$$MyMtgCardImplCopyWith<$Res>
       Conditions conditions,
       int quantity,
       Language language,
-      String note});
+      String? note});
 }
 
 /// @nodoc
@@ -134,7 +134,7 @@ class __$$MyMtgCardImplCopyWithImpl<$Res>
     Object? conditions = null,
     Object? quantity = null,
     Object? language = null,
-    Object? note = null,
+    Object? note = freezed,
   }) {
     return _then(_$MyMtgCardImpl(
       mtgCard: null == mtgCard
@@ -161,10 +161,10 @@ class __$$MyMtgCardImplCopyWithImpl<$Res>
           ? _value.language
           : language // ignore: cast_nullable_to_non_nullable
               as Language,
-      note: null == note
+      note: freezed == note
           ? _value.note
           : note // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
     ));
   }
 }
@@ -179,7 +179,7 @@ class _$MyMtgCardImpl extends _MyMtgCard {
       this.conditions = Conditions.mint,
       this.quantity = 1,
       this.language = Language.english,
-      this.note = ''})
+      this.note})
       : _setList = setList,
         super._();
 
@@ -207,8 +207,7 @@ class _$MyMtgCardImpl extends _MyMtgCard {
   @JsonKey()
   final Language language;
   @override
-  @JsonKey()
-  final String note;
+  final String? note;
 
   @override
   String toString() {
@@ -258,7 +257,7 @@ abstract class _MyMtgCard extends MyMtgCard {
       final Conditions conditions,
       final int quantity,
       final Language language,
-      final String note}) = _$MyMtgCardImpl;
+      final String? note}) = _$MyMtgCardImpl;
   _MyMtgCard._() : super._();
 
   @override
@@ -274,7 +273,7 @@ abstract class _MyMtgCard extends MyMtgCard {
   @override
   Language get language;
   @override
-  String get note;
+  String? get note;
   @override
   @JsonKey(ignore: true)
   _$$MyMtgCardImplCopyWith<_$MyMtgCardImpl> get copyWith =>

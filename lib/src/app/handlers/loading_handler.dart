@@ -6,6 +6,8 @@ class LoadingHandler {
   LoadingHandler();
 
   handle(context, previous, next) {
+    print('****************************************** APRI');
+
     if (next.loading) {
       showDialog(
           barrierDismissible: false,
@@ -28,6 +30,7 @@ class LoadingHandler {
           });
     }
     if (previous != null && previous.loading && !next.loading) {
+      print('****************************************** CHIUDI');
       if (dialogContext != null) {
         Navigator.of(dialogContext!).pop();
       }

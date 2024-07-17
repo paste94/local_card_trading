@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$NavigationState {
   bool get wannaRegister => throw _privateConstructorUsedError;
   bool get isAddCardPageOpen => throw _privateConstructorUsedError;
+  bool get isLoading => throw _privateConstructorUsedError;
   String? get fullScreenImage => throw _privateConstructorUsedError;
   User? get user => throw _privateConstructorUsedError;
 
@@ -35,6 +36,7 @@ abstract class $NavigationStateCopyWith<$Res> {
   $Res call(
       {bool wannaRegister,
       bool isAddCardPageOpen,
+      bool isLoading,
       String? fullScreenImage,
       User? user});
 }
@@ -54,6 +56,7 @@ class _$NavigationStateCopyWithImpl<$Res, $Val extends NavigationState>
   $Res call({
     Object? wannaRegister = null,
     Object? isAddCardPageOpen = null,
+    Object? isLoading = null,
     Object? fullScreenImage = freezed,
     Object? user = freezed,
   }) {
@@ -65,6 +68,10 @@ class _$NavigationStateCopyWithImpl<$Res, $Val extends NavigationState>
       isAddCardPageOpen: null == isAddCardPageOpen
           ? _value.isAddCardPageOpen
           : isAddCardPageOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       fullScreenImage: freezed == fullScreenImage
           ? _value.fullScreenImage
@@ -89,6 +96,7 @@ abstract class _$$NavigationStateImplCopyWith<$Res>
   $Res call(
       {bool wannaRegister,
       bool isAddCardPageOpen,
+      bool isLoading,
       String? fullScreenImage,
       User? user});
 }
@@ -106,6 +114,7 @@ class __$$NavigationStateImplCopyWithImpl<$Res>
   $Res call({
     Object? wannaRegister = null,
     Object? isAddCardPageOpen = null,
+    Object? isLoading = null,
     Object? fullScreenImage = freezed,
     Object? user = freezed,
   }) {
@@ -117,6 +126,10 @@ class __$$NavigationStateImplCopyWithImpl<$Res>
       isAddCardPageOpen: null == isAddCardPageOpen
           ? _value.isAddCardPageOpen
           : isAddCardPageOpen // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isLoading: null == isLoading
+          ? _value.isLoading
+          : isLoading // ignore: cast_nullable_to_non_nullable
               as bool,
       fullScreenImage: freezed == fullScreenImage
           ? _value.fullScreenImage
@@ -136,6 +149,7 @@ class _$NavigationStateImpl implements _NavigationState {
   const _$NavigationStateImpl(
       {this.wannaRegister = false,
       this.isAddCardPageOpen = false,
+      this.isLoading = false,
       this.fullScreenImage,
       this.user});
 
@@ -146,13 +160,16 @@ class _$NavigationStateImpl implements _NavigationState {
   @JsonKey()
   final bool isAddCardPageOpen;
   @override
+  @JsonKey()
+  final bool isLoading;
+  @override
   final String? fullScreenImage;
   @override
   final User? user;
 
   @override
   String toString() {
-    return 'NavigationState(wannaRegister: $wannaRegister, isAddCardPageOpen: $isAddCardPageOpen, fullScreenImage: $fullScreenImage, user: $user)';
+    return 'NavigationState(wannaRegister: $wannaRegister, isAddCardPageOpen: $isAddCardPageOpen, isLoading: $isLoading, fullScreenImage: $fullScreenImage, user: $user)';
   }
 
   @override
@@ -164,14 +181,16 @@ class _$NavigationStateImpl implements _NavigationState {
                 other.wannaRegister == wannaRegister) &&
             (identical(other.isAddCardPageOpen, isAddCardPageOpen) ||
                 other.isAddCardPageOpen == isAddCardPageOpen) &&
+            (identical(other.isLoading, isLoading) ||
+                other.isLoading == isLoading) &&
             (identical(other.fullScreenImage, fullScreenImage) ||
                 other.fullScreenImage == fullScreenImage) &&
             (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, wannaRegister, isAddCardPageOpen, fullScreenImage, user);
+  int get hashCode => Object.hash(runtimeType, wannaRegister, isAddCardPageOpen,
+      isLoading, fullScreenImage, user);
 
   @JsonKey(ignore: true)
   @override
@@ -185,6 +204,7 @@ abstract class _NavigationState implements NavigationState {
   const factory _NavigationState(
       {final bool wannaRegister,
       final bool isAddCardPageOpen,
+      final bool isLoading,
       final String? fullScreenImage,
       final User? user}) = _$NavigationStateImpl;
 
@@ -192,6 +212,8 @@ abstract class _NavigationState implements NavigationState {
   bool get wannaRegister;
   @override
   bool get isAddCardPageOpen;
+  @override
+  bool get isLoading;
   @override
   String? get fullScreenImage;
   @override

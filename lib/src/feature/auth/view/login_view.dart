@@ -4,18 +4,19 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
 import 'package:local_card_trading/src/app/handlers/error_handler.dart';
-import 'package:local_card_trading/src/app/handlers/loading_handler.dart';
 import 'package:local_card_trading/src/core/errors/error_provider.dart';
 import 'package:local_card_trading/src/core/errors/state/error_state.dart';
-import 'package:local_card_trading/src/core/loading/loading_provider.dart';
-import 'package:local_card_trading/src/core/loading/state/loading_state.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
-import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
-  static Page<void> page() => const MaterialPage<void>(child: LoginView());
+  static Page<void> page() => const MaterialPage<void>(
+        child: LoginView(),
+        maintainState: true,
+        allowSnapshotting: false,
+      );
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginViewState();
 }
@@ -44,17 +45,17 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    LoadingHandler loadingHandler = LoadingHandler();
+    // LoadingHandler loadingHandler = LoadingHandler();
 
-    ref.listen<ErrorState>(
-      errorProvider,
-      (previous, next) => errorHandler(context, ref, previous, next),
-    );
+    // ref.listen<ErrorState>(
+    //   errorProvider,
+    //   (previous, next) => errorHandler(context, ref, previous, next),
+    // );
 
-    ref.listen<LoadingState>(
-      loadingProvider,
-      (previous, next) => loadingHandler.handle(context, previous, next),
-    );
+    // ref.listen<LoadingState>(
+    //   loadingProvider,
+    //   (previous, next) => loadingHandler.handle(context, previous, next),
+    // );
 
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.login)),
@@ -76,6 +77,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 _googleLogin(),
                 const SizedBox(height: 4),
                 _signUpButton(),
+                const SizedBox(height: 8),
+                _modalButton(),
               ],
             ),
           ),
@@ -88,7 +91,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         key: const Key('LoginView_emailInput_textField'),
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
-        enabled: !ref.watch(loadingProvider).loading,
+        enabled: !ref.watch(navigationProvider).isLoading,
         decoration: InputDecoration(
             labelText: AppLocalizations.of(context)?.enter_email,
             helperText: '',
@@ -101,7 +104,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         key: const Key('LoginView_passwordInput_textField'),
         controller: passwordController,
         obscureText: true,
-        enabled: !ref.watch(loadingProvider).loading,
+        enabled: !ref.watch(navigationProvider).isLoading,
         decoration: InputDecoration(
           labelText: AppLocalizations.of(context)?.password,
           helperText: '',
@@ -111,7 +114,7 @@ class _LoginViewState extends ConsumerState<LoginView> {
         ),
       );
 
-  Widget _loginButton() => ref.watch(loadingProvider).loading
+  Widget _loginButton() => ref.watch(navigationProvider).isLoading
       ? const CircularProgressIndicator()
       : ElevatedButton(
           key: const Key('LoginView_continue_raisedButton'),
@@ -138,7 +141,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
           backgroundColor: Theme.of(context).colorScheme.secondary,
         ),
         icon: const Icon(FontAwesomeIcons.google, color: Colors.white),
-        onPressed: ref.watch(loadingProvider).loading ? null : _loginWithGoogle,
+        onPressed:
+            ref.watch(navigationProvider).isLoading ? null : _loginWithGoogle,
       );
 
   Widget _signUpButton() => TextButton(
@@ -150,6 +154,13 @@ class _LoginViewState extends ConsumerState<LoginView> {
           AppLocalizations.of(context)?.click_to_register ?? '',
           style: TextStyle(color: Theme.of(context).primaryColor),
         ),
+      );
+
+  Widget _modalButton() => TextButton(
+        onPressed: () => {
+          ref.read(navigationProvider.notifier).setLoading(true),
+        },
+        child: Text('OPEN IT'),
       );
 
   void _emailChanged() => setState(() {

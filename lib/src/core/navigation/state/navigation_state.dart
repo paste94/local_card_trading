@@ -8,6 +8,7 @@ class NavigationState with _$NavigationState {
   const factory NavigationState({
     @Default(false) bool wannaRegister,
     @Default(false) bool isAddCardPageOpen,
+    @Default(false) bool isLoading,
     String? fullScreenImage,
     User? user,
   }) = _NavigationState;

@@ -271,13 +271,16 @@ class NavigationRepository {
     CacheClient? cache,
     firebase_auth.FirebaseAuth? firebaseAuth,
     GoogleSignIn? googleSignIn,
-  })  : _cache = cache ?? CacheClient(),
-        _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance,
-        _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
+  }) {
+    _cache = cache ?? CacheClient();
+    _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
+    _firebaseAuth.useAuthEmulator('localhost', 9099);
+    _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
+  }
 
-  final CacheClient _cache;
-  final firebase_auth.FirebaseAuth _firebaseAuth;
-  final GoogleSignIn _googleSignIn;
+  late CacheClient _cache;
+  late firebase_auth.FirebaseAuth _firebaseAuth;
+  late GoogleSignIn _googleSignIn;
   final _storageRepository = StorageRepository();
 
   /// Whether or not the current environment is web

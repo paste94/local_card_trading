@@ -70,6 +70,10 @@ class SelectedCard extends _$SelectedCard {
     state = state?.copyWith(finish: val);
   }
 
+  void setNote(String note) {
+    state = state?.copyWith(note: note);
+  }
+
   Future<void> setSet(SelectedCardSet set) async {
     try {
       /// If the new set does NOT contains the current language,

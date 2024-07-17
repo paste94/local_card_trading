@@ -18,7 +18,7 @@ class MyMtgCard with _$MyMtgCard {
     @Default(Conditions.mint) Conditions conditions,
     @Default(1) int quantity,
     @Default(Language.english) Language language,
-    @Default('') String note,
+    String? note,
   }) = _MyMtgCard;
 
   factory MyMtgCard.fromMtgCard({
@@ -47,4 +47,30 @@ class MyMtgCard with _$MyMtgCard {
       .where((set) =>
           set.name == setName && set.collectorNumber == collectorNumber)
       .toList()[0];
+
+  Map<String, dynamic> toFirestore() {
+    return {
+      'id': id,
+      'finish': finish.name,
+      'conditions': conditions.name,
+      'quantity': quantity,
+      if (note != null) 'note': note,
+    };
+  }
+
+  // factory City.fromFirestore(
+  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
+  //   SnapshotOptions? options,
+  // ) {
+  //   final data = snapshot.data();
+  //   return City(
+  //     name: data?['name'],
+  //     state: data?['state'],
+  //     country: data?['country'],
+  //     capital: data?['capital'],
+  //     population: data?['population'],
+  //     regions:
+  //         data?['regions'] is Iterable ? List.from(data?['regions']) : null,
+  //   );
+  // }
 }

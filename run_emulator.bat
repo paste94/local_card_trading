@@ -1,0 +1,2 @@
+cd C:\Users\utente\Personale\local_card_trading_firebase_prototype
+firebase emulators:start

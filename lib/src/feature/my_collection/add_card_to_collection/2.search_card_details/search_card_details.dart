@@ -10,8 +10,9 @@ import 'package:local_card_trading/src/feature/my_collection/add_card_to_collect
 class SearchCardDetails extends ConsumerWidget {
   const SearchCardDetails({super.key});
 
-  static Page<void> page() =>
-      const MaterialPage<void>(child: SearchCardDetails());
+  static Page<void> page() => const MaterialPage<void>(
+        child: SearchCardDetails(),
+      );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -23,31 +24,41 @@ class SearchCardDetails extends ConsumerWidget {
         }
       },
       child: Scaffold(
-        appBar: AppBar(title: const Text('Add to list')),
+        appBar: AppBar(
+          title: const Text('Add to list'),
+          actions: [
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.check),
+            )
+          ],
+        ),
         body: const Card(
-          child: Column(children: [
-            Expanded(
-              child: Row(
-                children: [
-                  Expanded(
-                    flex: 3,
-                    child: Column(
-                      children: [
-                        IntrinsicHeight(child: SetDropdown()),
-                        IntrinsicHeight(child: ConditionsDropdown()),
-                        IntrinsicHeight(child: FoilDropdown()),
-                        IntrinsicHeight(child: LanguageDropdown()),
-                      ],
+          child: Column(
+            children: [
+              IntrinsicHeight(child: SetDropdown()),
+              IntrinsicHeight(
+                child: Row(
+                  children: [
+                    Expanded(
+                      flex: 2,
+                      child: Column(
+                        children: [
+                          IntrinsicHeight(child: ConditionsDropdown()),
+                          IntrinsicHeight(child: FoilDropdown()),
+                          IntrinsicHeight(child: LanguageDropdown()),
+                        ],
+                      ),
                     ),
-                  ),
-                  Expanded(
-                    flex: 2,
-                    child: CardPreview(),
-                  ),
-                ],
+                    Expanded(
+                      flex: 1,
+                      child: CardPreview(),
+                    ),
+                  ],
+                ),
               ),
-            ),
-          ]),
+            ],
+          ),
         ),
       ),
     );

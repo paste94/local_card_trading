@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/src/app/const/constants.dart';
 import 'package:local_card_trading/src/core/widgets/image_picker.dart';
-import 'package:local_card_trading/src/core/navigation/riverpod/navigation_provider.dart';
+import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingsPhoto extends ConsumerStatefulWidget {
