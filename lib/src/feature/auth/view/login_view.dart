@@ -3,12 +3,11 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:formz/formz.dart';
-import 'package:local_card_trading/src/app/handlers/error_handler.dart';
-import 'package:local_card_trading/src/core/errors/error_provider.dart';
-import 'package:local_card_trading/src/core/errors/state/error_state.dart';
-import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
-import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
-import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/providers/error/error_provider.dart';
+import 'package:local_card_trading/src/providers/error/state/error_state.dart';
+import 'package:local_card_trading/src/providers/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/widgets/error.dart';
+import 'package:local_card_trading/src/widgets/inputs.dart';
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});

@@ -18,8 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$MyMtgCard {
   MtgCard get mtgCard => throw _privateConstructorUsedError;
   Finish get finish => throw _privateConstructorUsedError;
-  List<SelectedCardSet> get setList =>
-      throw _privateConstructorUsedError; // @Default([]) List<Language> languageList,
+  List<SelectedCardSet> get setList => throw _privateConstructorUsedError;
   Conditions get conditions => throw _privateConstructorUsedError;
   int get quantity => throw _privateConstructorUsedError;
   Language get language => throw _privateConstructorUsedError;
@@ -196,7 +195,6 @@ class _$MyMtgCardImpl extends _MyMtgCard {
     return EqualUnmodifiableListView(_setList);
   }
 
-// @Default([]) List<Language> languageList,
   @override
   @JsonKey()
   final Conditions conditions;
@@ -266,7 +264,7 @@ abstract class _MyMtgCard extends MyMtgCard {
   Finish get finish;
   @override
   List<SelectedCardSet> get setList;
-  @override // @Default([]) List<Language> languageList,
+  @override
   Conditions get conditions;
   @override
   int get quantity;

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:local_card_trading/src/core/navigation/navigation_provider.dart';
+import 'package:local_card_trading/src/providers/navigation/navigation_provider.dart';
 
 class MyCollectionPage extends ConsumerWidget {
   const MyCollectionPage({super.key});

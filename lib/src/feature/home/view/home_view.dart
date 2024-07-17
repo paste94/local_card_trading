@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:local_card_trading/src/app/handlers/error_handler.dart';
 import 'package:local_card_trading/src/app/handlers/loading_handler.dart';
-import 'package:local_card_trading/src/core/errors/error_provider.dart';
-import 'package:local_card_trading/src/core/errors/state/error_state.dart';
-import 'package:local_card_trading/src/feature/home/view/home_bottom_nav_items.dart';
+import 'package:local_card_trading/src/providers/error.dart';
+import 'package:local_card_trading/src/widgets/error.dart';
+import 'package:local_card_trading/src/widgets/inputs.dart';
 
 class HomeView extends ConsumerStatefulWidget {
   const HomeView({super.key});
@@ -25,11 +24,6 @@ class _HomeViewState extends ConsumerState<HomeView> {
       errorProvider,
       (previous, next) => errorHandler(context, ref, previous, next),
     );
-
-    // ref.listen<LoadingState>(
-    //   loadingProvider,
-    //   (previous, next) => loadingHandler.handle(context, previous, next),
-    // );
 
     return Scaffold(
       appBar: AppBar(

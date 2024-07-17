@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:local_card_trading/src/app/models/selected_card_set.dart';
-import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
+import 'package:local_card_trading/src/constants/enums/conditions_enum.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
 part "my_mtg_card.freezed.dart";

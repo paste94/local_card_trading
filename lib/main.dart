@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:local_card_trading/firebase_options.dart';
 import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:local_card_trading/src/app/app_view.dart';
-import 'package:local_card_trading/src/core/observers/my_observer.dart';
+import 'package:local_card_trading/src/app/observers/my_observer.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
