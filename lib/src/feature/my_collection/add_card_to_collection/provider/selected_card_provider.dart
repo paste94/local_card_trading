@@ -1,5 +1,5 @@
-import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
-import 'package:local_card_trading/src/app/classes/selected_card_set.dart';
+import 'package:local_card_trading/src/app/models/my_mtg_card.dart';
+import 'package:local_card_trading/src/app/models/selected_card_set.dart';
 import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
 import 'package:local_card_trading/src/feature/my_collection/add_card_to_collection/provider/selected_card_exception.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';

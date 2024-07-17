@@ -1,4 +1,4 @@
-import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
+import 'package:local_card_trading/src/app/models/my_mtg_card.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 

@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:local_card_trading/src/app/classes/my_mtg_card.dart';
+import 'package:local_card_trading/src/app/models/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/const/constants.dart';
 
 class MtgCardImageViewer extends ConsumerStatefulWidget {
