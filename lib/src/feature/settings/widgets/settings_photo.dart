@@ -23,16 +23,20 @@ class _SettingsPhotoState extends ConsumerState<SettingsPhoto> {
   @override
   Widget build(BuildContext context) {
     final ScaffoldMessengerState? scaffold = _scaffoldKey.currentState;
+    final user = ref.watch(navigationProvider).user!;
 
     return Stack(children: [
       SizedBox(
         height: 100,
         width: 100,
         child: GestureDetector(
-          onTap: () =>
+          onTap: () {
+            if (user.photo != '' && user.photo != null) {
               ref.read(navigationProvider.notifier).openFullScreenImage(
-                    ref.watch(navigationProvider).user!.photo ?? '',
-                  ),
+                    user.photo ?? '',
+                  );
+            }
+          },
           child: Hero(
             tag: FULL_SCREEN_IMAGE_HERO_TAG,
             child: ClipRRect(

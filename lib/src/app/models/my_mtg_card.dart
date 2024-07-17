@@ -1,12 +1,11 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:local_card_trading/src/app/classes/selected_card_set.dart';
+import 'package:local_card_trading/src/app/models/selected_card_set.dart';
 import 'package:local_card_trading/src/app/enums/conditions_enum.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 
 part "my_mtg_card.freezed.dart";
 
 /// dart run build_runner build
-
 @freezed
 class MyMtgCard with _$MyMtgCard {
   const MyMtgCard._();
@@ -14,7 +13,6 @@ class MyMtgCard with _$MyMtgCard {
     required MtgCard mtgCard,
     required Finish finish,
     @Default([]) List<SelectedCardSet> setList,
-    // @Default([]) List<Language> languageList,
     @Default(Conditions.mint) Conditions conditions,
     @Default(1) int quantity,
     @Default(Language.english) Language language,
@@ -57,20 +55,4 @@ class MyMtgCard with _$MyMtgCard {
       if (note != null) 'note': note,
     };
   }
-
-  // factory City.fromFirestore(
-  //   DocumentSnapshot<Map<String, dynamic>> snapshot,
-  //   SnapshotOptions? options,
-  // ) {
-  //   final data = snapshot.data();
-  //   return City(
-  //     name: data?['name'],
-  //     state: data?['state'],
-  //     country: data?['country'],
-  //     capital: data?['capital'],
-  //     population: data?['population'],
-  //     regions:
-  //         data?['regions'] is Iterable ? List.from(data?['regions']) : null,
-  //   );
-  // }
 }

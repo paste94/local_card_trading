@@ -29,10 +29,10 @@ class _SettingsNameState extends ConsumerState<SettingsName> {
     return ListTile(
       leading: const Icon(Icons.person),
       title: Text(AppLocalizations.of(context)!.name),
-      subtitle: Text(user?.name ?? '**ERROR**'),
+      subtitle: Text(user?.name ?? ''),
       trailing: const Icon(Icons.edit),
       onTap: () {
-        _nameController.text = user?.name ?? '**ERROR**';
+        _nameController.text = user?.name ?? '';
         showModalBottomSheet(
             context: context,
             isScrollControlled: true,
