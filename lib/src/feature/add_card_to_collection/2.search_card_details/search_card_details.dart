@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:local_card_trading/src/feature/add_card_to_collection/2.search_card_details/widgets/card_preview.dart';
-import 'package:local_card_trading/src/feature/add_card_to_collection/2.search_card_details/widgets/conditions_dropdown.dart';
-import 'package:local_card_trading/src/feature/add_card_to_collection/2.search_card_details/widgets/foil_dropdown.dart';
-import 'package:local_card_trading/src/feature/add_card_to_collection/2.search_card_details/widgets/language_dropdown.dart';
-import 'package:local_card_trading/src/feature/add_card_to_collection/2.search_card_details/widgets/set_dropdown.dart';
+import 'package:local_card_trading/src/feature/add_card_to_collection/2.search_card_details/widgets.dart';
 import 'package:local_card_trading/src/feature/add_card_to_collection/provider/selected_card_provider.dart';
+import 'package:local_card_trading/src/providers/error.dart';
+import 'package:local_card_trading/src/widgets/error.dart';
 
 class SearchCardDetails extends ConsumerWidget {
   const SearchCardDetails({super.key});
@@ -16,6 +14,10 @@ class SearchCardDetails extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<ErrorState>(
+      errorProvider,
+      (previous, next) => errorHandler(context, ref, previous, next),
+    );
     return PopScope(
       canPop: false,
       onPopInvoked: (canPop) {
@@ -26,11 +28,8 @@ class SearchCardDetails extends ConsumerWidget {
       child: Scaffold(
         appBar: AppBar(
           title: const Text('Add to list'),
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.check),
-            )
+          actions: const [
+            ConfirmButton(),
           ],
         ),
         body: const Card(

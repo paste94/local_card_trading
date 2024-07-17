@@ -2,8 +2,10 @@ import 'package:local_card_trading/src/app/models/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/models/selected_card_set.dart';
 import 'package:local_card_trading/src/constants/enums/conditions_enum.dart';
 import 'package:local_card_trading/src/feature/add_card_to_collection/provider/selected_card_exception.dart';
+import 'package:local_card_trading/src/providers/error/error_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scryfall_api/scryfall_api.dart';
+import 'package:db_repository/db_repository.dart';
 
 part 'selected_card_provider.g.dart';
 
@@ -12,6 +14,8 @@ final apiClient = ScryfallApiClient();
 /// This class contains elements of MyMtgCard selected in [SearchCardDetails] page.
 @riverpod
 class SelectedCard extends _$SelectedCard {
+  final FirestoreRepository firestoreRepository = FirestoreRepository();
+
   @override
   MyMtgCard? build() {
     return null;
@@ -149,6 +153,17 @@ class SelectedCard extends _$SelectedCard {
       return query;
     } catch (e) {
       throw SelectedCardException('[createQuery] State not found, ERROR!');
+    }
+  }
+
+  Future<void> saveCard() async {
+    if (state != null) {
+      try {
+        await firestoreRepository.saveCard(state!.toFirestore());
+      } catch (e) {
+        print(e.toString());
+        ref.read(errorProvider.notifier).setError(error: e.toString());
+      }
     }
   }
 }

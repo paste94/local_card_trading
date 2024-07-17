@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:local_card_trading/src/providers/error.dart';
 import 'package:local_card_trading/src/providers/navigation/navigation_provider.dart';
 import 'package:local_card_trading/src/feature/add_card_to_collection/1.search_card_name/widgets/search_view.dart';
+import 'package:local_card_trading/src/widgets/error.dart';
 
 class SearchCardName extends ConsumerWidget {
   const SearchCardName({super.key});
@@ -9,6 +11,10 @@ class SearchCardName extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    ref.listen<ErrorState>(
+      errorProvider,
+      (previous, next) => errorHandler(context, ref, previous, next),
+    );
     return PopScope(
       canPop: false,
       onPopInvoked: (canPop) => {

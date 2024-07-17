@@ -30,6 +30,8 @@ dependencies:
     path: packages/authentication_repository
   storage_repository:
     path: packages/storage_repository
+  db_repository:
+    path: packages/db_repository
   flutter:
     sdk: flutter
   firebase_core: ^2.13.0
