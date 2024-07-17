@@ -69,6 +69,7 @@ class LogInWithEmailAndPasswordFailure implements Exception {
   /// Create an authentication message
   /// from a firebase authentication exception code.
   factory LogInWithEmailAndPasswordFailure.fromCode(String code) {
+    print('**************** ${code}');
     switch (code) {
       case 'invalid-email':
         return const LogInWithEmailAndPasswordFailure(
@@ -273,8 +274,8 @@ class NavigationRepository {
     GoogleSignIn? googleSignIn,
   }) {
     _cache = cache ?? CacheClient();
+    firebase_auth.FirebaseAuth.instance.useAuthEmulator('127.0.0.1', 9099);
     _firebaseAuth = firebaseAuth ?? firebase_auth.FirebaseAuth.instance;
-    _firebaseAuth.useAuthEmulator('localhost', 9099);
     _googleSignIn = googleSignIn ?? GoogleSignIn.standard();
   }
 
@@ -322,6 +323,7 @@ class NavigationRepository {
         password: password,
       );
     } on firebase_auth.FirebaseAuthException catch (e) {
+      print('************* ${e}');
       throw SignUpWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
       throw const SignUpWithEmailAndPasswordFailure();
@@ -373,6 +375,7 @@ class NavigationRepository {
         password: password,
       );
     } on firebase_auth.FirebaseAuthException catch (e) {
+      print('************* ${e}');
       throw LogInWithEmailAndPasswordFailure.fromCode(e.code);
     } catch (_) {
       throw const LogInWithEmailAndPasswordFailure();

@@ -3,10 +3,8 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:formz/formz.dart';
 import 'package:local_card_trading/src/app/handlers/error_handler.dart';
-import 'package:local_card_trading/src/app/handlers/loading_handler.dart';
 import 'package:local_card_trading/src/core/errors/error_provider.dart';
 import 'package:local_card_trading/src/core/errors/state/error_state.dart';
-import 'package:local_card_trading/src/core/navigation/state/navigation_state.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/confirmed_password.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/email.dart';
 import 'package:local_card_trading/src/core/widgets/inputs/password.dart';
@@ -41,17 +39,10 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
 
   @override
   Widget build(BuildContext context) {
-    // LoadingHandler loadingHandler = LoadingHandler();
-
     ref.listen<ErrorState>(
       errorProvider,
       (previous, next) => errorHandler(context, ref, previous, next),
     );
-
-    // ref.listen<NavigationState>(
-    //   navigationProvider,
-    //   (previous, next) => loadingHandler.handle(context, previous, next),
-    // );
 
     return PopScope(
       canPop: false,
@@ -86,6 +77,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
         key: const Key('LoginView_emailInput_textField'),
         keyboardType: TextInputType.emailAddress,
         controller: emailController,
+        enabled: !ref.watch(navigationProvider).isLoading,
         decoration: InputDecoration(
             labelText: AppLocalizations.of(context)?.enter_email,
             helperText: '',
@@ -98,6 +90,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
         key: const Key('LoginView_passwordInput_textField'),
         obscureText: true,
         controller: passwordController,
+        enabled: !ref.watch(navigationProvider).isLoading,
         decoration: InputDecoration(
             labelText: AppLocalizations.of(context)?.password,
             helperText: '',
@@ -110,6 +103,7 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
         key: const Key('LoginView_repeatPasswordInput_textField'),
         obscureText: true,
         controller: confirmedPasswordController,
+        enabled: !ref.watch(navigationProvider).isLoading,
         decoration: InputDecoration(
             labelText: AppLocalizations.of(context)?.repeat_password,
             helperText: '',
@@ -118,17 +112,19 @@ class _RegisterViewState extends ConsumerState<RegisterView> {
                 : null),
       );
 
-  ElevatedButton _registerButton() => ElevatedButton(
-        key: const Key('signUpForm_continue_raisedButton'),
-        style: ElevatedButton.styleFrom(
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
+  Widget _registerButton() => ref.watch(navigationProvider).isLoading
+      ? const CircularProgressIndicator()
+      : ElevatedButton(
+          key: const Key('signUpForm_continue_raisedButton'),
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(30),
+            ),
+            backgroundColor: Colors.orangeAccent,
           ),
-          backgroundColor: Colors.orangeAccent,
-        ),
-        onPressed: isValid ? _register : null,
-        child: Text(AppLocalizations.of(context)!.register),
-      );
+          onPressed: isValid ? _register : null,
+          child: Text(AppLocalizations.of(context)!.register),
+        );
 
   void _emailChanged() => setState(() {
         email = Email.dirty(emailController.text);

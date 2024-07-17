@@ -12,11 +12,7 @@ import 'package:local_card_trading/src/core/navigation/navigation_provider.dart'
 
 class LoginView extends ConsumerStatefulWidget {
   const LoginView({super.key});
-  static Page<void> page() => const MaterialPage<void>(
-        child: LoginView(),
-        maintainState: true,
-        allowSnapshotting: false,
-      );
+  static Page<void> page() => const MaterialPage<void>(child: LoginView());
   @override
   ConsumerState<ConsumerStatefulWidget> createState() => _LoginViewState();
 }
@@ -45,17 +41,10 @@ class _LoginViewState extends ConsumerState<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    // LoadingHandler loadingHandler = LoadingHandler();
-
-    // ref.listen<ErrorState>(
-    //   errorProvider,
-    //   (previous, next) => errorHandler(context, ref, previous, next),
-    // );
-
-    // ref.listen<LoadingState>(
-    //   loadingProvider,
-    //   (previous, next) => loadingHandler.handle(context, previous, next),
-    // );
+    ref.listen<ErrorState>(
+      errorProvider,
+      (previous, next) => errorHandler(context, ref, previous, next),
+    );
 
     return Scaffold(
       appBar: AppBar(title: Text(AppLocalizations.of(context)!.login)),
@@ -77,8 +66,8 @@ class _LoginViewState extends ConsumerState<LoginView> {
                 _googleLogin(),
                 const SizedBox(height: 4),
                 _signUpButton(),
-                const SizedBox(height: 8),
-                _modalButton(),
+                // const SizedBox(height: 8),
+                // _modalButton(),
               ],
             ),
           ),
