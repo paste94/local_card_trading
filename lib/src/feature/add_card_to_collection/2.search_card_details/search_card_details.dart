@@ -32,7 +32,7 @@ class SearchCardDetails extends ConsumerWidget {
             ConfirmButton(),
           ],
         ),
-        body: const Card(
+        body: const SingleChildScrollView(
           child: Column(
             children: [
               IntrinsicHeight(child: SetDropdown()),
@@ -46,6 +46,8 @@ class SearchCardDetails extends ConsumerWidget {
                           IntrinsicHeight(child: ConditionsDropdown()),
                           IntrinsicHeight(child: FoilDropdown()),
                           IntrinsicHeight(child: LanguageDropdown()),
+                          IntrinsicHeight(child: QuantityTextField()),
+                          IntrinsicHeight(child: NoteTextField()),
                         ],
                       ),
                     ),

@@ -3,6 +3,7 @@ import 'package:local_card_trading/src/app/models/selected_card_set.dart';
 import 'package:local_card_trading/src/constants/enums/conditions_enum.dart';
 import 'package:local_card_trading/src/feature/add_card_to_collection/provider/selected_card_exception.dart';
 import 'package:local_card_trading/src/providers/error/error_provider.dart';
+import 'package:local_card_trading/src/providers/navigation/navigation_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scryfall_api/scryfall_api.dart';
 import 'package:db_repository/db_repository.dart';
@@ -78,30 +79,36 @@ class SelectedCard extends _$SelectedCard {
     state = state?.copyWith(note: note);
   }
 
+  void setQuantity(int quantity) {
+    state = state?.copyWith(quantity: quantity);
+  }
+
   Future<void> setSet(SelectedCardSet set) async {
     try {
-      /// If the new set does NOT contains the current language,
-      /// change it using the head of the list.
-      var query = _createQuery(
-        set: set.code,
-        collectorNumber: set.collectorNumber,
-        language: set.langList.contains(state!.lang)
-            ? state!.lang.json
-            : set.langList[0].json,
-      );
-      final cardsList = await apiClient.searchCards(
-        query, // ! used to exact name search
-        rollupMode: RollupMode.prints,
-      );
-      var newCard = cardsList[0];
-      state = state!.copyWith(
-        mtgCard: newCard,
+      if (set.code != state?.set) {
+        /// If the new set does NOT contains the current language,
+        /// change it using the head of the list.
+        var query = _createQuery(
+          set: set.code,
+          collectorNumber: set.collectorNumber,
+          language: set.langList.contains(state?.lang)
+              ? state?.lang.json
+              : set.langList[0].json,
+        );
+        final cardsList = await apiClient.searchCards(
+          query, // ! used to exact name search
+          rollupMode: RollupMode.prints,
+        );
+        var newCard = cardsList[0];
+        state = state?.copyWith(
+          mtgCard: newCard,
 
-        /// If new set haven't the same selected foliage, change it
-        finish: newCard.finishes.contains(state!.finish)
-            ? state!.finish
-            : newCard.finishes[0],
-      );
+          /// If new set haven't the same selected foliage, change it
+          finish: newCard.finishes.contains(state?.finish)
+              ? state!.finish
+              : newCard.finishes[0],
+        );
+      }
     } catch (e) {
       if (e is ScryfallException) {
         throw SelectedCardException(e.details);
@@ -112,20 +119,22 @@ class SelectedCard extends _$SelectedCard {
 
   void setLanguage(Language language) async {
     try {
-      var query = _createQuery(language: language.json);
-      final cardsList = await apiClient.searchCards(
-        query, // ! used to exact name search
-        rollupMode: RollupMode.prints,
-      );
-      var newCard = cardsList[0];
-      state = state?.copyWith(
-        mtgCard: newCard,
+      if (language != state!.lang) {
+        var query = _createQuery(language: language.json);
+        final cardsList = await apiClient.searchCards(
+          query, // ! used to exact name search
+          rollupMode: RollupMode.prints,
+        );
+        var newCard = cardsList[0];
+        state = state?.copyWith(
+          mtgCard: newCard,
 
-        /// If new set haven't the same selected foliage, change it
-        finish: newCard.finishes.contains(state!.finish)
-            ? state!.finish
-            : newCard.finishes[0],
-      );
+          /// If new set haven't the same selected foliage, change it
+          finish: newCard.finishes.contains(state!.finish)
+              ? state!.finish
+              : newCard.finishes[0],
+        );
+      }
     } catch (e) {
       if (e is ScryfallException) {
         throw SelectedCardException(e.details);
@@ -158,12 +167,9 @@ class SelectedCard extends _$SelectedCard {
 
   Future<void> saveCard() async {
     if (state != null) {
-      try {
-        await firestoreRepository.saveCard(state!.toFirestore());
-      } catch (e) {
-        print(e.toString());
-        ref.read(errorProvider.notifier).setError(error: e.toString());
-      }
+      var firestoreCard = state!.toFirestore();
+      firestoreCard['uid'] = ref.read(navigationProvider).user!.id;
+      await firestoreRepository.saveCard(firestoreCard);
     }
   }
 }

@@ -49,6 +49,8 @@ class MyMtgCard with _$MyMtgCard {
   Map<String, dynamic> toFirestore() {
     return {
       'id': id,
+      'name': name,
+      'set': set,
       'finish': finish.name,
       'conditions': conditions.name,
       'quantity': quantity,
