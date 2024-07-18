@@ -2,7 +2,6 @@ import 'package:local_card_trading/src/app/models/my_mtg_card.dart';
 import 'package:local_card_trading/src/app/models/selected_card_set.dart';
 import 'package:local_card_trading/src/constants/enums/conditions_enum.dart';
 import 'package:local_card_trading/src/feature/add_card_to_collection/provider/selected_card_exception.dart';
-import 'package:local_card_trading/src/providers/error/error_provider.dart';
 import 'package:local_card_trading/src/providers/navigation/navigation_provider.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:scryfall_api/scryfall_api.dart';
